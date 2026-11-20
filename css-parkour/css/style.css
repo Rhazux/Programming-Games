@@ -1,0 +1,158 @@
+/*
+ * CSS Parkour – vzhled „arkádový automat za soumraku“
+ * Tlusté tmavé obrysy, tvrdé stíny jako u herních automatů, nápisy v úzkém plakátovém písmu Anton.
+ * Barvy vycházejí z herní scény: fialová noc, oranžový západ slunce, růžová, tráva a láva.
+ */
+@font-face { font-family: "Anton"; src: url("../fonts/anton.woff") format("woff"); font-display: swap; }
+
+:root {
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --display-weight: 400;
+  --display-case: uppercase;
+  --display-track: .015em;
+
+  --bg: #1b0f40;
+  --ink: #fff6ea;
+  --ink2: #e4d9f7;
+  --muted: #b3a7d8;
+  --line: #3d2b80;
+  --frame: #080320;
+  --card: #26175f;
+  --soft: #311e78;
+  --btn: #3a258c;
+  --btn-ink: #fff6ea;
+  --topbar: rgba(17, 9, 42, .94);
+
+  --accent: #ffb547;
+  --accent-ink: #2b1400;
+  --accent-soft: rgba(255, 181, 71, .28);
+  --primary: #ff4f8b;
+  --primary-ink: #1b0f40;
+  --go: #3ce6a6;
+  --go-ink: #04251a;
+  --good: #3ce6a6;
+  --good-ink: #04251a;
+  --good-soft: rgba(60, 230, 166, .12);
+  --bad: #ff6b4f;
+  --bad-soft: rgba(255, 93, 61, .12);
+  --warn: #ffd23f;
+  --pill-bg: rgba(255, 181, 71, .12);
+  --pill-line: rgba(255, 181, 71, .45);
+
+  --frame-w: 3px;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --btn-radius: 8px;
+  --lift: 6px 6px 0 var(--frame);
+  --lift-sm: 4px 4px 0 var(--frame);
+  --btn-lift: 4px 4px 0 var(--frame);
+  --modal-lift: 10px 10px 0 var(--frame);
+  --scrim: rgba(8, 3, 32, .72);
+
+  --code-bg: #120a33;
+  --code-line: #080320;
+  --code-bg-inline: rgba(170, 157, 210, .2);
+  --code-ink: #f1ecff;
+  --gutter: #0e0729;
+  --gutter-ink: #8477b8;
+  --caret: #ffb547;
+  --selection: rgba(255, 79, 139, .38);
+  --tk-kw: #ff6fa3;
+  --tk-fn: #7fb7ff;
+  --tk-builtin: #5ee7ff;
+  --tk-num: #ffb547;
+  --tk-str: #b6f36a;
+  --tk-com: #8a7ebd;
+  --tk-op: #d6a8ff;
+  --tk-prop: #5ee7ff;
+  --tk-sel: #ff9cc2;
+  --tk-val: #b6f36a;
+  --tk-tag: #ff6fa3;
+  --tk-attr: #ffb547;
+  --chip-bg: #120a33;
+  --star: #ffd23f;
+  --star-off: #4a3a8f;
+  --console-bg: #0d0628;
+  --console-ink: #f1ecff;
+  --console-muted: #a99cd6;
+  --hint-bg: rgba(255, 210, 63, .1);
+  --input: #120a33;
+  --ed-min: 200px;
+  --ed-max: 360px;
+  --bad-ink: #2a0606;
+}
+
+body { background: radial-gradient(1400px 520px at 50% 0%, #2a1767, transparent 70%) no-repeat, var(--bg); }
+
+/* lišta */
+.brand { font-size: 1.35rem; }
+
+.top-stat { border-width: 2px; }
+#topCoins .ico { color: #ffcf33; }
+
+/* úvod */
+.intro-copy .logo { color: var(--ink); text-shadow: 5px 5px 0 var(--primary), 10px 10px 0 var(--frame); line-height: .92; }
+.intro-copy .logo small { display: block; font-size: .42em; color: var(--accent); text-shadow: 3px 3px 0 var(--frame); letter-spacing: .04em; margin-top: .25em; }
+.demo { position: relative; }
+.demo .stage-wrap { pointer-events: none; }
+.demo-code { position: absolute; right: 14px; bottom: 14px; margin: 0; padding: .55rem .85rem; background: rgba(18, 10, 51, .94); border: 3px solid var(--frame); text-align: left; font-size: 1rem; box-shadow: 4px 4px 0 var(--frame); }
+.demo-label { position: absolute; left: 14px; top: 14px; background: var(--accent); color: var(--accent-ink); border: 3px solid var(--frame); border-radius: 6px; padding: .1rem .6rem; font-size: .85rem; font-weight: 800; box-shadow: 3px 3px 0 var(--frame); }
+
+/* scéna */
+.stage-wrap { position: relative; width: 100%; aspect-ratio: 2 / 1; border-radius: var(--radius); overflow: hidden; background: #0b1020; border: 3px solid var(--frame); box-shadow: var(--lift); }
+.stage-wrap iframe { position: absolute; left: 0; top: 0; width: 800px; height: 400px; border: 0; transform-origin: 0 0; display: block; background: #0b1020; }
+.stage-wrap.inspecting { border-color: var(--accent); }
+.banner { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); width: max-content; max-width: 90%; padding: .45rem 1.05rem; border-radius: 8px; font-weight: 800; text-align: center; line-height: 1.35;
+  background: #120a33; border: 3px solid var(--frame); box-shadow: 4px 4px 0 var(--frame); animation: drop .35s cubic-bezier(.2, 1.4, .5, 1); pointer-events: none; }
+.banner.good { color: var(--good); }
+.banner.bad { color: #ff8a6e; }
+.banner.info { color: var(--accent); }
+@keyframes drop { from { transform: translate(-50%, -40px); opacity: 0; } }
+
+/* level */
+.mbar .mb-num { background: var(--accent); color: var(--accent-ink); border: 3px solid var(--frame); box-shadow: 4px 4px 0 var(--frame); font-size: 1.7rem; }
+.mbar .mb-text h1 { font-size: clamp(1.7rem, 2.8vw, 2.5rem); letter-spacing: .02em; }
+.mbar .goal { border-width: 2px; }
+.stage-panel { padding: .9rem; }
+.stage-tools { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .9rem; }
+.stage-tools .btn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.stage-tools .coin-count { margin-left: auto; color: #ffcf33; font-weight: 800; font-variant-numeric: tabular-nums; }
+.brief { border-color: var(--frame); }
+.brief .task b { color: var(--accent); }
+.pane pre.code { margin: 0; max-height: 300px; overflow: auto; font-size: .88rem; }
+.pane-note { font-size: .9rem; color: var(--muted); margin: .6rem 0 0; }
+.lock-list { list-style: none; padding: 0; margin: .5rem 0 0; display: grid; gap: .3rem; font-size: .88rem; }
+.lock-list li { background: var(--soft); border-radius: 6px; padding: .3rem .6rem; }
+.code-pane .pane { display: flex; flex-direction: column; gap: .7rem; }
+.code-pane .pane[data-pane="css"] { flex: 1 1 auto; }
+.runbar .btn.go { text-transform: uppercase; font-family: var(--display); font-weight: 400; letter-spacing: .04em; font-size: 1.35rem; }
+.runbar .btn.go kbd { font-family: var(--font); text-transform: none; letter-spacing: 0; }
+
+/* mapa */
+.track.w1 { --tc: #5ee7ff; }
+.track.w2 { --tc: #ff6fa3; }
+.track.w3 { --tc: #ffb547; }
+.track .track-head .t-ico { background: var(--tc); border-color: var(--frame); border-width: 3px; box-shadow: 3px 3px 0 var(--frame); }
+.track .track-head h2 { font-size: 1.6rem; }
+.node .n-num { border-color: var(--frame); }
+.node.done .n-num { color: var(--good-ink); }
+.node .n-sub { font-family: var(--mono); }
+.next-up { border-color: var(--frame); background: var(--accent); color: var(--accent-ink); }
+.next-up .nu-num { color: var(--accent-ink); font-size: 3rem; }
+.next-up .nu-text small { color: rgba(43, 20, 0, .7); }
+.next-up .btn.primary { background: var(--frame); color: var(--ink); }
+
+/* výhra */
+.modal.win .modal-box { max-width: 640px; }
+.victory h2 { color: var(--accent); }
+
+/* výsledky */
+.res-hero h1 { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .demo-code { font-size: .78rem; padding: .3rem .5rem; right: 8px; bottom: 8px; }
+  .demo-label { display: none; }
+  .intro-copy .logo { text-shadow: 3px 3px 0 var(--primary), 6px 6px 0 var(--frame); }
+  .mbar .mb-num { font-size: 1.4rem; }
+  .runbar .btn.go { font-size: 1.15rem; }
+}

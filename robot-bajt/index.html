@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robot Bajt – naprogramuj robota v JavaScriptu</title>
+  <meta name="description" content="Naučná hra: píšeš skutečný JavaScript (cykly, podmínky, funkce, proměnné) a robot Bajt ho provádí. Pokrok měří vstupní a výstupní test.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <meta name="theme-color" content="#08342a">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="brand" data-action="home" title="Úvod"><span class="logo-ico" aria-hidden="true">🤖</span><span class="brand-text">Robot <b>Bajt</b></span></button>
+    <nav class="crumb" id="crumb"></nav>
+    <div class="top-actions">
+      <span class="top-stat" id="starsTotal" title="Získané hvězdy" hidden></span>
+      <button class="icon-btn" data-action="handbook" title="Příručka programátora">📘<span class="lbl"> Příručka</span></button>
+      <button class="icon-btn" data-action="sound" id="soundBtn" title="Zvuk zapnout / vypnout" aria-label="Zvuk">🔊</button>
+    </div>
+  </header>
+
+  <main id="screen" class="screen"></main>
+
+  <section id="game" class="ws-screen fit game" hidden>
+    <header class="mbar">
+      <span class="mb-num" id="lvlId"></span>
+      <div class="mb-text"><span class="mb-where" id="lvlWhere"></span><h1 id="lvlTitle"></h1></div>
+      <div class="mb-right"><ul class="goals" id="starGoals" aria-label="Hvězdy za misi"></ul></div>
+    </header>
+    <section class="panel brief brief-strip">
+      <div class="bs-text">
+        <p class="task"><b>Úkol:</b> <span id="lvlTask"></span></p>
+        <p class="story" id="lvlStory"></p>
+        <p class="bonus-line" id="lvlStars"></p>
+      </div>
+      <div class="brief-actions">
+        <button class="btn small" data-action="lesson" id="lessonBtn" title="Nová věc na příkladu, který ti robot předvede">📖 Lekce</button>
+        <button class="btn small" data-action="hint" id="hintBtn">💡 Nápověda</button>
+        <button class="btn small ghost" data-action="tour" id="tourBtn" title="Průvodce obrazovkou: co je kde a k čemu to slouží">❔ Průvodce</button>
+        <button class="btn small ghost" data-action="skip" id="skipBtn" hidden>⏭ Přeskočit misi</button>
+      </div>
+      <div class="hints" id="hintBox"></div>
+    </section>
+    <div class="ws">
+      <div class="col">
+        <section class="panel world-card">
+          <div class="world-wrap">
+            <div class="world-stage">
+              <canvas id="world" aria-label="Mapa světa robota"></canvas>
+              <div class="world-overlay" id="worldOverlay"></div>
+            </div>
+          </div>
+          <div class="world-status">
+            <div class="chips" id="chips"></div>
+            <div class="meters">
+              <span title="Energie robota (každá akce stojí 1)">🔋 <span class="energy"><span id="energyBar"></span></span> <b id="energyTxt"></b></span>
+              <span title="Sebrané bity">💠 <b id="bitsTxt">–</b></span>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col">
+        <section class="panel code-pane">
+          <div class="file-head"><span>📄 program.js</span><span class="size" id="sizeInfo"></span><span class="sp"></span>
+            <button class="btn small ghost" data-action="resetCode" title="Vrátit výchozí kód mise">↺ Výchozí kód</button></div>
+          <div id="editor"></div>
+          <details class="snips" id="snips" data-snips="robotBajt.snips"><summary>🧩 Příkazy a bloky <small>kliknutím vložíš do kódu</small></summary><div class="palette" id="palette"></div></details>
+          <div class="runbar">
+            <button class="btn go big" data-action="run" id="runBtn" title="Spustit (Ctrl + Enter)">▶ Spustit</button>
+            <button class="btn" data-action="step" id="stepBtn" title="Provádět program po jednotlivých akcích">⏯ Krokovat</button>
+            <button class="btn" data-action="stop" id="stopBtn" title="Zastavit" aria-label="Zastavit">⏹</button>
+            <button class="btn" data-action="fast" id="fastBtn" title="Přeskočit animaci" aria-label="Přeskočit animaci">⏩</button>
+            <label class="speed" title="Rychlost animace"><input type="range" id="speed" min="0" max="4" step="1" aria-label="Rychlost animace"><span id="speedLabel"></span></label>
+          </div>
+          <div class="status" id="status" aria-live="polite"></div>
+          <div class="console" id="console"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <noscript>Hra potřebuje zapnutý JavaScript.</noscript>
+  <script src="js/lang.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/lesson.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

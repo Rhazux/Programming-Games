@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hry – programovací hry</title>
+  <meta name="theme-color" content="#101114">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <style>
+    /* Písma si rozcestník bere ze složek her */
+    @font-face { font-family: "DM Sans"; src: url("robot-bajt/fonts/dmsans.woff") format("woff"); font-weight: 100 1000; font-display: swap; }
+    @font-face { font-family: "Archivo Black"; src: url("robot-bajt/fonts/archivo-black.woff") format("woff"); font-display: swap; }
+    @font-face { font-family: "Anton"; src: url("css-parkour/fonts/anton.woff") format("woff"); font-display: swap; }
+    @font-face { font-family: "Bitter"; src: url("operace-kobra/fonts/bitter.woff") format("woff"); font-weight: 500 900; font-display: swap; }
+    @font-face { font-family: "Montserrat"; src: url("web-studio/fonts/montserrat-black.woff") format("woff"); font-weight: 900; font-display: swap; }
+    @font-face { font-family: "Adventor Orel"; src: url("autopilot-orel/fonts/adventor-bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+    @font-face { font-family: "Heros Bistro"; src: url("async-bistro/fonts/heros-cn-bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+    @font-face { font-family: "Fira Bez"; src: url("web-bez-barier/fonts/fira-black.woff") format("woff"); font-weight: 900; font-display: swap; }
+    @font-face { font-family: "Cardo Galerie"; src: url("noc-v-galerii/fonts/cardo-regular.woff") format("woff"); font-weight: 400; font-display: swap; }
+
+    :root { --bg: #111216; --ink: #f4f4f6; --muted: #a2a5b3; --line: #2a2c35; --mono: "Cascadia Code", Consolas, ui-monospace, monospace; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.55 "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 3rem 1.3rem 3.5rem; }
+    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    h1 { margin: 0; font: 900 clamp(2.6rem, 6vw, 4.2rem)/1 "DM Sans", sans-serif; letter-spacing: -.035em; }
+    header p { margin: .5rem 0 0; color: var(--muted); font-size: 1.12rem; max-width: 46ch; }
+    .langs { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .langs span { font: 700 .85rem var(--mono); border: 1px solid var(--line); border-radius: 6px; padding: .2rem .55rem; color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+    .game { position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: .9rem; min-height: 300px; padding: 1.6rem 1.7rem 1.5rem; border-radius: 18px; text-decoration: none; color: var(--g-ink); background: var(--g-bg); overflow: hidden; outline-offset: 4px; transition: transform .15s; }
+    .game:hover { transform: translateY(-3px); }
+    .game:focus-visible { outline: 3px solid var(--g-accent); }
+    .g-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .g-lang { font: 700 .82rem var(--mono); padding: .22rem .6rem; border-radius: 6px; background: var(--g-chip); color: var(--g-accent); white-space: nowrap; }
+    .g-icon { font-size: 2.4rem; line-height: 1; }
+    .game h2 { margin: 0 0 .5rem; font: var(--g-weight, 400) var(--g-size, 2.6rem)/1 var(--g-font); letter-spacing: var(--g-track, 0); text-transform: var(--g-case, none); }
+    .game h2 b { font-weight: inherit; }
+    .game p { margin: 0; max-width: 44ch; color: var(--g-ink2); }
+    .g-code { margin: 0; font: .86rem/1.5 var(--mono); padding: .55rem .8rem; border-radius: 9px; background: var(--g-code); color: var(--g-codeink); white-space: pre; }
+    .g-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+    .g-play { display: inline-flex; align-items: center; gap: .4rem; font-weight: 800; padding: .6rem 1.1rem; border-radius: 10px; background: var(--g-accent); color: var(--g-accentink); }
+    .g-folder { display: inline-block; margin-top: .7rem; font: .8rem var(--mono); color: var(--g-ink2); opacity: .8; }
+
+    .bajt { --g-bg: #0d4535 linear-gradient(90deg, rgba(240,180,60,.08) 1px, transparent 1px) 0 0 / 40px 40px; --g-ink: #f3f4ea; --g-ink2: #cfe2d4; --g-accent: #f0b43c; --g-accentink: #2a1800; --g-chip: rgba(0,0,0,.25); --g-font: "Archivo Black", "Arial Black", sans-serif; --g-code: #0b1311; --g-codeink: #6fe0ff; }
+    .parkour { --g-bg: #26175f; --g-ink: #fff6ea; --g-ink2: #e4d9f7; --g-accent: #ffb547; --g-accentink: #2b1400; --g-chip: rgba(0,0,0,.28); --g-font: "Anton", Impact, sans-serif; --g-size: 3rem; --g-case: uppercase; --g-track: .02em; --g-code: #120a33; --g-codeink: #5ee7ff; box-shadow: inset 0 0 0 3px #080320; }
+    .parkour h2 { text-shadow: 4px 4px 0 #ff4f8b; }
+    .kobra { --g-bg: #142238; --g-ink: #eef3fb; --g-ink2: #c3cfe3; --g-accent: #ffd43b; --g-accentink: #1f1800; --g-chip: rgba(0,0,0,.28); --g-font: "Bitter", Georgia, serif; --g-weight: 800; --g-code: #0a1220; --g-codeink: #b5e48c; }
+    .orel { --g-bg: #31353b radial-gradient(circle at 14px 14px, #6a7079 0 2px, transparent 2.6px) no-repeat; --g-ink: #eceae4; --g-ink2: #c8c7c1; --g-accent: #79e08f; --g-accentink: #072010; --g-chip: rgba(0,0,0,.3); --g-font: "Adventor Orel", "Century Gothic", sans-serif; --g-weight: 700; --g-track: -.01em; --g-code: #0c120e; --g-codeink: #8dfc9e; }
+    .orel::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: linear-gradient(100deg, #a8741f, #ffe08a 18%, #e8b64c 30%, #a8741f 46%, #ffe08a 62%, #e8b64c 78%, #a8741f); }
+    .bistro { --g-bg: linear-gradient(#ffffff 2px, transparent 2px) 0 0 / 48px 24px, linear-gradient(90deg, #ffffff 2px, transparent 2px) 0 0 / 48px 24px, #eef1f3; --g-ink: #1f2326; --g-ink2: #3b4349; --g-accent: #d23a22; --g-accentink: #fff; --g-chip: #fff; --g-font: "Heros Bistro", "Arial Narrow", sans-serif; --g-weight: 700; --g-size: 2.9rem; --g-track: -.01em; --g-code: #1f2326; --g-codeink: #ffd36e; }
+    .bistro h2 b { color: #d23a22; }
+    .bariery { --g-bg: radial-gradient(circle, #f2c600 0 3px, transparent 3.6px) 0 0 / 22px 22px, #ffd400; --g-ink: #14213d; --g-ink2: #26324e; --g-accent: #14213d; --g-accentink: #ffd400; --g-chip: rgba(255, 255, 255, .7); --g-font: "Fira Bez", "Fira Sans", "Arial Black", sans-serif; --g-weight: 900; --g-track: -.02em; --g-code: #14213d; --g-codeink: #ffd400; }
+    .bariery .g-lang { color: #14213d; }
+    .galerie { --g-bg: radial-gradient(circle, rgba(212, 175, 90, .2) 0 1.3px, transparent 1.9px) 0 0 / 18px 18px, radial-gradient(ellipse 75% 55% at 50% 0%, rgba(255, 214, 150, .16), transparent 70%), #2a1218; --g-ink: #f6eadb; --g-ink2: #e3d1bf; --g-accent: #e2c071; --g-accentink: #2a1218; --g-chip: rgba(0, 0, 0, .3); --g-font: "Cardo Galerie", Georgia, serif; --g-weight: 400; --g-size: 2.9rem; --g-code: #170a0e; --g-codeink: #f1d48a; box-shadow: inset 0 0 0 4px #b08d43, inset 0 0 0 6px #5a3f17; }
+    .studio { --g-bg: #ffffff radial-gradient(circle, #d3d9ec 1px, transparent 1.4px) 0 0 / 20px 20px; --g-ink: #141a3a; --g-ink2: #3a4166; --g-accent: #2b59ff; --g-accentink: #fff; --g-chip: #eaf0ff; --g-font: "Montserrat", "Arial Black", sans-serif; --g-weight: 900; --g-track: -.025em; --g-code: #161a33; --g-codeink: #ff7ab6; }
+
+    footer { margin-top: 2.2rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; color: var(--muted); font-size: .95rem; }
+    footer b { color: var(--ink); display: block; margin-bottom: .15rem; }
+    kbd { font: 700 .8rem var(--mono); border: 1px solid var(--line); border-radius: 5px; padding: .05em .4em; color: var(--ink); }
+
+    @media (max-width: 860px) { .grid, footer { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .g-code { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .game { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Programovací hry</h1>
+        <p>Hry, ve kterých se úkoly řeší psaním skutečného kódu. Každá úroveň začíná krátkým příběhem a lekcí s živým příkladem, který si můžeš hned vyzkoušet.</p>
+      </div>
+      <div class="langs" aria-label="Jazyky"><span>JavaScript</span><span>CSS</span><span>Python</span><span>HTML</span></div>
+    </header>
+
+    <main class="grid" id="games"></main>
+
+    <footer>
+      <div><b>Ve VS Code</b>Stiskni <kbd>F5</kbd> a vyber hru. Otevře se v prohlížeči Chrome.</div>
+      <div><b>Bez VS Code</b>Dvakrát klikni na <code>index.html</code> ve složce hry.</div>
+      <div><b>Postup se ukládá</b>Každá hra si pamatuje hvězdy a výsledky v prohlížeči.</div>
+    </footer>
+  </div>
+
+  <script>
+    /* Seznam her – každá hra má vlastní podsložku se souborem index.html */
+    const GAMES = [
+      {
+        folder: 'robot-bajt', cls: 'bajt', icon: '🤖', lang: 'JavaScript',
+        title: 'Robot <b>Bajt</b>',
+        desc: 'Napiš robotovi program v JavaScriptu: cykly, podmínky, funkce. Robot ho na desce plošných spojů hned provede a ty ladíš, co se pokazilo.',
+        code: 'while (!jeCil()) {\n  krok();\n}'
+      },
+      {
+        folder: 'css-parkour', cls: 'parkour', icon: '🏃', lang: 'CSS',
+        title: 'CSS Parkour',
+        desc: 'Postav Pixelovi cestu přes lávu skutečným CSS: šířky, margin, flexbox, position, transform a animace.',
+        code: '.bridge {\n  width: 320px;\n}'
+      },
+      {
+        folder: 'operace-kobra', cls: 'kobra', icon: '🐍', lang: 'Python',
+        title: 'Operace <b>Kobra</b>',
+        desc: 'Tajná mise v Pythonu: dešifruj zprávy, rozeber logy, počítej s bity a dopadni hackery. Kód kontrolují testy.',
+        code: 'def desifruj(text, posun):\n    ...'
+      },
+      {
+        folder: 'web-studio', cls: 'studio', icon: '🏢', lang: 'HTML + JS',
+        title: 'Web Studio <b>Tycoon</b>',
+        desc: 'Vedeš webové studio. Klientům stavíš weby z HTML a JavaScriptu, testy je proklikají a ty dostaneš zaplaceno.',
+        code: '<button id="koupit">\n  Do košíku\n</button>'
+      },
+      {
+        folder: 'autopilot-orel', cls: 'orel', icon: '🌕', lang: 'Python',
+        title: 'Autopilot Orel',
+        desc: 'Napiš v Pythonu palubní software přistávacího modulu. Tvůj kód řídí motor desetkrát za sekundu: přistaneš, nebo vyhloubíš kráter.',
+        code: 'def autopilot(vyska, klesani):\n    if klesani > 2:\n        return 100\n    return 0'
+      },
+      {
+        folder: 'async-bistro', cls: 'bistro', icon: '🍝', lang: 'JavaScript',
+        title: 'Async <b>Bistro</b>',
+        desc: 'Řídíš kuchyni asynchronním JavaScriptem: await, Promise.all, try/catch a Promise.race rozhodnou, jestli hosté dostanou jídlo včas.',
+        code: 'const [t, o] = await Promise.all([\n  plotna(\'těstoviny\'),\n  plotna(\'omáčka\')\n]);'
+      },
+      {
+        folder: 'web-bez-barier', cls: 'bariery', icon: '♿', lang: 'HTML + CSS + JS',
+        title: 'Web bez bariér',
+        desc: 'Opravuješ weby pro skutečné lidi: Karla se čtečkou obrazovky, Tomáše jen s klávesnicí, slabozrakou Janu a Elišku, které vadí pohyb. Každou opravu hned vyzkouší.',
+        code: '<img src="chleba.svg"\n     alt="Kváskový chléb">'
+      },
+      {
+        folder: 'noc-v-galerii', cls: 'galerie', icon: '🖼️', lang: 'CSS',
+        title: 'Noc v galerii',
+        desc: 'Z obrazů v galerii v noci zmizely barvy. Do rána je domaluješ v CSS podle katalogu: kruhy, přechody, stíny, otáčení, mřížka i ořez. Galerie tvé plátno porovná s předlohou pixel po pixelu.',
+        code: '.slunce {\n  width: 140px;\n  height: 140px;\n  border-radius: 50%;\n}'
+      }
+    ];
+
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    document.getElementById('games').innerHTML = GAMES.map(g => `
+      <a class="game ${g.cls}" href="${encodeURI(g.folder)}/index.html">
+        <div class="g-top"><span class="g-icon" aria-hidden="true">${g.icon}</span><span class="g-lang">${esc(g.lang)}</span></div>
+        <div><h2>${g.title}</h2><p>${esc(g.desc)}</p><span class="g-folder">📁 ${esc(g.folder)}/</span></div>
+        <div class="g-foot"><span class="g-play">▶ Hrát</span><pre class="g-code" aria-hidden="true">${esc(g.code)}</pre></div>
+      </a>`).join('');
+  </script>
+</body>
+</html>

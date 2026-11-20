@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Parkour – postav Pixelovi cestu skutečným CSS</title>
+  <meta name="description" content="Vzdělávací hra o CSS: rozměry, box model, flexbox, pozicování, transformace a animace. Každý tvůj řádek CSS okamžitě mění herní svět.">
+  <meta name="theme-color" content="#1b0f40">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="brand" id="homeBtn" title="Úvod"><span class="logo-ico" aria-hidden="true">🏃</span><span class="brand-text">CSS Parkour</span></button>
+    <div class="crumb" id="crumb"></div>
+    <div class="top-actions">
+      <span class="top-stat" id="topStars" title="Získané hvězdy"><span class="ico">★</span>0/36</span>
+      <span class="top-stat" id="topCoins" title="Sebrané mince"><span class="ico">🪙</span>0</span>
+      <button class="icon-btn" id="mapBtn" hidden>🗺️ <span class="lbl">Mapa</span></button>
+      <button class="icon-btn" id="soundBtn" aria-pressed="true" title="Zvuk" aria-label="Zvuk">🔊</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <noscript><p style="padding:2rem;text-align:center">Hra potřebuje zapnutý JavaScript.</p></noscript>
+
+  <script src="js/kit.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/lesson.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

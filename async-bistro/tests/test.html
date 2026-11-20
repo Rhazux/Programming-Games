@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <title>Async Bistro – automatické testy</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; margin: 1.5rem; background: #fffdf6; color: #1f2326; }
+    h1, h2 { font-family: ui-monospace, Consolas, monospace; }
+    .ok { color: #2f8f4e; } .bad { color: #c62828; font-weight: 700; }
+    .summary { font-size: 1.3rem; font-weight: 800; margin: 0 0 1rem; padding: .6rem 1rem; border-radius: 10px; background: #f2f4f6; }
+  </style>
+</head>
+<body>
+  <h1>🍝 Async Bistro – automatické testy</h1>
+  <p>1) Kuchyně s virtuálním časem: await, souběh, fronty stanic, spálení, kurýři, časovače, chyby i řádky chyb.
+     2) Každá úroveň: vzorové řešení zvládne všechny směny a bonus, výchozí kód a typické chyby neprojdou.
+     3) Vstupní a výstupní test mají stejné dovednosti a platné odpovědi.</p>
+  <div id="summary" class="summary">⏳ Testy běží…</div>
+  <div id="out">Běží…</div>
+  <script src="../js/kitchen.js"></script>
+  <script src="../js/levels.js"></script>
+  <script src="../js/lessons.js"></script>
+  <script src="lessons-check.js"></script>
+  <script src="test.js"></script>
+</body>
+</html>
