@@ -340,8 +340,16 @@
     if (pb) pb.addEventListener('click', () => renderQuiz('post'));
   }
 
+  // Lekce otevřená z taháku: tlačítko „Zpět k taháku“ tahák znovu otevře a vrátí fokus na lekci, ze které hráč přišel.
   function openLesson(v) {
-    if (v && LESSONS[v.id]) Lesson.open({ modal: Kit.modal, lesson: LESSONS[v.id], kicker: `Lekce k zakázce ${v.id}: ${v.client.business}`, back: 'Zpět k taháku' });
+    if (!v || !LESSONS[v.id]) return;
+    const m = Lesson.open({ modal: Kit.modal, lesson: LESSONS[v.id], kicker: `Lekce k zakázce ${v.id}: ${v.client.business}`, back: 'Zpět k taháku' });
+    const back = Kit.$('.modal-box > .btn-row [data-close]', m);
+    if (back) back.addEventListener('click', () => setTimeout(() => {
+      cheatSheet();
+      const b = Kit.$(`.modal [data-lesson="${v.id}"]`);
+      if (b) b.focus();
+    }));
   }
 
   function cheatSheet() {

@@ -951,7 +951,18 @@
       ${sections}
       ${lessonList}
       <p class="muted small">Klávesy v editoru: <kbd>Ctrl</kbd>+<kbd>Enter</kbd> spustí program, <kbd>Tab</kbd> odsadí, <kbd>Ctrl</kbd>+<kbd>Z</kbd> vrátí změnu.</p>`, { cls: 'wide' });
-    $$('[data-lesson]', hb).forEach(b => b.addEventListener('click', () => Lesson.open({ modal, lesson: LESSONS[b.dataset.lesson], kicker: `Lekce k misi ${b.dataset.lesson}`, back: 'Zavřít lekci', mountOpts: LESSON_OPTS })));
+    // Lekce z příručky: „Zpět do příručky“ příručku znovu otevře a vrátí fokus na lekci, ze které hráč přišel.
+    $$('[data-lesson]', hb).forEach(b => b.addEventListener('click', () => {
+      const id = b.dataset.lesson;
+      const lv = LEVELS.find(l => l.id === id);
+      const m = Lesson.open({ modal, lesson: LESSONS[id], kicker: `Lekce k misi ${id}${lv ? ': ' + lv.title : ''}`, back: 'Zpět do příručky', mountOpts: LESSON_OPTS });
+      const back = $('.modal-box > .btn-row [data-close]', m);
+      if (back) back.addEventListener('click', () => setTimeout(() => {
+        showHandbook();
+        const nb = $(`.modal [data-lesson="${id}"]`);
+        if (nb) nb.focus();
+      }));
+    }));
   }
 
   /* ------------------------------------------------------------------ *

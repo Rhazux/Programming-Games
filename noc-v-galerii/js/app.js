@@ -412,17 +412,24 @@
         <div><b>🖼️ Zlatý rám</b><span>bonus za krátké CSS. Počítají se znaky bez mezer a komentářů.</span></div>
       </div>
       <div class="cheat">${items}</div>`, { cls: 'wide' });
-    $$('[data-lesson]', m).forEach(b => b.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +b.dataset.lesson))));
+    $$('[data-lesson]', m).forEach(b => b.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +b.dataset.lesson), true)));
   }
 
   /* ---------------- lekce: výklad techniky s živým příkladem ---------------- */
-  function openLesson(l) {
+  // Z příručky vede tlačítko „Zpět do příručky“ zpátky do příručky (fokus na lekci, ze které hráč přišel). Z obrazu lekci jen zavře.
+  function openLesson(l, fromCheat) {
     const les = LESSONS[l.id];
     if (!les) return;
     const m = Kit.modal(`<p class="b-kicker">${chapterOf(l).icon} ${esc(chapterOf(l).title)}, obraz ${l.id}: <i>${esc(l.title)}</i></p>
       ${Lesson.html(les)}
-      <div class="btn-row"><button class="btn primary" data-close data-focus>Zpět k obrazu</button></div>`, { cls: 'lesson-modal', label: 'Lekce: ' + l.concept });
+      <div class="btn-row"><button class="btn primary" data-close data-focus>${fromCheat ? 'Zpět do příručky' : 'Zpět k obrazu'}</button></div>`, { cls: 'lesson-modal', label: 'Lekce: ' + l.concept });
     Lesson.mount(m, les);
+    const back = fromCheat && Kit.$('.modal-box > .btn-row [data-close]', m);
+    if (back) back.addEventListener('click', () => setTimeout(() => {
+      cheatSheet();
+      const b = Kit.$(`.modal [data-lesson="${l.id}"]`);
+      if (b) b.focus();
+    }));
   }
 
   /* ---------------- briefing: příběh → lekce → úkol ---------------- */

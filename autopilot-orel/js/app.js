@@ -372,7 +372,7 @@
       : unlocked(l.id) ? `<div class="learn"><b>Úroveň ${l.id}: ${esc(l.concept)}</b><p class="small muted">Tahle úroveň tě ještě čeká. Lekci si můžeš projít už teď.</p>${lesBtn(l)}</div>`
       : `<div class="learn locked"><b>🔒 Úroveň ${l.id}: ${esc(l.concept)}</b><p class="small muted">Odemkne se po splnění úrovně.</p></div>`)).join('');
     const cm = Kit.modal(`<h2>📖 Tahák Pythonu</h2><p class="muted small">Všechno, co ses v úrovních naučil(a), na jednom místě.</p><div class="cheat">${items}</div>`, { cls: 'wide' });
-    Kit.$$('[data-lesson]', cm).forEach(btn => btn.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +btn.dataset.lesson))));
+    Kit.$$('[data-lesson]', cm).forEach(btn => btn.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +btn.dataset.lesson), true)));
   }
 
   /* ---------------- briefing ---------------- */
@@ -394,8 +394,16 @@
     });
   }
 
-  function openLesson(l) {
-    if (LESSONS[l.id]) Lesson.open({ modal: Kit.modal, lesson: LESSONS[l.id], kicker: `Lekce k úrovni ${l.id}: ${l.title}`, back: 'Zpět k úrovni' });
+  // Z taháku vede tlačítko „Zpět k taháku“ zpátky do taháku (fokus na lekci, ze které hráč přišel). Z úrovně lekci jen zavře.
+  function openLesson(l, fromCheat) {
+    if (!LESSONS[l.id]) return;
+    const m = Lesson.open({ modal: Kit.modal, lesson: LESSONS[l.id], kicker: `Lekce k úrovni ${l.id}: ${l.title}`, back: fromCheat ? 'Zpět k taháku' : 'Zpět k úrovni' });
+    const back = fromCheat && Kit.$('.modal-box > .btn-row [data-close]', m);
+    if (back) back.addEventListener('click', () => setTimeout(() => {
+      cheatSheet();
+      const b = Kit.$(`.modal [data-lesson="${l.id}"]`);
+      if (b) b.focus();
+    }));
   }
 
   /* ---------------- úroveň ---------------- */
