@@ -498,7 +498,7 @@
       <div class="cookbook"><div><h3>Stanice</h3><ul>${stations}<li><b>🚚 dodavatel(…)</b> doba jízdy se mění</li><li><b>🛵 rozvez(objednavka, jidlo)</b> 5 min, kurýři jsou 2</li></ul></div>
       <div><h3>Recepty: sloz(…)</h3><ul>${recipes}</ul></div></div>
       <div class="cheat">${items}</div>`, { cls: 'wide' });
-    Kit.$$('[data-lesson]', cm).forEach(btn => btn.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +btn.dataset.lesson))));
+    Kit.$$('[data-lesson]', cm).forEach(btn => btn.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +btn.dataset.lesson), true)));
   }
 
   /* ---------------- briefing ---------------- */
@@ -520,8 +520,16 @@
     });
   }
 
-  function openLesson(l) {
-    if (LESSONS[l.id]) Lesson.open({ modal: Kit.modal, lesson: LESSONS[l.id], kicker: `Lekce k úrovni ${l.id}: ${l.title}`, back: 'Zpět do kuchyně' });
+  // Z kuchařky vede tlačítko „Zpět do kuchařky“ zpátky do kuchařky (fokus na lekci, ze které hráč přišel). Z úrovně lekci jen zavře.
+  function openLesson(l, fromCheat) {
+    if (!LESSONS[l.id]) return;
+    const m = Lesson.open({ modal: Kit.modal, lesson: LESSONS[l.id], kicker: `Lekce k úrovni ${l.id}: ${l.title}`, back: fromCheat ? 'Zpět do kuchařky' : 'Zpět do kuchyně' });
+    const back = fromCheat && Kit.$('.modal-box > .btn-row [data-close]', m);
+    if (back) back.addEventListener('click', () => setTimeout(() => {
+      cheatSheet();
+      const b = Kit.$(`.modal [data-lesson="${l.id}"]`);
+      if (b) b.focus();
+    }));
   }
 
 

@@ -355,7 +355,7 @@
         <div><b>🌀 Pohyb</b><span>prefers-reduced-motion v CSS i JS, delší pohyb jde zastavit</span></div>
       </div>
       <div class="cheat">${items}</div>`, { cls: 'wide' });
-    Kit.$$('[data-lesson]', cm).forEach(btn => btn.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +btn.dataset.lesson))));
+    Kit.$$('[data-lesson]', cm).forEach(btn => btn.addEventListener('click', () => openLesson(LEVELS.find(x => x.id === +btn.dataset.lesson), true)));
   }
 
   /* ---------------- briefing ---------------- */
@@ -381,8 +381,16 @@
     });
   }
   const LESSON_OPTS = { run: lessonRun };
-  function openLesson(l) {
-    if (LESSONS[l.id]) Lesson.open({ modal: Kit.modal, lesson: LESSONS[l.id], kicker: `Lekce k zakázce ${l.id}: ${l.title}`, back: 'Zpět k zakázce', mountOpts: LESSON_OPTS });
+  // Z taháku vede tlačítko „Zpět k taháku“ zpátky do taháku (fokus na lekci, ze které hráč přišel). Ze zakázky lekci jen zavře.
+  function openLesson(l, fromCheat) {
+    if (!LESSONS[l.id]) return;
+    const m = Lesson.open({ modal: Kit.modal, lesson: LESSONS[l.id], kicker: `Lekce k zakázce ${l.id}: ${l.title}`, back: fromCheat ? 'Zpět k taháku' : 'Zpět k zakázce', mountOpts: LESSON_OPTS });
+    const back = fromCheat && Kit.$('.modal-box > .btn-row [data-close]', m);
+    if (back) back.addEventListener('click', () => setTimeout(() => {
+      cheatSheet();
+      const b = Kit.$(`.modal [data-lesson="${l.id}"]`);
+      if (b) b.focus();
+    }));
   }
 
   function briefing(l, first, onClose, start) {
