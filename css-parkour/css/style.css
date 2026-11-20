@@ -14,7 +14,7 @@
   --bg: #1b0f40;
   --ink: #fff6ea;
   --ink2: #e4d9f7;
-  --muted: #b3a7d8;
+  --muted: #c2b6e6;
   --line: #3d2b80;
   --frame: #080320;
   --card: #26175f;
@@ -26,14 +26,14 @@
   --accent: #ffb547;
   --accent-ink: #2b1400;
   --accent-soft: rgba(255, 181, 71, .28);
-  --primary: #ff4f8b;
+  --primary: #ff75ac;
   --primary-ink: #1b0f40;
   --go: #3ce6a6;
   --go-ink: #04251a;
   --good: #3ce6a6;
   --good-ink: #04251a;
   --good-soft: rgba(60, 230, 166, .12);
-  --bad: #ff6b4f;
+  --bad: #ff7458;
   --bad-soft: rgba(255, 93, 61, .12);
   --warn: #ffd23f;
   --pill-bg: rgba(255, 181, 71, .12);
@@ -54,7 +54,7 @@
   --code-bg-inline: rgba(170, 157, 210, .2);
   --code-ink: #f1ecff;
   --gutter: #0e0729;
-  --gutter-ink: #8477b8;
+  --gutter-ink: #a296d4;
   --caret: #ffb547;
   --selection: rgba(255, 79, 139, .38);
   --tk-kw: #ff6fa3;
@@ -62,7 +62,7 @@
   --tk-builtin: #5ee7ff;
   --tk-num: #ffb547;
   --tk-str: #b6f36a;
-  --tk-com: #8a7ebd;
+  --tk-com: #a297d4;
   --tk-op: #d6a8ff;
   --tk-prop: #5ee7ff;
   --tk-sel: #ff9cc2;
@@ -139,7 +139,7 @@ body { background: radial-gradient(1400px 520px at 50% 0%, #2a1767, transparent 
 .node .n-sub { font-family: var(--mono); }
 .next-up { border-color: var(--frame); background: var(--accent); color: var(--accent-ink); }
 .next-up .nu-num { color: var(--accent-ink); font-size: 3rem; }
-.next-up .nu-text small { color: rgba(43, 20, 0, .7); }
+.next-up .nu-text small { color: var(--accent-ink); }
 .next-up .btn.primary { background: var(--frame); color: var(--ink); }
 
 /* výhra */

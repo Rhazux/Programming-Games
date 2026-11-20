@@ -38,7 +38,7 @@
     'káva': '☕', 'toust': '🥪', 'vajíčko': '🍳', 'polévka': '🍲', 'pizza': '🍕', 'hranolky': '🍟', 'špagety': '🍝', 'burger': '🍔', 'bruschetta': '🥖', 'rizoto': '🍚', 'koláč': '🥧',
     'chléb': '🍞', 'sýr': '🧀', 'rajče': '🍅', 'salát': '🥬', 'maso': '🥩', 'houska': '🥯', 'těstoviny': '🍝', 'omáčka': '🥫', 'rýže': '🍚', 'lanýž': '🍄', 'šunka': '🥓', 'cibule': '🧅'
   };
-  const OCOL = ['#1e79b6', '#2b8348', '#9e6800', '#6c4bb4', '#cd3975', '#0f7e7e', '#ac601c', '#5a6b7b', '#6d7910', '#d23a22'];
+  const OCOL = ['#005c97', '#00662d', '#804c00', '#6544ac', '#ad105b', '#006363', '#8d4400', '#495a6a', '#535e00', '#b31200']; // bílý text na pruzích časové osy má kontrast aspoň 7 : 1
   const emo = n => EMO[n] || '🍽️';
 
   /* ---------------- profil ---------------- */
@@ -126,7 +126,7 @@
     const rows = stationRows(level, res);
     const pctT = t => `${Math.max(0, Math.min(100, (t / T) * 100))}%`;
     const tick = [1, 2, 5, 10].find(s => T / s <= 12) || 10;
-    const oc = i => (i === null || i === undefined ? '#6a747d' : OCOL[i % OCOL.length]);
+    const oc = i => (i === null || i === undefined ? '#505a62' : OCOL[i % OCOL.length]);
 
     root.innerHTML = `
       <div class="tickets" role="list" aria-label="Objednávky">${orders.map((o, i) => `
@@ -434,7 +434,7 @@
           <span class="n-num">${open ? l.id : '🔒'}</span>
           <span class="n-title">${esc(l.title)}</span>
           <span class="n-sub">${esc(l.concept)}</span>
-          <span class="n-stars" aria-label="${s ? s.stars.filter(Boolean).length : 0} hvězd ze 3">${stars}</span>
+          <span class="n-stars" aria-label="${((n) => `${n} ${Kit.plural(n, 'hvězda', 'hvězdy', 'hvězd')} ze 3`)(s ? s.stars.filter(Boolean).length : 0)}">${stars}</span>
         </button>`;
     };
     const nextL = LEVELS.find(l => l.id === nextId);
@@ -678,7 +678,7 @@
       if (!b) { b = document.createElement('div'); b.id = 'kbanner'; b.className = 'k-banner'; ($('#kbody .stations') || $('#kbody')).appendChild(b); }
       if (!r) { b.className = 'k-banner'; b.innerHTML = ''; return; }
       b.className = 'k-banner show ' + (r.ok ? 'ok' : 'bad');
-      b.innerHTML = `<b>${r.ok ? 'Směna zvládnutá' : 'Směna se nepovedla'}</b><span>${esc(r.msg)}</span>`;
+      b.innerHTML = `<b>${r.ok ? 'Směna zvládnutá' : 'Směna se nepovedla'}</b><span>${md(r.msg)}</span>`;
     }
     function showShift(i, play) {
       ses.sel = i;
@@ -712,7 +712,7 @@
     function errBlock(e) {
       const loc = e.line ? `Řádek ${e.line}` : '';
       return `<div class="err">✘ ${loc ? loc + ': ' : ''}${esc(e.text)}</div>` +
-        (e.czech ? `<div class="explain"><b>Co to znamená:</b> ${esc(e.czech)}${e.line ? ` <button class="line-link" data-line="${e.line}">ř. ${e.line}</button>` : ''}</div>` : '');
+        (e.czech ? `<div class="explain"><b>Co to znamená:</b> ${md(e.czech)}${e.line ? ` <button class="line-link" data-line="${e.line}">ř. ${e.line}</button>` : ''}</div>` : '');
     }
     const prompt = cmd => `<div class="prompt">bistro@kuchyne:~$ <b>${esc(cmd)}</b></div>`;
     function renderLog() {
@@ -725,8 +725,8 @@
       if (!s) { term.innerHTML = html; return; }
       html += `<div class="log-h">Deník: ${esc(s.name)}</div>`;
       html += s.log.map(([t, text, kind]) => `<div class="lg ${kind}"><span class="lt">${B.clock(s.start, t)}</span>${kind === 'log' ? '<span class="pr">log</span> ' : ''}${esc(text)}</div>`).join('');
-      if (s.logCut) html += `<div class="lg info">… a dalších ${s.logCut} řádků</div>`;
-      html += `<div class="lg ${s.ok ? 'ok' : 'bad'}">${s.ok ? '✔' : '✘'} ${esc(s.msg)}${s.detail ? ` – ${esc(s.detail)}` : ''}</div>`;
+      if (s.logCut) html += `<div class="lg info">… a ${Kit.plural(s.logCut, 'další', 'další', 'dalších')} ${s.logCut} ${Kit.plural(s.logCut, 'řádek', 'řádky', 'řádků')}</div>`;
+      html += `<div class="lg ${s.ok ? 'ok' : 'bad'}">${s.ok ? '✔' : '✘'} ${md(s.msg)}${s.detail ? ` – ${md(s.detail)}` : ''}</div>`;
       if (s.error) html += errBlock(s.error);
       term.innerHTML = html;
       bindLines();
@@ -741,7 +741,7 @@
         if (s.servedAll) stats.push(`poslední ${B.clock(s.start, s.servedAll)}`);
         if (s.burnt) stats.push(`spáleno ${s.burnt}×`);
         if (s.rejected) stats.push(`odmítnutý kurýr ${s.rejected}×`);
-        return `<button class="fsum ${s.ok ? 'ok' : 'bad'} ${i === ses.sel ? 'on' : ''}" data-f="${i}" title="${esc(s.msg + (s.detail ? ' – ' + s.detail : ''))}"><span class="st">${s.ok ? '✔' : '✘'}</span><b>${esc(s.name)}</b><span class="m">${esc(s.msg)}</span><small>${esc(stats.join(' · '))}</small></button>`;
+        return `<button class="fsum ${s.ok ? 'ok' : 'bad'} ${i === ses.sel ? 'on' : ''}" data-f="${i}" title="${esc((s.msg + (s.detail ? ' – ' + s.detail : '')).replace(/`/g, ''))}"><span class="st">${s.ok ? '✔' : '✘'}</span><b>${esc(s.name)}</b><span class="m">${md(s.msg)}</span><small>${esc(stats.join(' · '))}</small></button>`;
       }).join('');
       $$('#fsum [data-f]').forEach(b => b.addEventListener('click', () => { ses.onPlayEnd = null; showShift(+b.dataset.f, true); renderSummary(); }));
       $$('#tabs .fl-tab').forEach((t, i) => { const s = r.shifts[i]; t.querySelector('.st').textContent = s ? (s.ok ? '✔' : '✘') : ''; t.classList.toggle('ok', !!s && s.ok); t.classList.toggle('bad', !!s && !s.ok); });

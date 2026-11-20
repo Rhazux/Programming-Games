@@ -5,6 +5,8 @@
   'use strict';
 
   const { CHAPTERS, LEVELS, SNIPPETS, QUIZ, CONCEPTS, HANDBOOK, ROBOT_LINES } = window.BajtContent;
+  /* čeština: 1 příkaz, 2–4 příkazy, 0 a 5+ příkazů */
+  const plural = (n, one, few, many) => { const a = Math.abs(n); return a === 1 ? one : a >= 2 && a <= 4 ? few : many; };
   const { runProgram, testSpecs, rng, parFor, formatValue } = window.BajtWorld;
   const { WorldView, Player } = window.BajtRender;
   const { CodeEditor, highlight } = window.BajtEditor;
@@ -175,7 +177,11 @@
     if (!el) return;
     const ICON = { idle: '▶', run: '•', ok: '✔', bad: '✘', warn: '!' };
     el.className = 'status ' + (state || 'idle');
-    el.innerHTML = `<span class="s-ico" aria-hidden="true">${ICON[state] || '▶'}</span><span class="s-text">${html}${sub ? `<small>${sub}</small>` : ''}</span>`;
+    // úseky v `zpětných apostrofech` se ukážou jako kód (text už je escapovaný)
+    const code = t => String(t).replace(/`([^`\n]+)`/g, '<code>$1</code>');
+    el.innerHTML = `<span class="s-ico" aria-hidden="true">${ICON[state] || '▶'}</span><span class="s-text">${code(html)}${sub ? `<small>${code(sub)}</small>` : ''}</span>`;
+    const typing = document.activeElement && /^(TEXTAREA|INPUT)$/.test(document.activeElement.tagName);
+    if ((state === 'ok' || state === 'bad') && !typing) requestAnimationFrame(() => { const r = el.getBoundingClientRect(); if (r.bottom > innerHeight || r.top < 0) el.scrollIntoView({ block: 'nearest' }); });
   }
 
   function showScreen(html, crumb) {
@@ -346,7 +352,7 @@
           <span class="n-num">${unlocked ? l.id : '🔒'}</span>
           <span class="n-title">${l.debug ? '🐞 ' : l.boss ? '👾 ' : ''}${esc(l.title)}</span>
           <span class="n-sub">${l.debug ? 'oprav rozbitý kód' : l.boss ? 'finále' : s && s.skipped && !done ? 'přeskočeno' : ''}</span>
-          <span class="n-stars" aria-label="${s ? s.stars.filter(Boolean).length : 0} hvězd ze 3">${starsHtml(s ? s.stars : [false, false, false])}</span>
+          <span class="n-stars" aria-label="${((n) => `${n} ${plural(n, 'hvězda', 'hvězdy', 'hvězd')} ze 3`)(s ? s.stars.filter(Boolean).length : 0)}">${starsHtml(s ? s.stars : [false, false, false])}</span>
         </button>`;
       }).join('');
       const chSolved = lvls.filter(o => P.levels[o.l.id] && P.levels[o.l.id].solved).length;
@@ -464,7 +470,7 @@
     snips.open = read('robotBajt.snips', window.innerHeight >= 820 || window.innerWidth < 1100) !== false;
     if (!snips.dataset.bound) { snips.dataset.bound = '1'; snips.addEventListener('toggle', () => write('robotBajt.snips', snips.open)); }
     $('#lvlStory').textContent = level.story;
-    $('#lvlTask').textContent = level.task;
+    $('#lvlTask').innerHTML = Lesson.md(level.task);
     $('#hintBox').innerHTML = '';
     $('#hintBtn').textContent = `💡 Nápověda (${level.hints.length})`;
     $('#hintBtn').disabled = false;
@@ -563,10 +569,10 @@
       head: `<p class="b-kicker">${ch.icon} Kapitola ${ch.id}: ${esc(ch.title)} · mise ${esc(level.id)}</p><h2>${esc(level.title)}</h2>`,
       story: chapterBox + Lesson.story('🤖', 'Bajt', level.story),
       lesson: LESSONS[level.id], mountOpts: LESSON_OPTS,
-      task: `<div class="st-task"><p><b>Úkol:</b> ${esc(level.task)}</p></div>`,
+      task: `<div class="st-task"><p><b>Úkol:</b> ${Lesson.md(level.task)}</p></div>`,
       stars: [
         { t: level.gen ? 'Všechny testy' : 'Splnit úkol', d: level.gen ? 'Program projde všemi testovacími mapami, i náhodnými, které se mění při každém spuštění.' : 'Robot splní úkol mise a nenarazí.' },
-        { t: `Nejvýš ${level.sizeStar} příkazů`, d: 'Krátký kód: počítá se každý příkaz v programu. Pomůžou cykly a funkce.' },
+        { t: `Nejvýš ${level.sizeStar} ${plural(level.sizeStar, 'příkaz', 'příkazy', 'příkazů')}`, d: 'Krátký kód: počítá se každý příkaz v programu. Pomůžou cykly a funkce.' },
         { t: 'Úsporný robot', d: 'Robot udělá nejvýš tolik akcí jako vzorové řešení. Žádné zbytečné kroky a otočky.' }
       ],
       done: 'Jdu na to 🤖'
@@ -629,10 +635,10 @@
     const goal = (got, text, title) => `<li class="goal ${got ? 'got' : ''}" title="${esc(title)}"><i aria-hidden="true">★</i>${text}</li>`;
     $('#starGoals').innerHTML =
       goal(st.stars[0], level.gen ? 'Všechny testy' : 'Splnit úkol', 'Hvězda za splnění úkolu' + (level.gen ? ' ve všech testech' : '')) +
-      goal(st.stars[1], `Nejvýš ${level.sizeStar} příkazů`, `Hvězda za krátký kód: nejvýš ${level.sizeStar} příkazů`) +
+      goal(st.stars[1], `Nejvýš ${level.sizeStar} ${plural(level.sizeStar, 'příkaz', 'příkazy', 'příkazů')}`, `Hvězda za krátký kód: nejvýš ${level.sizeStar} ${plural(level.sizeStar, 'příkaz', 'příkazy', 'příkazů')}`) +
       goal(st.stars[2], 'Úsporný robot', `Hvězda za úsporného robota: akcí ${parTxt}`);
     const ls = $('#lvlStars');
-    if (ls) ls.innerHTML = `<span class="bl-star" aria-hidden="true">★</span> <b>Hvězdy navíc:</b> krátký kód (nejvýš ${level.sizeStar} příkazů) a úsporný robot (${level.gen ? 'akcí nejvýš jako vzorové řešení' : `nejvýš ${parFor(level, level.spec)} akcí`}).`;
+    if (ls) ls.innerHTML = `<span class="bl-star" aria-hidden="true">★</span> <b>Hvězdy navíc:</b> krátký kód (nejvýš ${level.sizeStar} ${plural(level.sizeStar, 'příkaz', 'příkazy', 'příkazů')}) a úsporný robot (${level.gen ? 'akcí nejvýš jako vzorové řešení' : `nejvýš ${parFor(level, level.spec)} ${plural(parFor(level, level.spec), 'akce', 'akce', 'akcí')}`}).`;
   }
 
   function updateSizeInfo() {
@@ -660,6 +666,7 @@
     $('#energyTxt').textContent = `${battery - used}/${battery}`;
     const total = view.bits.size + view.collected;
     $('#bitsTxt').textContent = total ? `${view.collected}/${total}` : '–';
+    $('#bitsMeter').hidden = !total; // na mapě bez bitů počítadlo jen mate
   }
 
   /* ---------- konzole ---------- */
@@ -858,8 +865,8 @@
       const rows = [
         { got: true, title: 'Mise splněna', text: `Prošly všechny testy (${res.tests.length}). Program jsi spustil(a) ${st.runs}×.` },
         now[1]
-          ? { got: true, title: `Krátký kód: nejvýš ${level.sizeStar} příkazů`, text: `Tvůj program má ${res.size} ${prikazu(res.size)}.` }
-          : { got: st.stars[1], title: `Krátký kód: nejvýš ${level.sizeStar} příkazů`, text: `Tvůj program má ${res.size} ${prikazu(res.size)}, na hvězdu stačí ${level.sizeStar}.${st.stars[1] ? ' Hvězdu ale už máš z dřívějška.' : ''}`, how: `<b>Jak na to:</b> ${sizeTip} Takhle to zvládne vzorové řešení:${solCode}` },
+          ? { got: true, title: `Krátký kód: nejvýš ${level.sizeStar} ${plural(level.sizeStar, 'příkaz', 'příkazy', 'příkazů')}`, text: `Tvůj program má ${res.size} ${prikazu(res.size)}.` }
+          : { got: st.stars[1], title: `Krátký kód: nejvýš ${level.sizeStar} ${plural(level.sizeStar, 'příkaz', 'příkazy', 'příkazů')}`, text: `Tvůj program má ${res.size} ${prikazu(res.size)}, na hvězdu stačí ${level.sizeStar}.${st.stars[1] ? ' Hvězdu ale už máš z dřívějška.' : ''}`, how: `<b>Jak na to:</b> ${sizeTip} Takhle to zvládne vzorové řešení:${solCode}` },
         now[2]
           ? { got: true, title: 'Úsporný robot', text: `Robot udělal ${res.steps} ${akci(res.steps)}${level.gen ? ' (nejvíc v jednom testu) a nic zbytečného' : `, cíl je nejvýš ${par}`}.` }
           : { got: st.stars[2], title: 'Úsporný robot', text: `Robot udělal ${res.steps} ${akci(res.steps)}${level.gen ? ' (nejvíc v jednom testu), vzorové řešení jich potřebuje méně' : `, na hvězdu stačí ${par}`}.${st.stars[2] ? ' Hvězdu ale už máš z dřívějška.' : ''}`, how: `<b>Jak na to:</b> robot dělá akce navíc, třeba se otáčí víckrát, než musí, nebo chodí tam a zpátky. Každá akce stojí energii. ${bothMiss ? 'Porovnej svůj program se vzorovým řešením výš.' : `Vzorové řešení:${solCode}`}` }
@@ -910,7 +917,7 @@
     G.hintShown++;
     L(level.id).hints++;
     save();
-    $('#hintBox').innerHTML = level.hints.slice(0, G.hintShown).map((h, i) => `<p class="hint">💡 ${i + 1}. ${esc(h)}</p>`).join('');
+    $('#hintBox').innerHTML = level.hints.slice(0, G.hintShown).map((h, i) => `<p class="hint">💡 ${i + 1}. ${Lesson.md(h)}</p>`).join('');
     $('#hintBtn').textContent = G.hintShown < level.hints.length ? '💡 Další nápověda' : '💡 Víc nápověd není';
     $('#hintBtn').disabled = G.hintShown >= level.hints.length;
   }

@@ -149,23 +149,23 @@
   function explainJs(msg) {
     let m;
     const s = String(msg || '').replace(/^Uncaught\s+/, '');
-    if (/Podáváš Promise|ještě není hotov/.test(s)) return 'Funkce stanice vrací Promise – slib, že jídlo bude. Hotové jídlo dostaneš, až na ni počkáš: const jidlo = await trouba(…).';
-    if ((m = /ReferenceError: (\S+) is not defined/.exec(s))) return `Jméno „${m[1]}“ neexistuje. Překlep? Pozor na háčky a velká písmena (prkenko, ne prkénko). Nebo proměnnou používáš dřív, než ji vytvoříš.`;
-    if ((m = /Cannot (?:read|set) properties of undefined \((?:reading|setting) '(.+?)'\)/.exec(s))) return `Hodnota je undefined – sahá se do ní pro „${m[1]}“. Překlep v názvu vlastnosti (objednavka.jidlo)? Nebo pole nemá prvek s tímhle indexem?`;
-    if ((m = /Cannot (?:read|set) properties of null/.exec(s))) return 'Hodnota je null – pracuješ s něčím, co neexistuje.';
-    if ((m = /TypeError: (.+?) is not a function/.exec(s))) return `„${m[1]}“ není funkce. Překlep v názvu? Promise.all a Promise.race se píšou s velkým P.`;
-    if (/is not iterable/.test(s)) return 'Rozbaluješ nebo procházíš něco, co není pole. Nezapomněl(a) jsi await před Promise.all(…)? A Promise.all potřebuje pole: Promise.all([a, b]).';
-    if (/await is only valid in async functions/.test(s)) return 'await jde použít jen uvnitř funkce označené async: async function obsluz(…) { … }.';
-    if (/Assignment to constant variable/.test(s)) return 'Do proměnné vytvořené přes const nejde znovu přiřadit. Když se má hodnota měnit, použij let.';
+    if (/Podáváš Promise|ještě není hotov/.test(s)) return 'Funkce stanice vrací Promise – slib, že jídlo bude. Hotové jídlo dostaneš, až na ni počkáš: `const jidlo = await trouba(…)`.';
+    if ((m = /ReferenceError: (\S+) is not defined/.exec(s))) return `Jméno „${m[1]}“ neexistuje. Překlep? Pozor na háčky a velká písmena (\`prkenko\`, ne \`prkénko\`). Nebo proměnnou používáš dřív, než ji vytvoříš.`;
+    if ((m = /Cannot (?:read|set) properties of undefined \((?:reading|setting) '(.+?)'\)/.exec(s))) return `Hodnota je \`undefined\` – sahá se do ní pro „${m[1]}“. Překlep v názvu vlastnosti (\`objednavka.jidlo\`)? Nebo pole nemá prvek s tímhle indexem?`;
+    if ((m = /Cannot (?:read|set) properties of null/.exec(s))) return 'Hodnota je `null` – pracuješ s něčím, co neexistuje.';
+    if ((m = /TypeError: (.+?) is not a function/.exec(s))) return `„${m[1]}“ není funkce. Překlep v názvu? \`Promise.all\` a \`Promise.race\` se píšou s velkým P.`;
+    if (/is not iterable/.test(s)) return 'Rozbaluješ nebo procházíš něco, co není pole. Nezapomněl(a) jsi `await` před `Promise.all(…)`? A `Promise.all` potřebuje pole: `Promise.all([a, b])`.';
+    if (/await is only valid in async functions/.test(s)) return '`await` jde použít jen uvnitř funkce označené `async`: `async function obsluz(…) { … }`.';
+    if (/Assignment to constant variable/.test(s)) return 'Do proměnné vytvořené přes `const` nejde znovu přiřadit. Když se má hodnota měnit, použij `let`.';
     if ((m = /Identifier '(.+?)' has already been declared/.exec(s))) return `Proměnnou nebo funkci „${m[1]}“ vytváříš dvakrát. Podruhé už jen přiřaď, nebo ji pojmenuj jinak.`;
-    if (/missing \) after argument list/.test(s)) return 'Chybí zavírací závorka ) za argumenty funkce – nebo čárka mezi argumenty.';
-    if (/Unexpected end of input/.test(s)) return 'Kód skončil uprostřed – nejspíš chybí zavírací } nebo ).';
-    if (/Invalid or unexpected token/.test(s)) return 'Neplatný znak – často neukončený text (chybí uvozovka) nebo typografické uvozovky „ “ místo " ".';
+    if (/missing \) after argument list/.test(s)) return 'Chybí zavírací závorka `)` za argumenty funkce – nebo čárka mezi argumenty.';
+    if (/Unexpected end of input/.test(s)) return 'Kód skončil uprostřed – nejspíš chybí zavírací `}` nebo `)`.';
+    if (/Invalid or unexpected token/.test(s)) return 'Neplatný znak – často neukončený text (chybí uvozovka) nebo typografické uvozovky „ “ místo `" "`.';
     if (/Unexpected token|Unexpected identifier|Unexpected string|Unexpected number/.test(s)) return 'Chyba v zápisu kódu – zkontroluj závorky, čárky a uvozovky kolem řádku s chybou.';
     if (/Maximum call stack size exceeded/.test(s)) return 'Funkce volá sama sebe pořád dokola (nekonečná rekurze).';
-    if (/nekonečný cyklus/.test(s)) return 'Cyklus nikdy neskončí – podmínka while/for zůstává pořád pravdivá. Měníš uvnitř cyklu proměnnou z podmínky?';
-    if (/Cannot access '(.+?)' before initialization/.test(s)) return 'Proměnnou používáš dřív, než je vytvořená (let/const). Přesuň deklaraci výš.';
-    if (/spálil|Spálen/.test(s)) return 'Trouba jídlo spálila a Promise skončila chybou. Chybu chyť pomocí try { … } catch (chyba) { … } a jídlo upeč znovu.';
+    if (/nekonečný cyklus/.test(s)) return 'Cyklus nikdy neskončí – podmínka `while`/`for` zůstává pořád pravdivá. Měníš uvnitř cyklu proměnnou z podmínky?';
+    if (/Cannot access '(.+?)' before initialization/.test(s)) return 'Proměnnou používáš dřív, než je vytvořená (`let`/`const`). Přesuň deklaraci výš.';
+    if (/spálil|Spálen/.test(s)) return 'Trouba jídlo spálila a Promise skončila chybou. Chybu chyť pomocí `try { … } catch (chyba) { … }` a jídlo upeč znovu.';
     if (/volný kurýr/.test(s)) return 'Kurýři jsou jen dva. Neposílej najednou víc rozvozů, než kolik je kurýrů – nech dva „kuchaře“ brát objednávky z fronty jednu po druhé.';
     if (/SyntaxError/.test(s)) return 'Chyba v zápisu kódu – prohlížeč ho nedokázal přečíst, takže se nespustil vůbec.';
     return '';
@@ -445,7 +445,7 @@
       return res;
     }
     const entry = exp[level.entry];
-    if (typeof entry !== 'function') { res.missing = level.entry; fail('missing', `V kódu chybí funkce ${level.entry}()`); return res; }
+    if (typeof entry !== 'function') { res.missing = level.entry; fail('missing', `V kódu chybí funkce \`${level.entry}()\``); return res; }
 
     let settled = false;
     let failure = null;
@@ -479,8 +479,8 @@
       const plain = failure && failure.name === 'Error' && failure.message ? failure.message : null;
       fail(burn ? 'burnt' : courier ? 'courier' : 'error', burn ? 'Spálené jídlo a neošetřená chyba' : courier ? 'Kurýr odmítl zakázku a chyba nebyla ošetřená' : plain ? plain.slice(0, 110) : `Program spadl: ${failure && failure.name ? failure.name : 'chyba'}`, res.error.czech || res.error.text);
     } else if (!settled) {
-      if (res.timeout) fail('timeout', `Směna skončila v ${clock(R.start, R.maxTime)} a kuchyně pořád vaří`, 'Nečekáš někde v nekonečné smyčce na cekej()?');
-      else fail('deadlock', 'Kuchyně čeká na něco, co nikdy nepřijde', 'Funkce pořád čeká na await, který se nikdy nesplní (třeba Promise, kterou nikdo nevyřeší).');
+      if (res.timeout) fail('timeout', `Směna skončila v ${clock(R.start, R.maxTime)} a kuchyně pořád vaří`, 'Nečekáš někde v nekonečné smyčce na `cekej()`?');
+      else fail('deadlock', 'Kuchyně čeká na něco, co nikdy nepřijde', 'Funkce pořád čeká na `await`, který se nikdy nesplní (třeba Promise, kterou nikdo nevyřeší).');
     }
     res.orders.forEach((o, i) => { if (o.status === 'waiting') { o.status = 'missing'; o.msg = 'Nedostal nic.'; } });
     res.doneAt = doneAt;
@@ -498,8 +498,8 @@
       const o = res.orders[first];
       const why = {
         missing: res.burnt ? 'Něco se spálilo a nikdo to neupekl znovu.' : 'Program skončil, ale tenhle stůl nic nedostal. Prošel(a) jsi všechny objednávky?',
-        late: 'Vaří se moc pomalu. Co jde dělat souběžně, spusť najednou (Promise.all).',
-        closed: 'Funkce skončila dřív, než se dovařilo. Na rozpracovanou práci musíš počkat: await, u více věcí await Promise.all(…).',
+        late: 'Vaří se moc pomalu. Co jde dělat souběžně, spusť najednou (`Promise.all`).',
+        closed: 'Funkce skončila dřív, než se dovařilo. Na rozpracovanou práci musíš počkat: `await`, u více věcí `await Promise.all(…)`.',
         wrong: '', cold: ''
       };
       fail(o.status, `Stůl ${o.stul}: ${o.status === 'missing' ? `${o.jidlo} nebylo podáno` : o.msg}`, why[o.status] || '');

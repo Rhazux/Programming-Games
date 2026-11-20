@@ -64,9 +64,9 @@ LOG_NOC = [
       tests: [{ call: 'hlaseni("Ema", 7)' }, { call: 'hlaseni("Tomáš", 12)' }, { call: 'hlaseni("X", 0)' }, { call: 'hlaseni("Agentka Nula", 100)', hidden: true }],
       bonus: { text: 'Použij f-string', check: c => nodes(c.ast, n => n.k === 'fstr').length > 0 },
       hints: [
-        'f-string začíná písmenem f před uvozovkami a proměnné píšeš do složených závorek: f"Agent {agent}".',
+        'f-string začíná písmenem `f` před uvozovkami a proměnné píšeš do složených závorek: `f"Agent {agent}"`.',
         'Hlídej přesný tvar: hranaté závorky, mezery, „č.“ s tečkou a tečku na konci.',
-        'return f"[KOBRA] Agent {agent} (č. {cislo}) je online."'
+        '`return f"[KOBRA] Agent {agent} (č. {cislo}) je online."`'
       ],
       palette: ['return ', 'f"|"', '{agent}', '{cislo}'],
       learn: ['Funkce (def) přijímá parametry a pomocí return vrací výsledek tomu, kdo ji zavolal. print() jen vypisuje – nic nevrací. f-string vloží do textu hodnotu proměnné, i číslo, bez převodu přes str().',
@@ -85,17 +85,17 @@ LOG_NOC = [
         ['nora', 'Napiš funkci `sila_hesla(heslo)`. Podle délky vrátí `"slabé"` (méně než 8 znaků), `"střední"` (8 až 11 znaků) nebo `"silné"` (12 a víc).'],
         ['nora', 'Pozor na hranice – heslo s přesně 8 znaky už je střední a s přesně 12 už silné.']
       ],
-      task: 'Vrať „slabé“ pro délku < 8, „střední“ pro 8–11 a „silné“ pro 12 a více znaků.',
+      task: 'Vrať `"slabé"` pro délku < 8, `"střední"` pro 8–11 a `"silné"` pro 12 a více znaků.',
       fn: 'sila_hesla',
       starter: 'def sila_hesla(heslo):\n    delka = len(heslo)\n    # doplň podmínky if / elif / else\n    return "?"\n',
       solution: 'def sila_hesla(heslo):\n    delka = len(heslo)\n    if delka < 8:\n        return "slabé"\n    elif delka < 12:\n        return "střední"\n    else:\n        return "silné"\n',
       tests: [{ call: 'sila_hesla("abc")' }, { call: 'sila_hesla("heslo123")' }, { call: 'sila_hesla("Kobra-2026!!")' },
         { call: 'sila_hesla("")', hidden: true }, { call: 'sila_hesla("1234567")', hidden: true }, { call: 'sila_hesla("abcdefghijk")', hidden: true }, { call: 'sila_hesla("x" * 40)', hidden: true }],
-      bonus: { text: 'Použij elif', check: c => nodes(c.ast, n => n.k === 'if' && n.elif).length > 0 },
+      bonus: { text: 'Použij `elif`', check: c => nodes(c.ast, n => n.k === 'if' && n.elif).length > 0 },
       hints: [
-        'len(heslo) vrátí počet znaků. Ve startovním kódu už je uložený v proměnné delka.',
-        'Podmínky se kontrolují shora dolů a platí první splněná: if delka < 8: … elif delka < 12: … else: …',
-        'Každá větev potřebuje svůj return: return "slabé", return "střední", return "silné".'
+        '`len(heslo)` vrátí počet znaků. Ve startovním kódu už je uložený v proměnné `delka`.',
+        'Podmínky se kontrolují shora dolů a platí první splněná: `if delka < 8: … elif delka < 12: … else: …`',
+        'Každá větev potřebuje svůj `return`: `return "slabé"`, `return "střední"`, `return "silné"`.'
       ],
       palette: ['if delka < 8:\n    |', 'elif |:\n    ', 'else:\n    |', 'return "slabé"'],
       learn: ['if / elif / else vybírá jednu z větví – Python kontroluje podmínky shora a provede první, která platí. Na hranice pozor: < 8 znamená 0 až 7, <= 8 už i osmičku.',
@@ -113,18 +113,18 @@ LOG_NOC = [
         ['nora', 'Přihlášení je PODEZŘELÉ, když je mimo pracovní dobu (před 7. nebo po 19. hodině) A ZÁROVEŇ ze zahraničí (země není "CZ"). NEBO když se někdo hlásí na účet "root" – to je podezřelé vždycky.'],
         ['nora', 'Napiš `je_podezrele(uzivatel, hodina, zeme)`, která vrátí `True` nebo `False`.']
       ],
-      task: 'Vrať True, když (hodina < 7 nebo hodina > 19) a země není „CZ“ – nebo když je uživatel „root“. Jinak False.',
+      task: 'Vrať `True`, když (`hodina < 7` nebo `hodina > 19`) a země není `"CZ"` – nebo když je uživatel `"root"`. Jinak `False`.',
       fn: 'je_podezrele',
       starter: 'def je_podezrele(uzivatel, hodina, zeme):\n    mimo_pracovni_dobu = False   # uprav: před 7. nebo po 19. hodině\n    ze_zahranici = False         # uprav: země není "CZ"\n    return False\n',
       solution: 'def je_podezrele(uzivatel, hodina, zeme):\n    mimo_pracovni_dobu = hodina < 7 or hodina > 19\n    ze_zahranici = zeme != "CZ"\n    return (mimo_pracovni_dobu and ze_zahranici) or uzivatel == "root"\n',
       tests: [{ call: 'je_podezrele("eva", 10, "CZ")' }, { call: 'je_podezrele("eva", 3, "RU")' }, { call: 'je_podezrele("root", 12, "CZ")' },
         { call: 'je_podezrele("eva", 3, "CZ")', hidden: true }, { call: 'je_podezrele("eva", 12, "US")', hidden: true }, { call: 'je_podezrele("adam", 19, "DE")', hidden: true },
         { call: 'je_podezrele("adam", 20, "DE")', hidden: true }, { call: 'je_podezrele("eva", 7, "SK")', hidden: true }, { call: 'je_podezrele("eva", 6, "SK")', hidden: true }],
-      bonus: { text: 'Bez příkazu if – jen logický výraz', check: c => { const d = fnDef(c.ast, 'je_podezrele'); return !!d && nodes(d.body, n => n.k === 'if').length === 0; } },
+      bonus: { text: 'Bez příkazu `if` – jen logický výraz', check: c => { const d = fnDef(c.ast, 'je_podezrele'); return !!d && nodes(d.body, n => n.k === 'if').length === 0; } },
       hints: [
-        'and = musí platit obě podmínky, or = stačí jedna. Porovnání jako hodina < 7 už samo je True nebo False.',
-        'mimo_pracovni_dobu = hodina < 7 or hodina > 19 a ze_zahranici = zeme != "CZ"',
-        'return (mimo_pracovni_dobu and ze_zahranici) or uzivatel == "root"'
+        '`and` = musí platit obě podmínky, `or` = stačí jedna. Porovnání jako `hodina < 7` už samo je `True` nebo `False`.',
+        '`mimo_pracovni_dobu = hodina < 7 or hodina > 19` a `ze_zahranici = zeme != "CZ"`',
+        '`return (mimo_pracovni_dobu and ze_zahranici) or uzivatel == "root"`'
       ],
       palette: [' and ', ' or ', 'not ', ' != "CZ"', ' == "root"'],
       learn: ['and, or a not skládají podmínky. Porovnání (==, !=, <, >) dávají True nebo False, takže je můžeš uložit do proměnné nebo rovnou vrátit. Závorky ujasní, co patří k čemu.',
@@ -142,17 +142,17 @@ LOG_NOC = [
         ['nora', 'Šakal šifruje Caesarovou šifrou: každé písmeno posune v abecedě o pevný počet míst dopředu (při posunu 3: a→d, b→e … x→a). Víme, že tahle zpráva má posun 17.'],
         ['nora', 'Napiš `desifruj(text, posun)`: každé malé písmeno a–z posuň o `posun` míst ZPĚT. Mezery, číslice a ostatní znaky nech, jak jsou.']
       ],
-      task: 'Každé písmeno a–z posuň o posun míst zpět (a posunuté o 1 zpět je z). Ostatní znaky nech beze změny.',
+      task: 'Každé písmeno a–z posuň o `posun` míst zpět (a posunuté o 1 zpět je z). Ostatní znaky nech beze změny.',
       fn: 'desifruj',
       starter: 'def desifruj(text, posun):\n    vysledek = ""\n    for znak in text:\n        # malé písmeno a–z posuň o "posun" míst zpět, ostatní znaky nech být\n        vysledek += znak\n    return vysledek\n',
       solution: 'def desifruj(text, posun):\n    vysledek = ""\n    for znak in text:\n        if "a" <= znak <= "z":\n            poradi = (ord(znak) - ord("a") - posun) % 26\n            vysledek += chr(poradi + ord("a"))\n        else:\n            vysledek += znak\n    return vysledek\n',
       tests: [{ call: 'desifruj("khoor", 3)' }, { call: 'desifruj("abc", 3)' }, { call: 'desifruj("jirq m yrexril 7 mv 22:00", 17)' },
         { call: 'desifruj("", 5)', hidden: true }, { call: 'desifruj("a-z!", 1)', hidden: true }, { call: 'desifruj("kobra", 26)', hidden: true }, { call: 'desifruj("kobra", 0)', hidden: true }],
-      bonus: { text: 'Přetečení abecedy vyřeš operátorem % (modulo)', check: c => nodes(c.ast, n => n.k === 'bin' && n.op === '%').length > 0 },
+      bonus: { text: 'Přetečení abecedy vyřeš operátorem `%` (modulo)', check: c => nodes(c.ast, n => n.k === 'bin' && n.op === '%').length > 0 },
       hints: [
-        'ord("a") je 97 a chr(97) je "a". Pořadí písmene v abecedě (0–25) zjistíš jako ord(znak) - ord("a").',
-        'Posun zpět s přetečením: (poradi - posun) % 26 – z „a“ posunutého o 3 zpět tak vznikne „x“.',
-        'if "a" <= znak <= "z":  … vysledek += chr(nove_poradi + ord("a"))  … else: vysledek += znak'
+        '`ord("a")` je `97` a `chr(97)` je `"a"`. Pořadí písmene v abecedě (0–25) zjistíš jako `ord(znak) - ord("a")`.',
+        'Posun zpět s přetečením: `(poradi - posun) % 26` – z „a“ posunutého o 3 zpět tak vznikne „x“.',
+        '`if "a" <= znak <= "z":` … `vysledek += chr(nove_poradi + ord("a"))` … `else: vysledek += znak`'
       ],
       palette: ['if "a" <= znak <= "z":\n    |', 'else:\n    |', 'ord(znak)', 'chr(|)', ' % 26'],
       learn: ['Cyklus for prochází text znak po znaku. ord() převede znak na číslo, chr() číslo zpět na znak. Zbytek po dělení (%) „zabalí“ čísla do kruhu: (0 − 3) % 26 = 23.',
@@ -172,18 +172,18 @@ LOG_NOC = [
         ['nora', 'Řádek vypadá takhle: `2026-11-19 07:02:45 FAIL user=admin ip=185.220.101.4`. Znaky na indexech 11 až 18 jsou čas.'],
         ['nora', 'Napiš `casy_utoku(log)`, která vrátí seznam časů (HH:MM:SS) všech neúspěšných přihlášení (řádky s FAIL) – ve stejném pořadí jako v logu.']
       ],
-      task: 'Pro každý řádek obsahující „FAIL“ přidej do seznamu jeho čas radek[11:19]. Vrať seznam.',
+      task: 'Pro každý řádek obsahující `"FAIL"` přidej do seznamu jeho čas `radek[11:19]`. Vrať seznam.',
       fn: 'casy_utoku',
       bonusSolution: 'def casy_utoku(log):\n    return [radek[11:19] for radek in log if "FAIL" in radek]\n',
       prelude: LOG,
       starter: '# LOG je seznam řádků – podívej se do záložky Data\n\ndef casy_utoku(log):\n    casy = []\n    for radek in log:\n        pass  # když je v řádku "FAIL", přidej do seznamu čas (řez radek[11:19])\n    return casy\n\nprint(LOG[1][11:19])   # vyzkoušej si řez\n',
       solution: 'def casy_utoku(log):\n    casy = []\n    for radek in log:\n        if "FAIL" in radek:\n            casy.append(radek[11:19])\n    return casy\n',
       tests: [{ call: 'casy_utoku(LOG)' }, { call: 'casy_utoku(LOG[:4])' }, { call: 'casy_utoku([])' }, { call: 'casy_utoku(LOG_NOC)', hidden: true }, { call: 'casy_utoku(LOG[4:7])', hidden: true }],
-      bonus: { text: 'Vyřeš to jedním list comprehension', check: c => { const d = fnDef(c.ast, 'casy_utoku'); return !!d && nodes(d.body, n => n.k === 'listcomp').length > 0; } },
+      bonus: { text: 'Vyřeš to jedním list comprehension (`[… for … in …]`)', check: c => { const d = fnDef(c.ast, 'casy_utoku'); return !!d && nodes(d.body, n => n.k === 'listcomp').length > 0; } },
       hints: [
-        'Řez radek[11:19] vrátí znaky na indexech 11 až 18 – přesně čas.',
-        '"FAIL" in radek je True, když řádek obsahuje FAIL.',
-        'if "FAIL" in radek: casy.append(radek[11:19])'
+        'Řez `radek[11:19]` vrátí znaky na indexech 11 až 18 – přesně čas.',
+        '`"FAIL" in radek` je `True`, když řádek obsahuje FAIL.',
+        '`if "FAIL" in radek: casy.append(radek[11:19])`'
       ],
       palette: ['if "FAIL" in radek:\n    |', 'casy.append(|)', 'radek[11:19]', '[radek[11:19] for radek in log if |]'],
       learn: ['Seznam (list) roste metodou append(). Řez text[a:b] vybere znaky od indexu a do b−1 (funguje i u seznamů). List comprehension zapíše cyklus s podmínkou na jeden řádek.',
@@ -201,18 +201,18 @@ LOG_NOC = [
         ['nora', 'Napiš `podezrele_ip(log, limit)`: spočítej, kolik neúspěšných pokusů (FAIL) přišlo z každé IP adresy, a vrať abecedně seřazený seznam adres, které jich mají aspoň `limit`.'],
         ['nora', 'IP adresu z řádku dostaneš třeba takhle: `radek.split("ip=")[1]`.']
       ],
-      task: 'Spočítej FAIL pokusy pro každou IP adresu (slovník) a vrať sorted() seznam adres s počtem ≥ limit.',
+      task: 'Spočítej FAIL pokusy pro každou IP adresu (slovník) a vrať `sorted()` seznam adres s počtem ≥ `limit`.',
       fn: 'podezrele_ip',
       prelude: LOG,
       starter: 'def podezrele_ip(log, limit):\n    pocty = {}                  # slovník: ip -> počet FAIL\n    for radek in log:\n        if "FAIL" in radek:\n            ip = radek.split("ip=")[1]\n            # zvyš počet pro tuhle ip\n    vysledek = []\n    # vyber adresy, které mají počet >= limit\n    return sorted(vysledek)\n',
       solution: 'def podezrele_ip(log, limit):\n    pocty = {}\n    for radek in log:\n        if "FAIL" in radek:\n            ip = radek.split("ip=")[1]\n            pocty[ip] = pocty.get(ip, 0) + 1\n    vysledek = []\n    for ip in pocty:\n        if pocty[ip] >= limit:\n            vysledek.append(ip)\n    return sorted(vysledek)\n',
       tests: [{ call: 'podezrele_ip(LOG, 3)' }, { call: 'podezrele_ip(LOG, 2)' }, { call: 'podezrele_ip(LOG, 100)' },
         { call: 'podezrele_ip(LOG, 1)', hidden: true }, { call: 'podezrele_ip(LOG_NOC, 2)', hidden: true }, { call: 'podezrele_ip([], 1)', hidden: true }],
-      bonus: { text: 'Počítej pomocí slovnik.get(klic, 0)', check: c => nodes(c.ast, n => n.k === 'call' && n.f.k === 'attr' && n.f.name === 'get').length > 0 },
+      bonus: { text: 'Počítej pomocí `slovnik.get(klic, 0)`', check: c => nodes(c.ast, n => n.k === 'call' && n.f.k === 'attr' && n.f.name === 'get').length > 0 },
       hints: [
-        'Počítání ve slovníku: pocty[ip] = pocty.get(ip, 0) + 1 – get vrátí 0, když tam adresa ještě není.',
-        'Slovník projdeš cyklem: for ip in pocty: … a počet je pocty[ip].',
-        'Nezapomeň výsledek seřadit – sorted(vysledek) už je ve startovním kódu.'
+        'Počítání ve slovníku: `pocty[ip] = pocty.get(ip, 0) + 1` – `get` vrátí `0`, když tam adresa ještě není.',
+        'Slovník projdeš cyklem: `for ip in pocty: …` a počet je `pocty[ip]`.',
+        'Nezapomeň výsledek seřadit – `sorted(vysledek)` už je ve startovním kódu.'
       ],
       palette: ['pocty[ip] = pocty.get(ip, 0) + 1', 'for ip in pocty:\n    |', 'if pocty[ip] >= limit:\n    |', 'vysledek.append(ip)'],
       learn: ['Slovník (dict) páruje klíče s hodnotami. Nejčastější použití: počítání výskytů – d[k] = d.get(k, 0) + 1. split("ip=") rozdělí text podle oddělovače na seznam částí.',
@@ -236,11 +236,11 @@ LOG_NOC = [
       solution: 'def ip_na_bity(ip):\n    casti = ip.split(".")\n    bity = []\n    for cast in casti:\n        cislo = int(cast)\n        bity.append(format(cislo, "08b"))\n    return ".".join(bity)\n',
       tests: [{ call: 'ip_na_bity("192.168.1.10")' }, { call: 'ip_na_bity("0.0.0.0")' }, { call: 'ip_na_bity("255.255.255.255")' },
         { call: 'ip_na_bity("10.0.0.1")', hidden: true }, { call: 'ip_na_bity("172.16.254.3")', hidden: true }, { call: 'ip_na_bity("8.8.4.4")', hidden: true }],
-      bonus: { text: 'Celá funkce na jediném řádku (return …)', check: c => { const d = fnDef(c.ast, 'ip_na_bity'); return !!d && d.body.length === 1 && d.body[0].k === 'return'; } },
+      bonus: { text: 'Celá funkce na jediném řádku (`return …`)', check: c => { const d = fnDef(c.ast, 'ip_na_bity'); return !!d && d.body.length === 1 && d.body[0].k === 'return'; } },
       hints: [
-        'int("192") převede text na číslo 192.',
-        'format(5, "08b") vrátí "00000101" – binárně, na 8 míst, doplněno nulami. bin(5) vrací "0b101".',
-        'bity.append(format(cislo, "08b")) – a ".".join(bity) je spojí tečkami.'
+        '`int("192")` převede text na číslo `192`.',
+        '`format(5, "08b")` vrátí `"00000101"` – binárně, na 8 míst, doplněno nulami. `bin(5)` vrací `"0b101"`.',
+        '`bity.append(format(cislo, "08b"))` – a `".".join(bity)` je spojí tečkami.'
       ],
       palette: ['bity.append(|)', 'format(cislo, "08b")', 'bin(cislo)[2:].zfill(8)', '".".join(|)'],
       learn: ['V počítači je všechno v bitech. bin(10) → "0b1010", format(10, "08b") → "00001010" a int("1010", 2) → 10. IPv4 adresa = 4 bajty = 32 bitů.',
@@ -258,7 +258,7 @@ LOG_NOC = [
         ['nora', 'Příklad: 192.168.1.10 a 192.168.1.200 s maskou 255.255.255.0 jsou ve stejné síti (192.168.1.x). 192.168.2.10 už ne.'],
         ['nora', 'Napiš `stejna_sit(ip1, ip2, maska)`, která vrátí `True` nebo `False`.']
       ],
-      task: 'Pro každou ze 4 částí porovnej a[i] & m[i] s b[i] & m[i]. Při prvním rozdílu vrať False, jinak True.',
+      task: 'Pro každou ze 4 částí porovnej `a[i] & m[i]` s `b[i] & m[i]`. Při prvním rozdílu vrať `False`, jinak `True`.',
       fn: 'stejna_sit',
       bonusSolution: 'def stejna_sit(ip1, ip2, maska):\n    a = [int(x) for x in ip1.split(".")]\n    b = [int(x) for x in ip2.split(".")]\n    m = [int(x) for x in maska.split(".")]\n    return all(x & k == y & k for x, y, k in zip(a, b, m))\n',
       starter: 'def stejna_sit(ip1, ip2, maska):\n    a = [int(x) for x in ip1.split(".")]\n    b = [int(x) for x in ip2.split(".")]\n    m = [int(x) for x in maska.split(".")]\n    for i in range(4):\n        pass  # porovnej a[i] & m[i] s b[i] & m[i]\n    return True\n\nprint(200 & 255, 200 & 0, 12 & 10)\n',
@@ -267,11 +267,11 @@ LOG_NOC = [
         { call: 'stejna_sit("10.1.2.3", "10.200.0.1", "255.0.0.0")' },
         { call: 'stejna_sit("172.16.5.4", "172.16.9.9", "255.255.240.0")', hidden: true }, { call: 'stejna_sit("172.16.5.4", "172.16.20.9", "255.255.240.0")', hidden: true },
         { call: 'stejna_sit("192.168.1.1", "192.168.1.2", "255.255.255.255")', hidden: true }, { call: 'stejna_sit("1.2.3.4", "5.6.7.8", "0.0.0.0")', hidden: true }],
-      bonus: { text: 'Použij zip() nebo all()', check: c => { const d = fnDef(c.ast, 'stejna_sit'); return callsName(d, 'zip') || callsName(d, 'all'); } },
+      bonus: { text: 'Použij `zip()` nebo `all()`', check: c => { const d = fnDef(c.ast, 'stejna_sit'); return callsName(d, 'zip') || callsName(d, 'all'); } },
       hints: [
-        '& je bitové AND: 200 & 255 = 200, 200 & 0 = 0. V Pythonu má & přednost před porovnáním, takže a & m != b & m funguje.',
-        'Stačí jeden rozdíl a adresy nejsou ve stejné síti → return False hned uvnitř cyklu.',
-        'if a[i] & m[i] != b[i] & m[i]: return False'
+        '`&` je bitové AND: `200 & 255 = 200`, `200 & 0 = 0`. V Pythonu má `&` přednost před porovnáním, takže `a & m != b & m` funguje.',
+        'Stačí jeden rozdíl a adresy nejsou ve stejné síti → `return False` hned uvnitř cyklu.',
+        '`if a[i] & m[i] != b[i] & m[i]: return False`'
       ],
       palette: ['if a[i] & m[i] != b[i] & m[i]:\n    |', 'return False', 'all(|)', 'zip(a, b, m)'],
       learn: ['Bitové operátory pracují s jednotlivými bity: & (AND), | (OR), ^ (XOR), << a >> (posun). Maska podsítě nechá jen bity, které určují síť. all() vrátí True, když jsou všechny hodnoty pravdivé.',
@@ -292,7 +292,7 @@ LOG_NOC = [
         ['nora', 'K dispozici máš funkci `zamek(pin)`. Vrátí `True`, když je PIN správný. PIN je TEXT se čtyřmi číslicemi, třeba `"0042"`.'],
         ['nora', 'Napiš `najdi_pin()`, která vyzkouší PINy od `"0000"` do `"9999"` a vrátí ten správný.']
       ],
-      task: 'Projdi čísla 0 až 9999, z každého udělej čtyřmístný text (42 → "0042"), vyzkoušej ho funkcí zamek(pin) a správný PIN vrať.',
+      task: 'Projdi čísla 0 až 9999, z každého udělej čtyřmístný text (42 → `"0042"`), vyzkoušej ho funkcí `zamek(pin)` a správný PIN vrať.',
       fn: 'najdi_pin',
       starter: '# zamek(pin) vrátí True, když je pin správný – pin je TEXT se 4 číslicemi, např. "0042"\n\ndef najdi_pin():\n    for cislo in range(10000):\n        pin = str(cislo)      # pozor: z čísla 42 musí být "0042"\n        # vyzkoušej pin pomocí zamek(pin)\n    return None\n\nprint(zamek("1234"))   # cvičný zámek – zkus si ho\n',
       solution: 'def najdi_pin():\n    for cislo in range(10000):\n        pin = str(cislo).zfill(4)\n        if zamek(pin):\n            return pin\n    return None\n',
@@ -300,9 +300,9 @@ LOG_NOC = [
         { call: 'najdi_pin()', setup: { pin: '0000' }, hidden: true }, { call: 'najdi_pin()', setup: { pin: '1337' }, hidden: true }, { call: 'najdi_pin()', setup: { pin: '0700' }, hidden: true }],
       bonus: { text: 'Skonči hned, jak PIN najdeš (žádný pokus navíc)', check: c => c.tests.every(t => t.calls === parseInt(t.setup.pin, 10) + 1) },
       hints: [
-        'str(42) je "42", ale zámek chce "0042". Použij str(cislo).zfill(4) nebo f"{cislo:04d}".',
-        'if zamek(pin): return pin – return ukončí funkci i cyklus.',
-        'Celé: for cislo in range(10000): pin = str(cislo).zfill(4); if zamek(pin): return pin'
+        '`str(42)` je `"42"`, ale zámek chce `"0042"`. Použij `str(cislo).zfill(4)` nebo `f"{cislo:04d}"`.',
+        '`if zamek(pin): return pin` – `return` ukončí funkci i cyklus.',
+        'Celé: `for cislo in range(10000): pin = str(cislo).zfill(4); if zamek(pin): return pin`'
       ],
       palette: ['str(cislo).zfill(4)', 'f"{cislo:04d}"', 'if zamek(pin):\n    |', 'return pin'],
       learn: ['Útok hrubou silou (brute force) zkouší všechny možnosti. Čtyřmístný PIN má 10⁴ = 10 000 kombinací – počítač je projde za zlomek sekundy. Proto mají bezpečná hesla hodně znaků a systémy omezují počet pokusů.',
@@ -331,9 +331,9 @@ LOG_NOC = [
         { call: 'najdi_kod()', setup: { secret: 999999 }, hidden: true }, { call: 'najdi_kod()', setup: { secret: 2 }, hidden: true }],
       bonus: { text: 'Najdi kód vždy nejvýš na 20 pokusů', check: c => c.tests.every(t => t.calls <= 20) },
       hints: [
-        'Prostřední číslo: stred = (dolni + horni) // 2 – dvě lomítka dají celé číslo.',
-        'Když je odpověď "víc", kód je nad středem: dolni = stred + 1. Když "míň": horni = stred - 1.',
-        'while dolni <= horni: stred = …; odpoved = hadej(stred); if odpoved == "správně": return stred …'
+        'Prostřední číslo: `stred = (dolni + horni) // 2` – dvě lomítka dají celé číslo.',
+        'Když je odpověď `"víc"`, kód je nad středem: `dolni = stred + 1`. Když `"míň"`: `horni = stred - 1`.',
+        '`while dolni <= horni: stred = …; odpoved = hadej(stred); if odpoved == "správně": return stred …`'
       ],
       palette: ['while dolni <= horni:\n    |', 'stred = (dolni + horni) // 2', 'odpoved = hadej(stred)', 'if odpoved == "správně":\n    return stred', 'elif odpoved == "víc":\n    |'],
       learn: ['Půlení intervalu (binární vyhledávání) každým pokusem zahodí polovinu možností. Milion čísel tak prohledá na 20 pokusů (2²⁰ ≈ 1 048 576), hrubá síla by jich potřebovala až milion. Stejně rychle se hledá ve slovníku nebo v seřazeném seznamu.',
@@ -351,7 +351,7 @@ LOG_NOC = [
         ['nora', 'Jenže lidé (i hackeři) používají běžná hesla. Spočítáme otisky hesel ze slovníku `SLOVNIK` a porovnáme je. Tomu se říká slovníkový útok.'],
         ['nora', 'Nejdřív `otisk(text)`: začni s h = 0 a pro každý znak spočítej `h = (h * 31 + ord(znak)) % 1000000007`. Pak `najdi_heslo(cil, slovnik)` vrátí slovo, jehož otisk je `cil` – nebo `None`.']
       ],
-      task: 'otisk(text) spočítá hash podle vzorce. najdi_heslo(cil, slovnik) projde slovník a vrátí slovo, jehož otisk se rovná cil; když žádné, vrátí None.',
+      task: '`otisk(text)` spočítá hash podle vzorce. `najdi_heslo(cil, slovnik)` projde slovník a vrátí slovo, jehož otisk se rovná `cil`; když žádné, vrátí `None`.',
       fn: 'najdi_heslo',
       prelude: 'SLOVNIK = ["123456", "heslo", "heslo123", "qwerty", "kobra", "admin", "password", "drak2026", "letmein", "sakal",\n           "praha", "iloveyou", "monkey", "abc123", "111111", "dragon", "master", "sunshine", "tajne", "pivo"]\n\n# otisky hesel nalezené v databázi Šakalova serveru\nOTISK_SERVER = 314192425\nOTISK_ZALOHA = 345166771\nOTISK_NEZNAMY = 753109851\n',
       starter: 'def otisk(text):\n    h = 0\n    # pro každý znak: h = (h * 31 + ord(znak)) % 1000000007\n    return h\n\ndef najdi_heslo(cil, slovnik):\n    # projdi slovník a porovnej otisk(slovo) s cil\n    return None\n\nprint(otisk("a"))   # má vyjít 97\n',
@@ -359,11 +359,11 @@ LOG_NOC = [
       tests: [{ call: 'otisk("a")' }, { call: 'otisk("kobra")' }, { call: 'najdi_heslo(OTISK_SERVER, SLOVNIK)' },
         { call: 'otisk("")', hidden: true }, { call: 'otisk("Šakal")', hidden: true }, { call: 'najdi_heslo(OTISK_ZALOHA, SLOVNIK)', hidden: true },
         { call: 'najdi_heslo(OTISK_NEZNAMY, SLOVNIK)', hidden: true }, { call: 'najdi_heslo(97, ["b", "a"])', hidden: true }],
-      bonus: { text: 'najdi_heslo používá tvoji funkci otisk()', check: c => callsName(fnDef(c.ast, 'najdi_heslo'), 'otisk') },
+      bonus: { text: '`najdi_heslo` používá tvoji funkci `otisk()`', check: c => callsName(fnDef(c.ast, 'najdi_heslo'), 'otisk') },
       hints: [
-        'for znak in text: h = (h * 31 + ord(znak)) % 1000000007',
-        'Ve funkci najdi_heslo: for slovo in slovnik: if otisk(slovo) == cil: return slovo',
-        'Když cyklus doběhne a nic nenajde, vrať None (return None za cyklem).'
+        '`for znak in text: h = (h * 31 + ord(znak)) % 1000000007`',
+        'Ve funkci `najdi_heslo`: `for slovo in slovnik: if otisk(slovo) == cil: return slovo`',
+        'Když cyklus doběhne a nic nenajde, vrať `None` (`return None` za cyklem).'
       ],
       palette: ['for znak in text:\n    |', 'h = (h * 31 + ord(znak)) % 1000000007', 'for slovo in slovnik:\n    |', 'if otisk(slovo) == cil:\n    return slovo'],
       learn: ['Hashovací funkce převede text na číslo: stejný vstup dá vždy stejný otisk, ale zpátky to nejde. Běžná hesla ale útočník „uhodne“ tak, že spočítá otisky slovníku a porovná je. Obrana: dlouhá neobvyklá hesla a „sůl“ (náhodný text přidaný k heslu před hashováním).',
@@ -381,18 +381,18 @@ LOG_NOC = [
         ['nora', 'Tohle je Šakalova poslední zpráva. Posun šifry neznáme – ale víme, že se vždycky podepisuje slovem „sakal“.'],
         ['nora', 'Napiš `rozlouskni(zprava)`: vyzkoušej všech 26 posunů a vrať tu dešifrovanou verzi, která obsahuje slovo `"sakal"`. Když žádná, vrať `None`. Použij svou funkci `desifruj` z mise 4 – zkopíruj ji sem.']
       ],
-      task: 'Pro posun 0 až 25 dešifruj zprávu (funkcí desifruj). Když výsledek obsahuje „sakal“, vrať ho. Jinak vrať None.',
+      task: 'Pro posun 0 až 25 dešifruj zprávu (funkcí `desifruj`). Když výsledek obsahuje `"sakal"`, vrať ho. Jinak vrať `None`.',
       fn: 'rozlouskni',
       prelude: 'ZPRAVA = "bjtju txwlr. yanmjejv turln. baji e yarbcjed en 4:00"\n',
       starter: 'def desifruj(text, posun):\n    # zkopíruj sem svoje řešení z mise 4\n    return text\n\ndef rozlouskni(zprava):\n    for posun in range(26):\n        pass  # dešifruj zprávu a zkontroluj, jestli obsahuje "sakal"\n    return None\n',
       solution: 'def desifruj(text, posun):\n    vysledek = ""\n    for znak in text:\n        if "a" <= znak <= "z":\n            vysledek += chr((ord(znak) - ord("a") - posun) % 26 + ord("a"))\n        else:\n            vysledek += znak\n    return vysledek\n\ndef rozlouskni(zprava):\n    for posun in range(26):\n        kandidat = desifruj(zprava, posun)\n        if "sakal" in kandidat:\n            return kandidat\n    return None\n',
       tests: [{ call: 'rozlouskni(ZPRAVA)' }, { call: 'rozlouskni("ovyt nvfvg: nzmqzm kvyiz j kpgijxd")' }, { call: 'rozlouskni("sakal")' },
         { call: 'rozlouskni("efisd utiunx yz sjsn")', hidden: true }, { call: 'rozlouskni("lzl gdrkn cqzj2026, rzjzk")', hidden: true }, { call: 'rozlouskni("")', hidden: true }],
-      bonus: { text: 'rozlouskni volá tvoji funkci desifruj()', check: c => callsName(fnDef(c.ast, 'rozlouskni'), 'desifruj') },
+      bonus: { text: '`rozlouskni` volá tvoji funkci `desifruj()`', check: c => callsName(fnDef(c.ast, 'rozlouskni'), 'desifruj') },
       hints: [
-        'Zkopíruj funkci desifruj z mise 4 (celou, včetně def).',
-        'V cyklu: kandidat = desifruj(zprava, posun) a pak if "sakal" in kandidat: return kandidat.',
-        'return None patří až za cyklus – až když žádný posun nevyšel.'
+        'Zkopíruj funkci `desifruj` z mise 4 (celou, včetně `def`).',
+        'V cyklu: `kandidat = desifruj(zprava, posun)` a pak `if "sakal" in kandidat: return kandidat`.',
+        '`return None` patří až za cyklus – až když žádný posun nevyšel.'
       ],
       palette: ['kandidat = desifruj(zprava, posun)', 'if "sakal" in kandidat:\n    return kandidat', 'return None'],
       learn: ['Velké problémy se řeší skládáním malých funkcí: desifruj umí jednu věc, rozlouskni ji použije 26×. Caesarova šifra má jen 26 klíčů, takže se dá prolomit hrubou silou okamžitě. Moderní šifry mají klíčů tolik, že by je všechny počítače světa nevyzkoušely ani za miliardy let.',

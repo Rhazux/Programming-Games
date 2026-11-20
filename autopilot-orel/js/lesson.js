@@ -98,7 +98,7 @@
       let h = text ? esc(text.replace(/\n$/, '')) : '<span class="ls-dim">(program nic nevypsal – výpis dělá print)</span>';
       if (!r.ok) {
         const e = r.error;
-        h += `${text ? '\n' : ''}<span class="ls-err">✘ ${esc(e.text)}${e.line ? ` (řádek ${e.line})` : ''}${e.czech ? `\n  ${esc(e.czech)}` : ''}</span>`;
+        h += `${text ? '\n' : ''}<span class="ls-err">✘ ${esc(e.text)}${e.line ? ` (řádek ${e.line})` : ''}${e.czech ? `\n  ${esc(e.czech.replace(/`/g, ''))}` : ''}</span>`;
       }
       out.innerHTML = `<pre class="ls-console">${h}</pre>`;
       out.classList.remove('ls-flash'); void out.offsetWidth; out.classList.add('ls-flash');

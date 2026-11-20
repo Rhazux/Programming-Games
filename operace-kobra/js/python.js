@@ -2748,55 +2748,55 @@
         if ((m = /name '(.+)' is not defined/.exec(msg))) {
           const name = m[1];
           const sug = ctx.suggestion || null;
-          if (/^(true|false|none)$/i.test(name)) return `Python rozlišuje velká písmena: piš ${name[0].toUpperCase() + name.slice(1).toLowerCase()}.`;
-          if (['printf', 'echo', 'console', 'println'].includes(name)) return 'V Pythonu se vypisuje funkcí print(...).';
+          if (/^(true|false|none)$/i.test(name)) return `Python rozlišuje velká písmena: piš \`${name[0].toUpperCase() + name.slice(1).toLowerCase()}\`.`;
+          if (['printf', 'echo', 'console', 'println'].includes(name)) return 'V Pythonu se vypisuje funkcí `print(...)`.';
           return `Python nezná jméno „${name}“. ${sug ? `Nemyslel(a) jsi „${sug}“? ` : ''}Je to překlep, nebo proměnnou používáš dřív, než do ní něco uložíš? Pokud je to text, dej ho do uvozovek.`;
         }
         break;
       case 'UnboundLocalError':
-        return 'Proměnnou ve funkci měníš (přiřazuješ do ní), takže ji Python bere jako lokální – jenže ji čteš dřív, než má hodnotu. Nastav ji na začátku funkce (např. pocet = 0).';
+        return 'Proměnnou ve funkci měníš (přiřazuješ do ní), takže ji Python bere jako lokální – jenže ji čteš dřív, než má hodnotu. Nastav ji na začátku funkce (např. `pocet = 0`).';
       case 'TypeError':
-        if ((m = /can only concatenate str \(not "(.+)"\) to str/.exec(msg))) return `Text (str) a ${tcz(m[1])} nejde spojit pomocí +. Převeď hodnotu na text: str(x), nebo použij f-string: f"…{x}…".`;
+        if ((m = /can only concatenate str \(not "(.+)"\) to str/.exec(msg))) return `Text (str) a ${tcz(m[1])} nejde spojit pomocí \`+\`. Převeď hodnotu na text: \`str(x)\`, nebo použij f-string: \`f"…{x}…"\`.`;
         if ((m = /unsupported operand type\(s\) for (.+): '(.+)' and '(.+)'/.exec(msg))) {
-          if (m[2] === 'NoneType' || m[3] === 'NoneType') return 'Počítáš s hodnotou None – nejspíš nějaká funkce nic nevrací (chybí return).';
-          if ((m[2] === 'int' || m[2] === 'float') && m[3] === 'str') return `Nejde ${m[1] === '+' ? 'sečíst' : 'počítat s'} číslo a text. Pokud text obsahuje číslo, převeď ho: int(text).`;
-          return `Operátor ${m[1]} nejde použít na ${tcz(m[2])} a ${tcz(m[3])}.`;
+          if (m[2] === 'NoneType' || m[3] === 'NoneType') return 'Počítáš s hodnotou `None` – nejspíš nějaká funkce nic nevrací (chybí `return`).';
+          if ((m[2] === 'int' || m[2] === 'float') && m[3] === 'str') return `Nejde ${m[1] === '+' ? 'sečíst' : 'počítat s'} číslo a text. Pokud text obsahuje číslo, převeď ho: \`int(text)\`.`;
+          return `Operátor \`${m[1]}\` nejde použít na ${tcz(m[2])} a ${tcz(m[3])}.`;
         }
         if ((m = /'(.+)' not supported between instances of '(.+)' and '(.+)'/.exec(msg))) {
-          if ((m[2] === 'str' && (m[3] === 'int' || m[3] === 'float')) || (m[3] === 'str' && (m[2] === 'int' || m[2] === 'float'))) return 'Porovnáváš text s číslem – Python neví, co je víc. Převeď text na číslo pomocí int(...).';
-          return `Hodnoty typu ${tcz(m[2])} a ${tcz(m[3])} nejde porovnat pomocí ${m[1]}.`;
+          if ((m[2] === 'str' && (m[3] === 'int' || m[3] === 'float')) || (m[3] === 'str' && (m[2] === 'int' || m[2] === 'float'))) return 'Porovnáváš text s číslem – Python neví, co je víc. Převeď text na číslo pomocí `int(...)`.';
+          return `Hodnoty typu ${tcz(m[2])} a ${tcz(m[3])} nejde porovnat pomocí \`${m[1]}\`.`;
         }
-        if ((m = /(.+)\(\) missing (\d+) required positional arguments?: (.+)/.exec(msg))) return `Funkci ${m[1]} voláš s málo argumenty – chybí ${m[3]}. Při volání musíš dodat hodnotu pro každý parametr.`;
-        if ((m = /(.+)\(\) takes (.+) but (\d+) (?:was|were) given/.exec(msg))) return `Funkci ${m[1]} posíláš víc argumentů, než má parametrů. Zkontroluj závorky při volání a hlavičku def.`;
-        if ((m = /'(.+)' object is not iterable/.exec(msg))) return m[1] === 'int' ? 'Cyklem for nejde procházet číslo. Chtěl(a) jsi range(n)?' : m[1] === 'NoneType' ? 'Procházíš None – nějaká funkce asi nic nevrací (chybí return).' : `Typ ${tcz(m[1])} se nedá procházet cyklem.`;
-        if ((m = /'(.+)' object is not subscriptable/.exec(msg))) return m[1] === 'NoneType' ? 'Používáš [] na None – nějaká funkce asi nic nevrací (chybí return).' : m[1] === 'function' || m[1] === 'builtin_function_or_method' ? 'Funkci se volá kulatými závorkami (), ne hranatými [].' : `Hranaté závorky [] fungují u seznamů, textů a slovníků, ne u typu ${tcz(m[1])}.`;
-        if ((m = /'(.+)' object is not callable/.exec(msg))) return `${tcz(m[1])} není funkce – nejde ho volat pomocí (). Nepřepsal(a) jsi omylem jméno funkce proměnnou? Nebo chybí mezi hodnotami operátor (např. *)?`;
-        if ((m = /(list|string|tuple) indices must be integers or slices, not (.+)/.exec(msg))) return `Index musí být celé číslo, ne ${tcz(m[2])}.${m[2] === 'str' ? ' Chtěl(a) jsi slovník (dict)? Nebo převeď text na číslo int(...).' : m[2] === 'float' ? ' Použij celočíselné dělení //.' : ''}`;
-        if ((m = /object of type '(.+)' has no len\(\)/.exec(msg))) return `len() umí změřit text, seznam nebo slovník – ne ${tcz(m[1])}.${m[1] === 'int' ? ' Počet číslic zjistíš přes len(str(cislo)).' : ''}`;
-        if (/'str' object does not support item assignment/.test(msg)) return 'Text (str) nejde měnit po znacích. Vytvoř nový text – třeba postupným přidáváním: vysledek = vysledek + znak.';
+        if ((m = /(.+)\(\) missing (\d+) required positional arguments?: (.+)/.exec(msg))) return `Funkci \`${m[1]}\` voláš s málo argumenty – chybí ${m[3]}. Při volání musíš dodat hodnotu pro každý parametr.`;
+        if ((m = /(.+)\(\) takes (.+) but (\d+) (?:was|were) given/.exec(msg))) return `Funkci \`${m[1]}\` posíláš víc argumentů, než má parametrů. Zkontroluj závorky při volání a hlavičku \`def\`.`;
+        if ((m = /'(.+)' object is not iterable/.exec(msg))) return m[1] === 'int' ? 'Cyklem `for` nejde procházet číslo. Chtěl(a) jsi `range(n)`?' : m[1] === 'NoneType' ? 'Procházíš `None` – nějaká funkce asi nic nevrací (chybí `return`).' : `Typ ${tcz(m[1])} se nedá procházet cyklem.`;
+        if ((m = /'(.+)' object is not subscriptable/.exec(msg))) return m[1] === 'NoneType' ? 'Používáš `[]` na `None` – nějaká funkce asi nic nevrací (chybí `return`).' : m[1] === 'function' || m[1] === 'builtin_function_or_method' ? 'Funkci se volá kulatými závorkami `()`, ne hranatými `[]`.' : `Hranaté závorky \`[]\` fungují u seznamů, textů a slovníků, ne u typu ${tcz(m[1])}.`;
+        if ((m = /'(.+)' object is not callable/.exec(msg))) return `${tcz(m[1])} není funkce – nejde ho volat pomocí \`()\`. Nepřepsal(a) jsi omylem jméno funkce proměnnou? Nebo chybí mezi hodnotami operátor (např. \`*\`)?`;
+        if ((m = /(list|string|tuple) indices must be integers or slices, not (.+)/.exec(msg))) return `Index musí být celé číslo, ne ${tcz(m[2])}.${m[2] === 'str' ? ' Chtěl(a) jsi slovník (dict)? Nebo převeď text na číslo `int(...)`.' : m[2] === 'float' ? ' Použij celočíselné dělení `//`.' : ''}`;
+        if ((m = /object of type '(.+)' has no len\(\)/.exec(msg))) return `\`len()\` umí změřit text, seznam nebo slovník – ne ${tcz(m[1])}.${m[1] === 'int' ? ' Počet číslic zjistíš přes `len(str(cislo))`.' : ''}`;
+        if (/'str' object does not support item assignment/.test(msg)) return 'Text (str) nejde měnit po znacích. Vytvoř nový text – třeba postupným přidáváním: `vysledek = vysledek + znak`.';
         if ((m = /unhashable type: '(.+)'/.exec(msg))) return `${tcz(m[1])} nemůže být klíčem ve slovníku ani prvkem množiny. Použij n-tici (tuple) nebo text.`;
-        if (/sequence item \d+: expected str instance/.test(msg)) return 'join() spojuje jen texty. Převeď prvky na text: "".join(str(x) for x in seznam).';
-        if (/'(.+)' object cannot be interpreted as an integer/.test(msg)) return 'Tady je potřeba celé číslo (int). U range() a podobných nejde použít float ani text – převeď hodnotu přes int(...).';
+        if (/sequence item \d+: expected str instance/.test(msg)) return '`join()` spojuje jen texty. Převeď prvky na text: `"".join(str(x) for x in seznam)`.';
+        if (/'(.+)' object cannot be interpreted as an integer/.test(msg)) return 'Tady je potřeba celé číslo (int). U `range()` a podobných nejde použít float ani text – převeď hodnotu přes `int(...)`.';
         if (/can't multiply sequence by non-int/.test(msg)) return 'Text nebo seznam jde násobit jen celým číslem.';
-        if (/ord\(\) expected a character/.test(msg)) return 'ord() bere jen jeden znak. Projdi text cyklem a volej ord(znak) pro každý znak zvlášť.';
-        if (/sum\(\) can't sum strings/.test(msg)) return 'Texty se nespojují přes sum(), ale přes "".join(seznam).';
+        if (/ord\(\) expected a character/.test(msg)) return '`ord()` bere jen jeden znak. Projdi text cyklem a volej `ord(znak)` pro každý znak zvlášť.';
+        if (/sum\(\) can't sum strings/.test(msg)) return 'Texty se nespojují přes `sum()`, ale přes `"".join(seznam)`.';
         if (/got an unexpected keyword argument/.test(msg)) return 'Funkce nemá parametr s tímhle jménem.';
-        if (/'in <string>' requires string as left operand/.test(msg)) return 'U textu se přes in hledá zase text: např. "a" in slovo. Číslo převeď na text pomocí str(...).';
+        if (/'in <string>' requires string as left operand/.test(msg)) return 'U textu se přes `in` hledá zase text: např. `"a" in slovo`. Číslo převeď na text pomocí `str(...)`.';
         return 'Hodnota má jiný typ, než operace čeká. Zkontroluj, jestli nemícháš text a čísla.';
       case 'IndexError':
-        if (/list index out of range/.test(msg)) return 'Sahas mimo seznam. Seznam s n prvky má indexy 0 až n − 1 (poslední prvek je seznam[-1]).';
-        if (/string index out of range/.test(msg)) return 'Sahas mimo text. Text délky n má indexy 0 až n − 1.';
+        if (/list index out of range/.test(msg)) return 'Saháš mimo seznam. Seznam s n prvky má indexy 0 až n − 1 (poslední prvek je `seznam[-1]`).';
+        if (/string index out of range/.test(msg)) return 'Saháš mimo text. Text délky n má indexy 0 až n − 1.';
         if (/pop from empty list/.test(msg)) return 'Seznam je prázdný – není co vyndat.';
         return 'Index je mimo rozsah.';
-      case 'KeyError': return `Klíč ${msg} ve slovníku není. Použij slovnik.get(klic, vychozi) nebo se nejdřív zeptej: if klic in slovnik.`;
+      case 'KeyError': return `Klíč ${msg} ve slovníku není. Použij \`slovnik.get(klic, vychozi)\` nebo se nejdřív zeptej: \`if klic in slovnik\`.`;
       case 'ValueError':
-        if ((m = /invalid literal for int\(\) with base (\d+): (.+)/.exec(msg))) return `Text ${m[2]} není celé číslo${m[1] !== '10' ? ` v soustavě o základu ${m[1]}` : ''}, int() ho nepřevede.${/[.,]/.test(m[2]) ? ' Desetinné číslo převeď přes float().' : ''}`;
-        if (/could not convert string to float/.test(msg)) return 'Text není číslo, float() ho nepřevede. (Desetinná tečka, ne čárka!)';
+        if ((m = /invalid literal for int\(\) with base (\d+): (.+)/.exec(msg))) return `Text ${m[2]} není celé číslo${m[1] !== '10' ? ` v soustavě o základu ${m[1]}` : ''}, \`int()\` ho nepřevede.${/[.,]/.test(m[2]) ? ' Desetinné číslo převeď přes `float()`.' : ''}`;
+        if (/could not convert string to float/.test(msg)) return 'Text není číslo, `float()` ho nepřevede. (Desetinná tečka, ne čárka!)';
         if (/too many values to unpack/.test(msg)) return 'Na levé straně je méně proměnných, než kolik hodnot rozbaluješ.';
         if (/not enough values to unpack/.test(msg)) return 'Na levé straně je víc proměnných, než kolik je hodnot.';
-        if (/is not in list|x not in list/.test(msg)) return 'Hledaná hodnota v seznamu není. Zeptej se nejdřív: if x in seznam.';
-        if (/substring not found/.test(msg)) return 'Hledaný text tam není. Metoda find() místo chyby vrátí −1.';
-        if (/arg is an empty sequence|iterable argument is empty/.test(msg)) return 'min()/max() dostaly prázdný seznam.';
+        if (/is not in list|x not in list/.test(msg)) return 'Hledaná hodnota v seznamu není. Zeptej se nejdřív: `if x in seznam`.';
+        if (/substring not found/.test(msg)) return 'Hledaný text tam není. Metoda `find()` místo chyby vrátí `-1`.';
+        if (/arg is an empty sequence|iterable argument is empty/.test(msg)) return '`min()`/`max()` dostaly prázdný seznam.';
         return 'Hodnota má správný typ, ale nedává smysl (např. převod textu, který není číslo).';
       case 'ZeroDivisionError': return 'Dělení nulou. Před dělením zkontroluj, že dělitel není 0.';
       case 'AttributeError': {
@@ -2805,41 +2805,41 @@
           const a = m[2];
           const special = { push: 'append', length: 'len(x)', size: 'len(x)', add: t === 'list' ? 'append' : null, toUpperCase: 'upper', toLowerCase: 'lower', contains: 'in', trim: 'strip', indexOf: 'find / index', len: 'len(x)' };
           const sug = special[a] || ctx.suggestion || null;
-          if (t === 'NoneType') return 'Voláš metodu na None – nějaká funkce asi nic nevrací (chybí return), nebo jsi uložil(a) výsledek metody, která vrací None (např. seznam.sort()).';
+          if (t === 'NoneType') return 'Voláš metodu na `None` – nějaká funkce asi nic nevrací (chybí `return`), nebo jsi uložil(a) výsledek metody, která vrací `None` (např. `seznam.sort()`).';
           return `${tcz(t)} nemá metodu/vlastnost „${a}“.${sug ? ` Nemyslel(a) jsi ${sug.includes('(') || sug.includes(' ') ? sug : '„' + sug + '“'}?` : ''}`;
         }
         return 'Tenhle typ takovou metodu nemá.';
       }
-      case 'RecursionError': return 'Funkce volá sama sebe pořád dokola. Chybí ukončovací podmínka (např. if n == 0: return …).';
+      case 'RecursionError': return 'Funkce volá sama sebe pořád dokola. Chybí ukončovací podmínka (např. `if n == 0: return …`).';
       case 'IndentationError':
-        if (/expected an indented block/.test(msg)) return 'Za řádkem končícím dvojtečkou (:) musí přijít odsazený blok. Odsaď další řádek o 4 mezery.';
+        if (/expected an indented block/.test(msg)) return 'Za řádkem končícím dvojtečkou (`:`) musí přijít odsazený blok. Odsaď další řádek o 4 mezery.';
         if (/unexpected indent/.test(msg)) return 'Tenhle řádek je odsazený, i když nemá být. Zarovnej ho s řádkem nad ním.';
         if (/unindent does not match/.test(msg)) return 'Odsazení nesedí s žádnou úrovní nad ním. Používej vždy 4 mezery na úroveň.';
         return 'Chyba v odsazení. V Pythonu odsazení určuje, co patří do bloku.';
       case 'SyntaxError':
-        if (/expected ':'/.test(msg)) return 'Na konci řádku s if / elif / else / for / while / def chybí dvojtečka (:).';
-        if (/Maybe you meant '==' or ':=' instead of '='/.test(msg)) return 'V podmínce se porovnává pomocí ==. Jedno = znamená přiřazení.';
-        if (/Maybe you meant '==' instead of '='/.test(msg)) return 'Na levé straně = musí být proměnná. Pokud jsi chtěl(a) porovnávat, použij ==.';
+        if (/expected ':'/.test(msg)) return 'Na konci řádku s `if` / `elif` / `else` / `for` / `while` / `def` chybí dvojtečka (`:`).';
+        if (/Maybe you meant '==' or ':=' instead of '='/.test(msg)) return 'V podmínce se porovnává pomocí `==`. Jedno `=` znamená přiřazení.';
+        if (/Maybe you meant '==' instead of '='/.test(msg)) return 'Na levé straně `=` musí být proměnná. Pokud jsi chtěl(a) porovnávat, použij `==`.';
         if (/was never closed/.test(msg)) return 'Závorka se otevřela, ale nikde se nezavřela.';
         if (/unmatched/.test(msg)) return 'Zavírací závorka nemá k sobě otevírací.';
-        if (/does not match opening parenthesis/.test(msg)) return 'Závorky nesedí – např. ( zavíráš pomocí ].';
+        if (/does not match opening parenthesis/.test(msg)) return 'Závorky nesedí – např. `(` zavíráš pomocí `]`.';
         if (/unterminated (triple-quoted )?string literal/.test(msg)) return 'Text nemá ukončovací uvozovku.';
-        if (/Missing parentheses in call to 'print'/.test(msg)) return 'V Pythonu 3 je print funkce: print("text").';
-        if (/'return' outside function/.test(msg)) return 'return smí být jen uvnitř funkce (def). Zkontroluj odsazení.';
-        if (/'break' outside loop|'continue' not properly in loop/.test(msg)) return 'break/continue smí být jen uvnitř cyklu for nebo while.';
+        if (/Missing parentheses in call to 'print'/.test(msg)) return 'V Pythonu 3 je `print` funkce: `print("text")`.';
+        if (/'return' outside function/.test(msg)) return '`return` smí být jen uvnitř funkce (`def`). Zkontroluj odsazení.';
+        if (/'break' outside loop|'continue' not properly in loop/.test(msg)) return '`break`/`continue` smí být jen uvnitř cyklu `for` nebo `while`.';
         if (/Perhaps you forgot a comma/.test(msg)) return 'Mezi hodnotami chybí čárka.';
         if (/invalid decimal literal/.test(msg)) return 'Jméno proměnné nesmí začínat číslicí.';
-        if (/leading zeros/.test(msg)) return 'Celé číslo nesmí začínat nulou (piš 7, ne 07). Text „0007“ dej do uvozovek.';
-        if (/invalid character/.test(msg)) return 'V kódu je znak, kterému Python nerozumí (třeba typografické uvozovky „ “ – použij " ).';
-        if (/cannot assign to/.test(msg)) return 'Přiřadit (=) jde jen do proměnné, prvku seznamu nebo slovníku.';
-        if (/expected 'else' after 'if' expression/.test(msg)) return 'Podmíněný výraz má tvar: a if podminka else b.';
+        if (/leading zeros/.test(msg)) return 'Celé číslo nesmí začínat nulou (piš `7`, ne `07`). Text „0007“ dej do uvozovek.';
+        if (/invalid character/.test(msg)) return 'V kódu je znak, kterému Python nerozumí (třeba typografické uvozovky „ “ – použij `"`).';
+        if (/cannot assign to/.test(msg)) return 'Přiřadit (`=`) jde jen do proměnné, prvku seznamu nebo slovníku.';
+        if (/expected 'else' after 'if' expression/.test(msg)) return 'Podmíněný výraz má tvar: `a if podminka else b`.';
         if (/třídy|nepodporuje|není podporovan|nejsou podporovan/.test(msg)) return msg;
         return 'Python tomuhle zápisu nerozumí. Zkontroluj dvojtečky, závorky, uvozovky a čárky.';
-      case 'ModuleNotFoundError': return 'Tenhle modul v terminálu KOBRA není. K dispozici jsou math, string a random.';
+      case 'ModuleNotFoundError': return 'Tenhle modul v terminálu KOBRA není. K dispozici jsou `math`, `string` a `random`.';
       case 'ImportError': return 'Modul takovou funkci nemá.';
-      case 'Timeout': return 'Program běží moc dlouho. Nemáš nekonečný cyklus? U while zkontroluj, že se podmínka někdy stane nepravdivou (měníš proměnnou uvnitř cyklu?).';
-      case 'OutputLimit': return 'Program vypsal obrovské množství textu – nejspíš print v nekonečném cyklu.';
-      case 'AssertionError': return 'Podmínka v assert neplatí.';
+      case 'Timeout': return 'Program běží moc dlouho. Nemáš nekonečný cyklus? U `while` zkontroluj, že se podmínka někdy stane nepravdivou (měníš proměnnou uvnitř cyklu?).';
+      case 'OutputLimit': return 'Program vypsal obrovské množství textu – nejspíš `print` v nekonečném cyklu.';
+      case 'AssertionError': return 'Podmínka v `assert` neplatí.';
       case 'OverflowError': return 'Číslo je příliš velké.';
       case 'MemoryError': return 'Vytváříš příliš velký seznam nebo text.';
       case 'StopIteration': return 'Iterátor už nemá další prvky.';

@@ -71,7 +71,7 @@
         'Zkus `return 100`, tedy plný výkon. Pro bonus si tah nejdřív ulož do proměnné: `tah = 100` a pod to `return tah`.'
       ],
       bonus: {
-        text: 'Ulož tah do proměnné a vrať ji (tah = … a return tah)',
+        text: 'Ulož tah do proměnné a vrať ji (`tah = …` a `return tah`)',
         check: c => {
           const d = fnDef(c.ast, 'autopilot');
           return !!d && nodes(d.body, n => n.k === 'assign').length > 0 && nodes(d.body, n => n.k === 'return' && n.value && n.value.k === 'name').length > 0;
@@ -314,7 +314,7 @@
         'Funkce se dají vnořit: `max(0, min(100, tah))`. Počítá se zevnitř ven.',
         'Nakonec celé číslo: `return round(max(0, min(100, tah)))`. Pozor, ve druhém letu Orel nejdřív stoupá, tah by vyšel záporný.'
       ],
-      bonus: { text: 'Žádný if – jen min(), max() a round()', check: c => { const d = fnDef(c.ast, 'autopilot'); return !!d && nodes(d.body, n => n.k === 'if' || n.k === 'ifexp').length === 0; } },
+      bonus: { text: 'Žádný `if` – jen `min()`, `max()` a `round()`', check: c => { const d = fnDef(c.ast, 'autopilot'); return !!d && nodes(d.body, n => n.k === 'if' || n.k === 'ifexp').length === 0; } },
       learn: ['Vestavěné funkce jsou v Pythonu připravené: min() a max() vrací nejmenší a největší z čísel, round() zaokrouhlí na celé číslo (int), abs() vrátí absolutní hodnotu.', 'max(0, min(100, 135))   # → 100\nmax(0, min(100, -20))   # → 0\nround(47.6)             # → 48'],
       palette: ['min(100, tah)', 'max(0, |)', 'round(|)', 'return round(max(0, min(100, tah)))'],
       reward: 'Motor dostává jen čisté příkazy. Technici si oddechli.'
@@ -489,7 +489,7 @@ def autopilot(vyska, klesani):
         'Pro bonus: `zip(teren, teren[1:])` dá dvojice sousedních výšek a `enumerate()` k nim přidá index: `for i, (a, b) in enumerate(zip(teren, teren[1:])):`'
       ],
       bonus: {
-        text: 'Bez range(len(…)) – použij enumerate() nebo zip()',
+        text: 'Bez `range(len(…))` – použij `enumerate()` nebo `zip()`',
         check: c => { const d = fnDef(c.ast, 'vyber_misto'); return !!d && (callsName(d, 'enumerate') || callsName(d, 'zip')) && !callsName(d, 'range'); }
       },
       learn: ['Seznam je řada hodnot v hranatých závorkách. Index začíná nulou, teren[-1] je poslední prvek. Cyklus for projde prvky nebo indexy (range(len(seznam))).', 'teren = [13.4, 11.3, 13.6]\nfor i in range(len(teren) - 1):\n    print(i, teren[i + 1] - teren[i])'],
@@ -552,7 +552,7 @@ def autopilot(vyska, klesani):
         'Rychlost = změna výšky za čas: `klesani = (minula - vyska) / 0.1`. Na konci si ulož aktuální výšku: `pamet[\'vyska\'] = vyska`.',
         'Pro bonus přidej do vráceného slovníku i svůj odhad: `return {\'tah\': tah, \'klesani\': klesani}`. Řízení ho porovná se skutečnou rychlostí.'
       ],
-      bonus: { text: "Vrať i odhad rychlosti: {'tah': …, 'klesani': …} (přesně na 0,2 m/s)", check: c => all(c, f => f.maxEstErr <= 0.2) },
+      bonus: { text: "Vrať i odhad rychlosti: `{'tah': …, 'klesani': …}` (přesně na 0,2 m/s)", check: c => all(c, f => f.maxEstErr <= 0.2) },
       learn: ['Slovník (dict) páruje klíče s hodnotami: data[\'vyska\']. Neexistující klíč vyvolá KeyError, proto .get(klic, vychozi) nebo test \'klic\' in slovnik. Do slovníku zapíšeš slovnik[klic] = hodnota.', "pamet = {}\nminula = pamet.get('vyska', 120)   # → 120\npamet['vyska'] = 118\n'vyska' in pamet                   # → True"],
       palette: ["pamet.get('vyska', vyska)", "pamet['vyska'] = vyska", '(minula - vyska) / 0.1', "{'tah': tah, 'klesani': klesani}"],
       reward: 'Bez radaru, jen s výškoměrem a pamětí. Přesně tak to dělal počítač Apolla.'

@@ -9,6 +9,8 @@
   Kit.$ = (s, r) => (r || document).querySelector(s);
   Kit.$$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   Kit.esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  /* čeština: 1 hvězda, 2–4 hvězdy, 0 a 5+ hvězd */
+  Kit.plural = (n, one, few, many) => { const a = Math.abs(n); return a === 1 ? one : a >= 2 && a <= 4 ? few : many; };
   Kit.pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
   Kit.pick = arr => arr[Math.floor(Math.random() * arr.length)];
   Kit.shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -200,7 +202,12 @@
     if (!el) return;
     const ICON = { idle: '▶', run: '•', ok: '✔', bad: '✘', warn: '!' };
     el.className = 'status ' + (state || 'idle');
-    el.innerHTML = `<span class="s-ico" aria-hidden="true">${ICON[state] || '▶'}</span><span class="s-text">${html}${sub ? `<small>${sub}</small>` : ''}</span>`;
+    // úseky v `zpětných apostrofech` se ukážou jako kód (text už je escapovaný)
+    const code = t => String(t).replace(/`([^`\n]+)`/g, '<code>$1</code>');
+    el.innerHTML = `<span class="s-ico" aria-hidden="true">${ICON[state] || '▶'}</span><span class="s-text">${code(html)}${sub ? `<small>${code(sub)}</small>` : ''}</span>`;
+    // výsledek běhu musí být vidět: když je pod okrajem sloupce (nízké okno, otevřené nápovědy), posuň ho do zorného pole
+    const typing = document.activeElement && /^(TEXTAREA|INPUT)$/.test(document.activeElement.tagName);
+    if ((state === 'ok' || state === 'bad') && !typing) requestAnimationFrame(() => { const r = el.getBoundingClientRect(); if (r.bottom > innerHeight || r.top < 0) el.scrollIntoView({ block: 'nearest' }); });
   };
 
   /* Hvězdné cíle v liště mise: [{ got, text, val, title }] */

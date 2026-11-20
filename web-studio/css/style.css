@@ -14,7 +14,7 @@
   --bg: #eef1f8;
   --ink: #141a3a;
   --ink2: #3a4166;
-  --muted: #5d6482;
+  --muted: #4a506b;
   --line: #dde2f0;
   --frame: #d3d9ec;
   --card: #ffffff;
@@ -23,20 +23,20 @@
   --btn-ink: #141a3a;
   --topbar: rgba(255, 255, 255, .92);
 
-  --accent: #2b59ff;
+  --accent: #1c42e8;
   --accent-ink: #ffffff;
   --accent-soft: rgba(43, 89, 255, .16);
-  --primary: #2b59ff;
+  --primary: #1c42e8;
   --primary-ink: #fff;
-  --go: #0f7a44;
+  --go: #006732;
   --go-ink: #fff;
-  --good: #0f7a44;
+  --good: #006732;
   --good-ink: #fff;
   --good-soft: #ecfaf2;
-  --bad: #c62828;
+  --bad: #b40a16;
   --bad-soft: #fff1f1;
-  --warn: #a05804;
-  --money: #0d7842;
+  --warn: #844300;
+  --money: #005e2e;
   --pill-bg: #eaf0ff;
   --pill-line: #c9d6ff;
 
@@ -53,7 +53,7 @@
   --code-bg-inline: #e8edff;
   --code-ink: #e9ecff;
   --gutter: #11142a;
-  --gutter-ink: #7c82ad;
+  --gutter-ink: #9ea4cd;
   --caret: #ffcf3a;
   --selection: rgba(124, 146, 255, .38);
   --tk-kw: #ff7ab6;
@@ -61,7 +61,7 @@
   --tk-builtin: #a9b6ff;
   --tk-num: #ffcf3a;
   --tk-str: #8be3a9;
-  --tk-com: #868ab0;
+  --tk-com: #a0a4c9;
   --tk-op: #ffa6cf;
   --tk-prop: #7cc7ff;
   --tk-sel: #ffa6cf;
@@ -70,7 +70,7 @@
   --tk-attr: #ffcf3a;
   --chip-bg: #161a33;
   --chip-ink: #7cc7ff;
-  --star: #ba7f00;
+  --star: #9b6600;
   --star-off: #d0d5e6;
   --console-bg: #161a33;
   --console-ink: #e9ecff;
@@ -138,7 +138,6 @@ body { background: radial-gradient(circle, #d3d9ec 1px, transparent 1.4px) 0 0 /
 .node.done .n-num.ava { background: var(--good-soft); border-color: var(--good); }
 .node.next .n-num.ava { background: #eaf0ff; border-color: var(--accent); }
 .node .n-pay { font-size: .82rem; font-weight: 800; color: var(--money); }
-.track .nodes { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
 .next-up { border-width: 2px; }
 .next-up .nu-num { font-size: 2.6rem; }
 .shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .7rem; }
@@ -152,6 +151,7 @@ body { background: radial-gradient(circle, #d3d9ec 1px, transparent 1.4px) 0 0 /
 .mb-num.ava { background: #fff; border: 1.5px solid var(--frame); font-size: 1.9rem; }
 .mb-reward { flex: none; font-weight: 800; color: var(--money); background: var(--good-soft); border: 1px solid #bfe9d0; border-radius: 99px; padding: .15rem .65rem; font-size: .85rem; white-space: nowrap; }
 .chat { display: grid; gap: .5rem; }
+.panel-h.chat-h { margin-top: 1.1rem; padding-top: .9rem; border-top: 1px solid var(--line); }
 .bubble { background: var(--soft); border: 1px solid var(--line); border-radius: 4px 14px 14px 14px; padding: .45rem .75rem; font-size: .96rem; line-height: 1.45; animation: fade .3s; }
 .bubble b.who { display: block; font-size: .8rem; color: var(--muted); }
 .reqs { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
@@ -161,7 +161,7 @@ body { background: radial-gradient(circle, #d3d9ec 1px, transparent 1.4px) 0 0 /
 .req.pass i { color: var(--good); }
 .req.fail { border-color: #f5a9ab; background: var(--bad-soft); }
 .req.fail i { color: var(--bad); }
-.req small { grid-column: 2; color: #a3262a; font-weight: 600; }
+.req small { grid-column: 2; color: #981e24; font-weight: 600; }
 .req.wishreq { border-style: dashed; }
 .req.wishreq.pass { border-style: solid; }
 .wish-h { margin-top: .9rem !important; }
