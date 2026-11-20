@@ -1,0 +1,117 @@
+{
+  // Otevři tento soubor ve VS Code (dvojklik nebo Soubor → Otevřít pracovní prostor ze souboru).
+  // Pak stačí F5 a vybrat, co se má spustit v prohlížeči Chrome.
+  "folders": [
+    { "name": "Hry", "path": "." }
+  ],
+  "settings": {
+    "files.exclude": { "**/.DS_Store": true }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🎮 Rozcestník všech her",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/index.html"
+      },
+      {
+        "name": "🤖 Robot Bajt",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/robot-bajt/index.html"
+      },
+      {
+        "name": "🏃 CSS Parkour",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/css-parkour/index.html"
+      },
+      {
+        "name": "🧪 CSS Parkour – testy levelů",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/css-parkour/tests/test.html"
+      },
+      {
+        "name": "🐍 Operace Kobra",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/operace-kobra/index.html"
+      },
+      {
+        "name": "🧪 Operace Kobra – testy (Python vs. CPython)",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/operace-kobra/tests/test.html"
+      },
+      {
+        "name": "🏢 Web Studio Tycoon",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/web-studio/index.html"
+      },
+      {
+        "name": "🧪 Web Studio Tycoon – testy zakázek",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/web-studio/tests/test.html"
+      },
+      {
+        "name": "🌕 Autopilot Orel",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/autopilot-orel/index.html"
+      },
+      {
+        "name": "🧪 Autopilot Orel – testy letů",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/autopilot-orel/tests/test.html"
+      },
+      {
+        "name": "🍝 Async Bistro",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/async-bistro/index.html"
+      },
+      {
+        "name": "🧪 Async Bistro – testy kuchyně",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/async-bistro/tests/test.html"
+      },
+      {
+        "name": "♿ Web bez bariér",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/web-bez-barier/index.html"
+      },
+      {
+        "name": "🧪 Web bez bariér – testy zakázek",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/web-bez-barier/tests/test.html"
+      },
+      {
+        "name": "🖼️ Noc v galerii",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/noc-v-galerii/index.html"
+      },
+      {
+        "name": "🧪 Noc v galerii – testy obrazů",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${workspaceFolder:Hry}/noc-v-galerii/tests/test.html"
+      },
+      {
+        "name": "📄 Otevřít právě otevřený HTML soubor",
+        "type": "chrome",
+        "request": "launch",
+        "file": "${file}"
+      }
+    ]
+  }
+}

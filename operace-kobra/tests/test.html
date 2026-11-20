@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <title>Operace Kobra – automatické testy</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; margin: 1.5rem; background: #030805; color: #dcffe8; }
+    h1, h2 { font-family: ui-monospace, Consolas, monospace; }
+    .ok { color: #39ff88; } .bad { color: #ff5f6d; font-weight: 700; }
+    .summary { font-size: 1.3rem; font-weight: 800; margin: 0 0 1rem; padding: .6rem 1rem; border-radius: 10px; background: #0b1d12; }
+    pre { white-space: pre-wrap; background: #010402; padding: .5rem; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>🐍 Operace Kobra – automatické testy</h1>
+  <p>1) Interpret Mini-Python se porovná se skutečným CPythonem na desítkách programů (výstup i chybové hlášky).
+     2) Každá mise: vzorové řešení projde všemi testy a bonusem, výchozí kód a typické chyby neprojdou.</p>
+  <div id="summary" class="summary">⏳ Testy běží…</div>
+  <div id="out">Běží…</div>
+  <script src="../js/python.js"></script>
+  <script src="../js/missions.js"></script>
+  <script src="../js/lessons.js"></script>
+  <script src="../js/harness.js"></script>
+  <script src="cpython-expected.js"></script>
+  <script src="lessons-check.js"></script>
+  <script src="test.js"></script>
+</body>
+</html>

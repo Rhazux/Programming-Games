@@ -1,0 +1,163 @@
+/*
+ * Robot Bajt – vzhled „uvnitř počítače“
+ * Zelená deska plošných spojů, měděné cesty a zlaté kontakty, černé čipy, bílý potisk.
+ * Nadpisy v širokém písmu Archivo Black, jako popisky na desce.
+ */
+@font-face { font-family: "Archivo Black"; src: url("../fonts/archivo-black.woff") format("woff"); font-display: swap; }
+
+:root {
+  --display: "Archivo Black", "Arial Black", system-ui, sans-serif;
+  --display-weight: 400;
+  --display-case: none;
+  --display-track: -.01em;
+
+  --bg: #08342a;
+  --ink: #f3f4ea;
+  --ink2: #cfe2d4;
+  --muted: #b0cec0;
+  --line: #1b6550;
+  --frame: #1b6550;
+  --card: #0d4535;
+  --soft: #12513f;
+  --btn: #155a46;
+  --btn-ink: #f3f4ea;
+  --topbar: rgba(6, 40, 32, .94);
+
+  --accent: #f0b43c;
+  --accent-ink: #2a1800;
+  --accent-soft: rgba(240, 180, 60, .25);
+  --primary: #f0b43c;
+  --primary-ink: #2a1800;
+  --go: #f0b43c;
+  --go-ink: #2a1800;
+  --good: #7ef0b2;
+  --good-ink: #052a1a;
+  --good-soft: rgba(126, 240, 178, .1);
+  --bad: #ff9d97;
+  --bad-soft: rgba(255, 94, 87, .12);
+  --warn: #ffd166;
+  --pill-bg: rgba(240, 180, 60, .12);
+  --pill-line: rgba(240, 180, 60, .45);
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --lift: 0 14px 32px rgba(0, 0, 0, .3);
+  --lift-sm: 0 4px 12px rgba(0, 0, 0, .22);
+  --scrim: rgba(3, 22, 17, .72);
+
+  --code-bg: #0b1311;
+  --code-line: #0b1311;
+  --code-bg-inline: rgba(240, 180, 60, .16);
+  --code-ink: #e9efe6;
+  --gutter: #080e0d;
+  --gutter-ink: #618778;
+  --caret: #f0b43c;
+  --selection: rgba(126, 240, 178, .3);
+  --tk-kw: #d7a6ff;
+  --tk-fn: #f0b43c;
+  --tk-num: #ff9f5a;
+  --tk-str: #ffb0d0;
+  --tk-com: #6f9183;
+  --tk-op: #e9efe6;
+  --tk-cmd: #6fe0ff;
+  --tk-sen: #a8f06a;
+  --chip-bg: #0b1311;
+  --star: #ffd166;
+  --star-off: #2a6b56;
+  --console-bg: #080e0d;
+  --console-ink: #e9efe6;
+  --console-muted: #93b4a6;
+  --hint-bg: rgba(255, 209, 102, .1);
+  --input: #0b1311;
+  --ed-min: 200px;
+  --ed-max: 400px;
+  --bad-ink: #2a0606;
+}
+
+body {
+  background:
+    linear-gradient(90deg, rgba(240, 180, 60, .05) 1px, transparent 1px) 0 0 / 46px 46px,
+    linear-gradient(rgba(240, 180, 60, .05) 1px, transparent 1px) 0 0 / 46px 46px,
+    var(--bg);
+}
+
+/* lišta */
+.brand .brand-text b { font-weight: inherit; }
+.top-stat .ico { color: var(--star); }
+
+/* úvod */
+.intro-copy .logo b { display: block; font-weight: inherit; }
+.intro-copy .logo::after { content: ""; display: block; width: 3.2em; height: .2em; margin-top: .22em;
+  background: radial-gradient(circle at calc(100% - .1em) 50%, var(--bg) .045em, var(--accent) .05em .1em, transparent .105em) right / .2em .2em no-repeat,
+    linear-gradient(var(--accent), var(--accent)) left center / calc(100% - .2em) .06em no-repeat; }
+.bot-stage { position: relative; display: grid; grid-template-columns: auto auto; justify-content: center; align-items: center; gap: 1.6rem; min-height: 340px; padding: 2.2rem 1.4rem 1.4rem; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--lift); overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(240, 180, 60, .18), transparent 55%),
+    repeating-linear-gradient(90deg, transparent 0 58px, rgba(240, 180, 60, .16) 58px 60px, transparent 60px 120px),
+    #0b4031; }
+.hero-bot { width: 190px; height: 190px; display: block; }
+.code-teaser { text-align: left; white-space: pre; font: .95rem/1.55 var(--mono); background: var(--code-bg); border: 1px solid #000; border-radius: 10px; padding: .7rem 1rem; box-shadow: 0 10px 24px rgba(0, 0, 0, .4); color: var(--code-ink); }
+.chip-label { position: absolute; left: 14px; top: 14px; font: .78rem var(--mono); color: rgba(243, 244, 234, .7); border: 1px solid rgba(243, 244, 234, .35); border-radius: 4px; padding: .1rem .45rem; }
+
+/* mapa */
+.node .n-sub { font-family: var(--mono); }
+.node.boss .n-title { color: #d7a6ff; }
+.track .t-ico { background: var(--code-bg); border-color: #000; }
+
+/* mise */
+.world-card { padding: .8rem; }
+.world-wrap { position: relative; display: flex; justify-content: center; }
+#world { display: block; border-radius: 8px; box-shadow: 0 0 0 1px #000, 0 10px 26px rgba(0, 0, 0, .35); max-width: 100%; }
+.world-stage { position: relative; line-height: 0; }
+.world-overlay { position: absolute; inset: 0; pointer-events: none; line-height: 1.5; }
+.bubble {
+  position: absolute; transform: translate(-50%, -115%); background: #fbfbf5; color: #10231b; font-weight: 800; font-size: .88rem;
+  padding: .3rem .75rem; border-radius: 12px; white-space: nowrap; opacity: 0; transition: opacity .2s; box-shadow: 0 6px 18px rgba(0, 0, 0, .35); z-index: 3;
+}
+.bubble::after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #fbfbf5; border-bottom: 0; }
+.bubble.below { transform: translate(-50%, 15%); }
+.bubble.below::after { top: -6px; bottom: auto; border: 6px solid transparent; border-bottom-color: #fbfbf5; border-top: 0; }
+.bubble.show { opacity: 1; }
+.bubble.err { background: #ffe1df; }
+.bubble.err::after { border-top-color: #ffe1df; }
+.bubble.below.err::after { border-bottom-color: #ffe1df; border-top-color: transparent; }
+.bubble.ok { background: #dcfce9; }
+.bubble.ok::after { border-top-color: #dcfce9; }
+.world-status { display: flex; justify-content: space-between; align-items: center; gap: .6rem; flex-wrap: wrap; margin-top: .75rem; }
+.chips { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
+.tchip { font: inherit; font-size: .82rem; font-weight: 800; border-radius: 99px; padding: .22rem .65rem; border: 1px solid var(--line); background: var(--code-bg); color: var(--muted); cursor: pointer; }
+.tchip:disabled { cursor: default; }
+.tchip.ok { color: var(--good-ink); background: var(--good); border-color: transparent; }
+.tchip.bad { color: var(--bad-ink); background: var(--bad); border-color: transparent; }
+.tchip.run { color: var(--accent-ink); background: var(--accent); border-color: transparent; }
+.meters { display: flex; gap: 1rem; align-items: center; font-size: .92rem; color: var(--muted); }
+.meters b { color: var(--ink); }
+.energy { display: inline-block; width: 84px; height: 9px; background: var(--code-bg); border-radius: 99px; overflow: hidden; vertical-align: middle; border: 1px solid #000; }
+.energy span { display: block; height: 100%; background: linear-gradient(90deg, var(--good), var(--accent)); transition: width .15s; }
+.file-head .size { font: 700 .85rem var(--font); color: var(--muted); }
+.file-head .size b { color: var(--ink); }
+.file-head .size b.ok { color: var(--good); }
+.tk-cmd { color: var(--tk-cmd); }
+.tk-sen { color: var(--tk-sen); }
+.chip { color: var(--ink); }
+.chip.cmd { color: var(--tk-cmd); }
+.chip.sen { color: var(--tk-sen); }
+.chip.kw { color: var(--tk-kw); }
+.chip.op { color: var(--accent); }
+.speed { display: flex; align-items: center; gap: .4rem; margin-left: auto; font-size: .88rem; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.speed input { width: 96px; accent-color: var(--accent); }
+.runbar .btn:not(.go) { padding: .7rem .85rem; }
+.game.running .ed-ta { caret-color: transparent; }
+
+/* příručka */
+.hb { margin-bottom: 1.1rem; }
+.hb h3 { color: var(--accent); margin-bottom: .45rem; }
+.api { list-style: none; padding: 0; margin: 0 0 .5rem; display: grid; gap: .35rem; }
+.api code { margin-right: .4rem; }
+
+@media (max-width: 640px) {
+  .bot-stage { min-height: 250px; }
+  .hero-bot { width: 140px; height: 140px; }
+  .code-teaser { font-size: .78rem; }
+  .speed { margin-left: 0; }
+}

@@ -1,0 +1,265 @@
+/*
+ * Autopilot Orel – vzhled „přístrojová deska lunárního modulu“
+ * Šedé lakované panely kabiny Apolla, zelené číslice palubního počítače (DSKY),
+ * jantarové kontrolky a zlatá fólie Kapton ze sestupového stupně.
+ * Nadpisy: TeX Gyre Adventor – geometrické písmo ve stylu Futury z pamětní desky Apolla 11.
+ */
+@font-face { font-family: "Adventor Orel"; src: url("../fonts/adventor-bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+
+:root {
+  --display: "Adventor Orel", "Century Gothic", "Avant Garde", "DM Sans", sans-serif;
+  --display-weight: 700;
+  --display-case: none;
+  --display-track: -.01em;
+
+  --bg: #26292e;
+  --ink: #eceae4;
+  --ink2: #c8c7c1;
+  --muted: #adb0b5;
+  --line: #454a52;
+  --frame: #4b5059;
+  --card: #31353b;
+  --soft: #2b2f34;
+  --btn: #3a3f46;
+  --btn-ink: #eceae4;
+  --topbar: rgba(32, 35, 39, .96);
+
+  --accent: #79e08f;
+  --accent-ink: #072010;
+  --accent-soft: rgba(121, 224, 143, .2);
+  --primary: #79e08f;
+  --primary-ink: #072010;
+  --go: #79e08f;
+  --go-ink: #072010;
+  --good: #79e08f;
+  --good-ink: #072010;
+  --good-soft: rgba(121, 224, 143, .1);
+  --bad: #ff7466;
+  --bad-soft: rgba(255, 90, 74, .1);
+  --warn: #ffb020;
+  --pill-bg: rgba(121, 224, 143, .1);
+  --pill-line: rgba(121, 224, 143, .4);
+  --focus: #ffb020;
+
+  --gold-0: #a8741f;
+  --gold-1: #e8b64c;
+  --gold-2: #ffe08a;
+  --kapton: linear-gradient(100deg, var(--gold-0), var(--gold-2) 18%, var(--gold-1) 30%, var(--gold-0) 46%, var(--gold-2) 62%, var(--gold-1) 78%, var(--gold-0));
+  --el: #8dfc9e;          /* zelené číslice palubního počítače */
+  --el-bg: #0c120e;
+  --screw: radial-gradient(circle, #6a7079 0 2px, #3b4047 2.4px, transparent 3.2px);
+
+  --radius: 10px;
+  --radius-sm: 7px;
+  --lift: inset 0 1px 0 rgba(255, 255, 255, .06), 0 10px 26px rgba(0, 0, 0, .34);
+  --lift-sm: inset 0 1px 0 rgba(255, 255, 255, .05), 0 4px 12px rgba(0, 0, 0, .25);
+
+  --code-bg: #17191c;
+  --code-line: #3a3f46;
+  --code-bg-inline: rgba(121, 224, 143, .14);
+  --code-ink: #e6e4de;
+  --gutter: #121416;
+  --gutter-ink: #7a838f;
+  --caret: #79e08f;
+  --selection: rgba(121, 224, 143, .28);
+  --tk-kw: #c3a6ff;
+  --tk-fn: #7fd1ff;
+  --tk-builtin: #ffc94a;
+  --tk-num: #ff9e64;
+  --tk-str: #b6e3a0;
+  --tk-com: #848b95;
+  --tk-op: #9fb3c8;
+  --tk-prop: #7fd1ff;
+  --tk-sel: #c3a6ff;
+  --tk-val: #b6e3a0;
+  --tk-tag: #c3a6ff;
+  --tk-attr: #ffc94a;
+  --chip-bg: #1d2024;
+  --chip-ink: #7fd1ff;
+  --star: #ffc94a;
+  --star-off: #4e535b;
+  --console-bg: #121416;
+  --console-ink: #dcdad4;
+  --hint-bg: rgba(255, 176, 32, .1);
+  --input: #1d2024;
+  --ed-min: 200px;
+  --ed-max: 440px;
+  --next-label: "Letět";
+  --bad-ink: #2a0606;
+}
+
+body { background: linear-gradient(180deg, #2a2d32, var(--bg) 340px) no-repeat, var(--bg); }
+
+/* lišta se zlatou fólií */
+.topbar { border-bottom: 0; box-shadow: 0 1px 0 rgba(0, 0, 0, .4); }
+.topbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: var(--kapton); opacity: .9; }
+.brand .brand-text { font-size: 1.12rem; }
+
+/* tlačítka jako klávesy palubního počítače */
+.btn { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 0 rgba(0, 0, 0, .35); }
+.btn.go, .btn.primary { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 2px 0 #2d6b3a; }
+.btn.ghost { box-shadow: none; }
+
+/* ---------- úvod ---------- */
+.intro-copy .logo { font-size: clamp(3rem, 7vw, 5.6rem); line-height: .9; }
+.intro-copy .logo span { display: block; font-size: 1.42em; letter-spacing: -.03em; background: var(--kapton); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .04em; }
+.window { position: relative; border-radius: 18px; padding: 10px; background: var(--screw) 6px 6px / 14px 14px no-repeat, var(--screw) calc(100% - 6px) 6px / 14px 14px no-repeat, var(--screw) 6px calc(100% - 6px) / 14px 14px no-repeat, var(--screw) calc(100% - 6px) calc(100% - 6px) / 14px 14px no-repeat, linear-gradient(#3d4249, #2c3035); border: 1px solid #555b63; box-shadow: var(--lift); }
+.window canvas { display: block; width: 100%; height: clamp(250px, 30vw, 380px); border-radius: 10px; background: #05070b; }
+.demo-tag { position: absolute; left: 22px; bottom: 20px; font: 600 .85rem var(--font); color: var(--ink2); background: rgba(10, 12, 16, .72); border: 1px solid rgba(255, 255, 255, .1); padding: .3rem .7rem; border-radius: 99px; }
+.steps li::before { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- mapa ---------- */
+.track.c1 .t-ico { border-color: var(--accent); }
+.track.c2 .t-ico { border-color: var(--warn); }
+.track.c3 .t-ico { border-color: var(--gold-1); }
+.node .n-sub { font-family: var(--mono); font-size: .76rem; }
+.node.done .n-num { background: var(--good); border-color: var(--good); color: var(--good-ink); }
+
+/* ---------- úroveň: zadání a pravidla ---------- */
+.brief-strip .task { font-size: 1.06rem; font-weight: 600; margin: 0; }
+.brief-strip .task b { color: var(--el); }
+.rules { list-style: none; display: flex; flex-wrap: wrap; gap: .35rem; margin: .55rem 0 0; padding: 0; }
+.rules li { display: inline-flex; align-items: center; gap: .35rem; font-size: .82rem; font-weight: 700; color: var(--ink2); background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: .16rem .55rem; white-space: nowrap; }
+.rules li span { color: var(--warn); }
+
+/* ---------- panel letu ---------- */
+.flight { display: flex; flex-direction: column; gap: .6rem; padding: .8rem .85rem .85rem; background: var(--screw) 5px 5px / 12px 12px no-repeat, var(--screw) calc(100% - 5px) 5px / 12px 12px no-repeat, var(--screw) 5px calc(100% - 5px) / 12px 12px no-repeat, var(--screw) calc(100% - 5px) calc(100% - 5px) / 12px 12px no-repeat, var(--card); }
+.fl-head { display: flex; align-items: center; gap: .5rem .8rem; flex-wrap: wrap; padding: 0 .35rem; }
+.fl-tabs { display: flex; gap: .3rem; flex-wrap: wrap; }
+.fl-tab { display: inline-flex; align-items: center; gap: .35rem; font: 700 .9rem var(--font); color: var(--ink2); background: var(--soft); border: 1px solid var(--line); border-radius: 7px; padding: .32rem .7rem; cursor: pointer; }
+.fl-tab:hover { border-color: var(--accent); }
+.fl-tab.on { color: var(--ink); border-color: var(--ink2); background: #3d4249; }
+.fl-tab .st { font-style: normal; font-weight: 900; }
+.fl-tab.ok .st { color: var(--good); }
+.fl-tab.bad .st { color: var(--bad); }
+.fl-tab:focus-visible, .speed button:focus-visible, .fsum:focus-visible, .scrub:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.fl-ctrl { display: flex; align-items: center; gap: .3rem; margin-left: auto; }
+.fl-ctrl .icon-btn { width: 2.2rem; padding: 0; justify-content: center; }
+.speed { display: inline-flex; border: 1px solid var(--frame); border-radius: 99px; overflow: hidden; }
+.speed button { font: 700 .8rem var(--font); color: var(--muted); background: var(--btn); border: 0; padding: .45rem .5rem; cursor: pointer; font-variant-numeric: tabular-nums; }
+.speed button + button { border-left: 1px solid var(--frame); }
+.speed button.on { background: var(--accent); color: var(--accent-ink); }
+.fv-wrap { position: relative; height: clamp(260px, 44vw, 440px); border-radius: 8px; overflow: hidden; background: #05070b; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .7), 0 0 0 1px #50565e; }
+.fv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fv-banner { position: absolute; left: 50%; top: 14%; transform: translate(-50%, -8px); opacity: 0; text-align: center; pointer-events: none; transition: opacity .3s, transform .3s; max-width: 86%; }
+.fv-banner.show { opacity: 1; transform: translate(-50%, 0); }
+.fv-banner.low { top: 52%; }
+.fv-banner b { display: block; font: 700 clamp(1.6rem, 3.2vw, 2.6rem)/1.05 var(--display); letter-spacing: -.01em; text-shadow: 0 2px 14px rgba(0, 0, 0, .8); }
+.fv-banner span { display: inline-block; margin-top: .45rem; font-weight: 700; font-size: .98rem; color: var(--ink); background: rgba(5, 7, 11, .72); border: 1px solid rgba(255, 255, 255, .12); padding: .25rem .75rem; border-radius: 99px; }
+.fv-banner.ok b { color: var(--el); }
+.fv-banner.bad b { color: var(--bad); }
+.scrub { width: 100%; margin: 0; accent-color: var(--accent); height: 1.1rem; cursor: pointer; }
+
+/* telemetrie ve stylu DSKY */
+.dsky { display: flex; flex-wrap: wrap; gap: .4rem; align-items: stretch; }
+.dsky .cell { position: relative; flex: 1 1 5.6rem; min-width: 5.2rem; background: var(--el-bg); border: 1px solid #000; border-radius: 6px; padding: .28rem .55rem .32rem; box-shadow: inset 0 2px 6px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 255, 255, .06); }
+.dsky .cell small { display: block; font-size: .72rem; font-weight: 700; color: #6f8f77; line-height: 1.2; }
+.dsky .cell b { font: 600 1.28rem/1.15 var(--mono); color: var(--el); text-shadow: 0 0 8px rgba(141, 252, 158, .45); font-variant-numeric: tabular-nums; }
+.dsky .cell em { font-style: normal; font-size: .75rem; color: #6f8f77; margin-left: .2rem; }
+.dsky .mini { position: absolute; left: .55rem; right: .55rem; bottom: .22rem; height: 3px; background: rgba(141, 252, 158, .12); border-radius: 2px; overflow: hidden; }
+.dsky .mini span { display: block; height: 100%; background: var(--el); }
+.lamps { display: grid; grid-template-columns: repeat(3, auto); gap: .3rem; align-content: center; }
+.lamp { font: 700 .7rem/1 var(--font); color: #8c9198; background: #24272b; border: 1px solid #15171a; border-radius: 4px; padding: .5rem .55rem; text-align: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+.lamp.on.green { color: #062010; background: var(--el); box-shadow: 0 0 12px rgba(141, 252, 158, .55); }
+.lamp.on.amber { color: #2a1800; background: var(--warn); box-shadow: 0 0 12px rgba(255, 176, 32, .55); }
+.lamp.on.red { color: var(--bad-ink); background: var(--bad); box-shadow: 0 0 12px rgba(255, 90, 74, .6); animation: lamp 1s steps(1) infinite; }
+@keyframes lamp { 50% { filter: brightness(.7); } }
+.graph { display: block; width: 100%; height: 92px; background: #15171a; border: 1px solid #000; border-radius: 6px; }
+
+/* ---------- výsledky simulace ---------- */
+.file-head .dots i { display: inline-block; width: .65rem; height: .65rem; border-radius: 50%; margin-right: .25rem; background: var(--bad); }
+.file-head .dots i:nth-child(2) { background: var(--warn); }
+.file-head .dots i:nth-child(3) { background: var(--good); }
+.flights-sum { display: grid; gap: .3rem; }
+.flights-sum:empty { display: none; }
+.fsum { display: flex; align-items: baseline; gap: .5rem; text-align: left; font: inherit; color: var(--ink); background: var(--soft); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: var(--radius-sm); padding: .32rem .7rem; cursor: pointer; white-space: nowrap; overflow: hidden; }
+.fsum .st { font-weight: 900; }
+.fsum b { font-size: .9rem; }
+.fsum .m { font-size: .9rem; font-weight: 600; }
+.fsum small { flex: 1; min-width: 0; color: var(--muted); font-size: .8rem; overflow: hidden; text-overflow: ellipsis; }
+.fsum.ok { border-left-color: var(--good); }
+.fsum.ok .st { color: var(--good); }
+.fsum.bad { border-left-color: var(--bad); }
+.fsum.bad .st { color: var(--bad); }
+.fsum.on { border-color: var(--ink2); }
+.fsum.ok.on { border-left-color: var(--good); }
+.fsum.bad.on { border-left-color: var(--bad); }
+.log-h { font: 700 .8rem var(--font); color: var(--muted); margin: .45rem 0 .2rem; }
+.terminal { background: var(--console-bg); border: 1px solid var(--code-line); border-radius: var(--radius-sm); padding: .55rem .8rem; font: .84rem/1.55 var(--mono); color: var(--console-ink); min-height: 52px; max-height: 260px; overflow: auto; }
+.terminal .prompt { color: var(--muted); }
+.terminal .prompt b { color: var(--accent); font-weight: 400; }
+.terminal .out { white-space: pre-wrap; word-break: break-word; }
+.terminal .err { color: var(--bad); white-space: pre-wrap; }
+.lg { white-space: pre-wrap; word-break: break-word; }
+.lg .lt { color: #7f868f; margin-right: .6rem; white-space: pre; }
+.lg .pr { font-size: .72rem; color: #11140f; background: #9fb3c8; border-radius: 3px; padding: 0 .3rem; }
+.lg.info { color: var(--muted); }
+.lg.ok { color: var(--good); }
+.lg.warn, .lg.drop { color: var(--warn); }
+.lg.alarm, .lg.bad { color: var(--bad); font-weight: 700; }
+.explain { background: rgba(255, 90, 74, .1); border-left: 3px solid var(--bad); padding: .45rem .7rem; border-radius: 0 6px 6px 0; margin: .4rem 0; font-family: var(--font); font-size: .93rem; color: var(--ink); white-space: normal; }
+.explain b { color: #ffb3ab; }
+.tests { display: grid; gap: .35rem; }
+.tests:empty { display: none; }
+.test { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .4rem .65rem; font: .84rem/1.5 var(--mono); background: var(--code-bg); }
+.test.pass { border-color: rgba(121, 224, 143, .4); }
+.test.fail { border-color: rgba(255, 90, 74, .6); }
+.test .st { font-weight: 700; margin-right: .4rem; }
+.test.fail:has(.tb) { display: flex; align-items: flex-start; }
+.test .tb { flex: 1; min-width: 0; }
+.test.pass .st { color: var(--good); }
+.test.fail .st { color: var(--bad); }
+.test .meta { color: var(--muted); font-family: var(--font); font-size: .85rem; }
+.test .why { font-family: var(--font); font-size: .92rem; color: var(--warn); margin-top: .2rem; }
+
+/* ---------- briefing (rádio) ---------- */
+.brief-modal .modal-box { max-width: 640px; }
+.b-kicker { color: var(--muted); font-weight: 700; font-size: .9rem; margin: 0 0 .2rem; }
+.radio { display: grid; gap: .6rem; margin: .8rem 0 1rem; }
+.msg { display: grid; grid-template-columns: 2.3rem 1fr; gap: .7rem; align-items: start; }
+.briefing.typing .msg { animation: radio .45s backwards; }
+@keyframes radio { from { opacity: 0; transform: translateY(6px); } }
+.msg .ava { width: 2.3rem; height: 2.3rem; border-radius: 50%; display: grid; place-items: center; font: 700 1rem var(--display); background: var(--kapton); color: #2a1b00; }
+.msg.capcom .ava { background: var(--el-bg); color: var(--el); border: 1px solid #000; box-shadow: 0 0 8px rgba(141, 252, 158, .3); }
+.msg .bubble { background: var(--soft); border: 1px solid var(--line); border-radius: 4px 10px 10px 10px; padding: .5rem .75rem; font-size: .98rem; line-height: 1.5; }
+.msg .who { display: block; font-weight: 800; font-size: .78rem; color: var(--muted); margin-bottom: .1rem; }
+.msg.capcom .bubble { font-family: var(--mono); font-size: .9rem; color: var(--el); background: var(--el-bg); border-color: #000; }
+.msg.capcom .who { font-family: var(--font); color: #6f8f77; }
+.b-task { background: var(--hint-bg); border-left: 4px solid var(--warn); border-radius: 0 8px 8px 0; padding: .6rem .85rem; }
+.b-task b { color: var(--warn); }
+
+/* ---------- výhra ---------- */
+.modal.win .modal-box { max-width: 660px; border-color: rgba(255, 201, 74, .5); }
+.granted { display: inline-block; font: 700 1.35rem/1.2 var(--display); color: var(--el); background: var(--el-bg); border: 1px solid #000; border-radius: 8px; padding: .35rem 1rem; margin-bottom: .7rem; text-shadow: 0 0 10px rgba(141, 252, 158, .5); }
+.reward { text-align: left; background: var(--el-bg); color: var(--el); font-family: var(--mono); font-size: .92rem; border: 1px solid #000; border-radius: var(--radius-sm); padding: .65rem .85rem; }
+
+/* ---------- výsledky ---------- */
+.errlist { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+.errlist span { font: .82rem var(--mono); border: 1px solid var(--line); border-radius: 99px; padding: .15rem .6rem; color: var(--ink2); }
+.errlist span b { color: var(--bad); }
+
+/* ---------- velké obrazovky: simulace vyplní výšku sloupce ---------- */
+@media (min-width: 1100px) and (min-height: 640px) {
+  .ws-screen.fit .flight-col { overflow: hidden; }
+  .ws-screen.fit .flight { flex: 1 1 auto; min-height: 0; }
+  .ws-screen.fit .fv-wrap { flex: 1 1 auto; height: auto; min-height: 170px; }
+}
+@media (min-width: 1100px) and (max-height: 780px) {
+  .ws-screen.fit .code-pane .results { max-height: 26vh; }
+  .brief-strip .task { font-size: 1rem; }
+  .rules { margin-top: .35rem; }
+  .flight { gap: .45rem; padding: .6rem .7rem .7rem; }
+  .graph { height: 70px; }
+  .dsky .cell { padding: .2rem .5rem .26rem; }
+  .dsky .cell b { font-size: 1.12rem; }
+  .lamp { padding: .4rem .45rem; }
+}
+@media (max-width: 640px) {
+  .fl-ctrl { margin-left: 0; width: 100%; }
+  .fl-ctrl .speed { flex: 1; }
+  .fl-ctrl .speed button { flex: 1; }
+  .dsky .cell { flex-basis: 30%; min-width: 0; }
+  .lamps { flex-basis: 100%; grid-template-columns: repeat(3, 1fr); }
+  .window canvas { height: 230px; }
+  .demo-tag { font-size: .75rem; left: 16px; bottom: 14px; }
+}

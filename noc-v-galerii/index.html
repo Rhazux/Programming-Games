@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noc v galerii – obrazy namalované v CSS</title>
+  <meta name="description" content="Vzdělávací hra: v noci zmizely z obrazů barvy a ty je do rána namaluješ znovu v CSS. Hra porovná tvé plátno s katalogem pixel po pixelu.">
+  <meta name="theme-color" content="#2a1218">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect x=%224%22 y=%228%22 width=%2256%22 height=%2248%22 rx=%223%22 fill=%22%23d4af5a%22/><rect x=%2211%22 y=%2215%22 width=%2242%22 height=%2234%22 fill=%22%23f3e3c3%22/><circle cx=%2232%22 cy=%2228%22 r=%228%22 fill=%22%23e2673f%22/><path d=%22M11 49 Q32 30 53 49Z%22 fill=%22%237d9a78%22/></svg>">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">Přeskočit na obsah</a>
+  <header class="topbar">
+    <button class="brand" id="homeBtn" title="Úvod">
+      <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="8" width="56" height="48" rx="3" fill="#d4af5a"/><rect x="11" y="15" width="42" height="34" fill="#f3e3c3"/><circle cx="32" cy="28" r="8" fill="#e2673f"/><path d="M11 49 Q32 30 53 49Z" fill="#7d9a78"/></svg>
+      <span class="brand-text">Noc v galerii</span>
+    </button>
+    <nav class="crumb" id="crumb" aria-label="Kde jsi"></nav>
+    <div class="top-actions">
+      <span class="top-stat clock" id="topClock" title="Čas v galerii: každý obnovený obraz posune noc o 40 minut"><span class="ico" aria-hidden="true">🕰️</span>22:00</span>
+      <span class="top-stat" id="topStars" title="Získané hvězdy"><span class="ico" aria-hidden="true">★</span>0/36</span>
+      <button class="icon-btn" id="mapBtn" hidden><span aria-hidden="true">🗺️</span> <span class="lbl">Plán výstavy</span></button>
+      <button class="icon-btn" id="soundBtn" aria-pressed="true" title="Zvuk" aria-label="Zvuk">🔊</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+  <div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+
+  <noscript><p style="padding:2rem;text-align:center">Hra potřebuje zapnutý JavaScript.</p></noscript>
+
+  <script src="js/kit.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/painter.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/lesson.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

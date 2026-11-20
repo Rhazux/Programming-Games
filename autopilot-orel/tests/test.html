@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <title>Autopilot Orel – automatické testy</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; margin: 1.5rem; background: #1b1d21; color: #eceae4; }
+    h1, h2 { font-family: ui-monospace, Consolas, monospace; }
+    .ok { color: #79e08f; } .bad { color: #ff5a4a; font-weight: 700; }
+    .summary { font-size: 1.3rem; font-weight: 800; margin: 0 0 1rem; padding: .6rem 1rem; border-radius: 10px; background: #0c120e; }
+  </style>
+</head>
+<body>
+  <h1>🌕 Autopilot Orel – automatické testy</h1>
+  <p>1) Fyzika letu: vznášení, spotřeba paliva, přistání, porucha motoru, alarm 1202.
+     2) Každá úroveň: vzorové řešení proletí všemi lety a splní bonus, výchozí kód a typické chyby neprojdou.
+     3) Vstupní a výstupní test mají stejné dovednosti a platné odpovědi.</p>
+  <div id="summary" class="summary">⏳ Testy běží…</div>
+  <div id="out">Běží…</div>
+  <script src="../js/python.js"></script>
+  <script src="../js/sim.js"></script>
+  <script src="../js/levels.js"></script>
+  <script src="../js/lessons.js"></script>
+  <script src="lessons-check.js"></script>
+  <script src="test.js"></script>
+</body>
+</html>

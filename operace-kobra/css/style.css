@@ -1,0 +1,196 @@
+/*
+ * Operace Kobra – vzhled „spis tajné služby“
+ * Noční modrá operačního střediska, žlutá a modrá z loga Pythonu,
+ * zadání mise jako papírový spis (manila) psaný patkovým písmem Bitter.
+ */
+@font-face { font-family: "Bitter"; src: url("../fonts/bitter.woff") format("woff"); font-weight: 500 900; font-display: swap; }
+
+:root {
+  --display: "Bitter", Georgia, "Times New Roman", serif;
+  --display-weight: 800;
+  --display-case: none;
+  --display-track: -.01em;
+
+  --bg: #0e1828;
+  --ink: #eef3fb;
+  --ink2: #c3cfe3;
+  --muted: #95a4bf;
+  --line: #243652;
+  --frame: #243652;
+  --card: #142238;
+  --soft: #1b2c47;
+  --btn: #1e3150;
+  --btn-ink: #eef3fb;
+  --topbar: rgba(11, 20, 34, .94);
+
+  --accent: #ffd43b;
+  --accent-ink: #1f1800;
+  --accent-soft: rgba(255, 212, 59, .22);
+  --py-blue: #5a9bd5;
+  --primary: #ffd43b;
+  --primary-ink: #1f1800;
+  --go: #ffd43b;
+  --go-ink: #1f1800;
+  --good: #5fd38d;
+  --good-ink: #05200f;
+  --good-soft: rgba(95, 211, 141, .1);
+  --bad: #ff6b5e;
+  --bad-soft: rgba(255, 107, 94, .1);
+  --warn: #ffb347;
+  --pill-bg: rgba(255, 212, 59, .1);
+  --pill-line: rgba(255, 212, 59, .4);
+
+  --manila: #eadbb0;
+  --manila-2: #e1cf9c;
+  --manila-ink: #2c2311;
+  --manila-muted: #5c4f32;
+  --manila-line: #c9b276;
+  --stamp: #9f2b23;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --lift: 0 14px 34px rgba(0, 0, 0, .32);
+  --lift-sm: 0 4px 14px rgba(0, 0, 0, .25);
+
+  --code-bg: #0a1220;
+  --code-line: #22334e;
+  --code-bg-inline: rgba(90, 155, 213, .18);
+  --code-ink: #e3ebf7;
+  --gutter: #08101c;
+  --gutter-ink: #6b81a9;
+  --caret: #ffd43b;
+  --selection: rgba(90, 155, 213, .4);
+  --tk-kw: #c792ea;
+  --tk-fn: #82aaff;
+  --tk-builtin: #ffd43b;
+  --tk-num: #f9a26c;
+  --tk-str: #b5e48c;
+  --tk-com: #7083a5;
+  --tk-op: #89ddff;
+  --tk-prop: #82aaff;
+  --tk-sel: #c792ea;
+  --tk-val: #b5e48c;
+  --tk-tag: #c792ea;
+  --tk-attr: #ffd43b;
+  --chip-bg: #0a1220;
+  --chip-ink: #82aaff;
+  --star: #ffd43b;
+  --star-off: #34486b;
+  --console-bg: #08101c;
+  --console-ink: #dbe6f5;
+  --hint-bg: rgba(255, 179, 71, .1);
+  --input: #0a1220;
+  --ed-min: 200px;
+  --ed-max: 420px;
+  --next-label: "Další";
+  --bad-ink: #2a0606;
+}
+
+body { background: radial-gradient(1200px 500px at 85% -10%, rgba(90, 155, 213, .16), transparent 70%) no-repeat, var(--bg); }
+
+/* lišta */
+.brand .brand-text { font-size: 1.2rem; }
+.brand .brand-text b { font-weight: inherit; }
+
+/* úvod */
+.intro-copy .logo { line-height: .98; }
+.intro-copy .logo b { display: block; font-weight: inherit; }
+.boot-wrap { position: relative; }
+.boot { font: .98rem/1.65 var(--mono); background: var(--code-bg); border: 1px solid var(--code-line); border-radius: var(--radius); padding: 1.1rem 1.3rem; min-height: 250px; text-align: left; box-shadow: var(--lift); color: var(--console-ink); }
+.boot .term-bar { display: flex; gap: .4rem; margin: -.2rem 0 .8rem; }
+.boot .term-bar i { width: .7rem; height: .7rem; border-radius: 50%; background: #ff6b5e; }
+.boot .term-bar i:nth-child(2) { background: #ffd43b; }
+.boot .term-bar i:nth-child(3) { background: #5fd38d; }
+.boot div { white-space: pre-wrap; animation: fade .25s; }
+.boot .ok { color: var(--good); }
+.boot .warn { color: var(--warn); }
+.boot .bad { color: var(--bad); }
+.cursor { display: inline-block; width: .6em; height: 1.1em; background: var(--accent); vertical-align: -.15em; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.stamp { position: absolute; right: -10px; top: -22px; transform: rotate(8deg); border: 4px solid var(--stamp); color: var(--stamp); background: rgba(234, 219, 176, .94); border-radius: 8px; padding: .25rem .9rem; font: 900 1.1rem/1.2 var(--display); letter-spacing: .06em; box-shadow: 0 6px 16px rgba(0, 0, 0, .35); }
+
+/* mapa */
+.track .t-ico { background: var(--soft); }
+.track.s1 .t-ico { border-color: var(--accent); }
+.track.s2 .t-ico { border-color: var(--py-blue); }
+.track.s3 .t-ico { border-color: var(--bad); }
+.node .n-sub { font-family: var(--mono); font-size: .76rem; }
+.next-up { border-color: var(--accent); }
+
+/* mise – spis */
+.dossier { --muted: var(--manila-muted); position: relative; margin-top: 15px; background: linear-gradient(var(--manila), var(--manila-2)); color: var(--manila-ink); border: 1px solid var(--manila-line); border-radius: 4px var(--radius) var(--radius) var(--radius); padding: 1.1rem 1.2rem 1.15rem; box-shadow: var(--lift); }
+.dossier::before { content: ""; position: absolute; left: -1px; top: -14px; width: 38%; height: 15px; background: var(--manila); border: 1px solid var(--manila-line); border-bottom: 0; border-radius: 8px 8px 0 0; }
+.dossier .panel-h { color: var(--manila-ink); font-family: var(--display); font-size: 1.05rem; }
+.dossier .panel-h small { color: var(--manila-muted); }
+.dossier code { background: rgba(44, 35, 17, .1); color: var(--manila-ink); }
+.dossier .task-box { background: #fff8e0; border: 2px solid var(--manila-ink); border-radius: var(--radius-sm); padding: .8rem .95rem; margin-top: .9rem; }
+.dossier .task-box .task { font-size: 1.08rem; font-weight: 600; margin: 0; }
+.dossier .task-box .task b { color: var(--stamp); }
+.dossier .task-box pre.code { margin: .6rem 0 0; font-size: .95rem; }
+.dossier .brief-actions .btn { background: #fff8e0; color: var(--manila-ink); border-color: var(--manila-line); }
+.dossier .brief-actions .btn.ghost { background: transparent; }
+.dossier .hint { background: #fff3cf; color: var(--manila-ink); border-left-color: var(--warn); }
+.dossier .hint b { color: #a0560a; }
+.comms { display: grid; gap: .55rem; }
+.msg { display: grid; grid-template-columns: 2.1rem 1fr; gap: .6rem; align-items: start; animation: fade .3s; }
+.msg .ava { width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center; font: 800 .95rem var(--display); background: var(--manila-ink); color: var(--manila); }
+.msg .bubble { font-size: .97rem; line-height: 1.5; }
+.msg .who { display: block; font-weight: 800; font-size: .8rem; color: var(--manila-muted); margin-bottom: .05rem; }
+.msg.sakal .ava { background: var(--stamp); color: #fff; }
+.msg.sakal .bubble { font-family: var(--mono); font-size: .92rem; color: #7d1d15; background: rgba(195, 53, 43, .08); border-left: 3px solid var(--stamp); padding: .35rem .6rem; border-radius: 0 6px 6px 0; }
+.typing { color: var(--manila-muted); font-size: .9rem; font-style: italic; }
+.typing::after { content: "▋"; animation: blink 1s steps(1) infinite; font-style: normal; }
+.skip { background: none; border: 0; color: var(--manila-muted); font: 700 .85rem var(--font); cursor: pointer; text-decoration: underline; justify-self: end; }
+
+.examples { width: 100%; border-collapse: collapse; font: .9rem var(--mono); }
+.examples td { padding: .4rem .45rem; border-bottom: 1px solid var(--line); vertical-align: top; word-break: break-word; }
+.examples tr:last-child td { border-bottom: 0; }
+.examples td.arrow { color: var(--muted); width: 1.4rem; }
+.examples td.exp { color: var(--tk-str); }
+.data-pre { max-height: 260px; overflow: auto; font-size: .82rem; margin: .4rem 0 0; }
+details.panel summary { cursor: pointer; font-weight: 800; }
+
+.file-head .dots i { display: inline-block; width: .65rem; height: .65rem; border-radius: 50%; margin-right: .25rem; background: #ff6b5e; }
+.file-head .dots i:nth-child(2) { background: #ffd43b; }
+.file-head .dots i:nth-child(3) { background: #5fd38d; }
+.terminal { background: var(--console-bg); border: 1px solid var(--code-line); border-radius: var(--radius-sm); padding: .6rem .85rem; font: .88rem/1.55 var(--mono); color: var(--console-ink); min-height: 52px; }
+.terminal .prompt { color: var(--muted); }
+.terminal .prompt b { color: var(--accent); font-weight: 400; }
+.terminal .out { white-space: pre-wrap; word-break: break-word; }
+.terminal .err { color: var(--bad); white-space: pre-wrap; }
+.terminal .ok { color: var(--good); }
+.explain { background: rgba(255, 107, 94, .1); border-left: 3px solid var(--bad); padding: .45rem .7rem; border-radius: 0 6px 6px 0; margin: .4rem 0; font-family: var(--font); font-size: .93rem; color: var(--ink); }
+.explain b { color: #ffb3ab; }
+.tests { display: grid; gap: .35rem; }
+.tests:empty { display: none; }
+.tests .sum { font-weight: 800; }
+.test { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .45rem .65rem; font: .86rem/1.5 var(--mono); background: var(--code-bg); }
+.test.pass { border-color: rgba(95, 211, 141, .4); }
+.test.fail { border-color: rgba(255, 107, 94, .6); }
+.test .st { font-weight: 700; margin-right: .4rem; }
+.test.fail:has(.tb) { display: flex; align-items: flex-start; }
+.test .tb { flex: 1; min-width: 0; }
+.test.pass .st { color: var(--good); }
+.test.fail .st { color: var(--bad); }
+.test .meta { color: var(--muted); font-family: var(--font); font-size: .85rem; }
+.test .why { font-family: var(--font); font-size: .92rem; color: var(--warn); margin-top: .2rem; }
+.test .gotline { word-break: break-word; }
+
+/* výhra */
+.modal.win .modal-box { max-width: 660px; border-color: rgba(255, 212, 59, .45); }
+.granted { display: inline-block; font: 900 1.3rem/1.2 var(--display); color: var(--good); border: 3px solid var(--good); border-radius: 8px; padding: .2rem .8rem; transform: rotate(-3deg); margin-bottom: .7rem; letter-spacing: .04em; }
+.reward { text-align: left; background: var(--manila); color: var(--manila-ink); border-radius: var(--radius-sm); padding: .65rem .85rem; font-size: .96rem; }
+
+/* výsledky */
+.errlist { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+.errlist span { font: .82rem var(--mono); border: 1px solid var(--line); border-radius: 99px; padding: .15rem .6rem; color: var(--ink2); }
+.errlist span b { color: var(--bad); }
+
+@media (max-width: 640px) {
+  .stamp { right: 6px; top: -16px; font-size: .9rem; }
+  .boot { min-height: 0; font-size: .85rem; }
+}
+
+.dossier .bonus-line { color: var(--manila-muted); }
+.dossier .bonus-line b { color: var(--manila-ink); }
+.dossier .bonus-line .bl-star { color: #8a6400; }
