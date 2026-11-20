@@ -13,8 +13,8 @@
 
   --bg: #08342a;
   --ink: #f3f4ea;
-  --ink2: #cfe2d4;
-  --muted: #b0cec0;
+  --ink2: #d3e6d8;
+  --muted: #cbe8da;
   --line: #1b6550;
   --frame: #1b6550;
   --card: #0d4535;
@@ -25,7 +25,7 @@
 
   --accent: #f0b43c;
   --accent-ink: #2a1800;
-  --accent-soft: rgba(240, 180, 60, .25);
+  --accent-soft: rgba(240, 180, 60, .14);
   --primary: #f0b43c;
   --primary-ink: #2a1800;
   --go: #f0b43c;
@@ -50,16 +50,16 @@
   --code-bg-inline: rgba(240, 180, 60, .16);
   --code-ink: #e9efe6;
   --gutter: #080e0d;
-  --gutter-ink: #618778;
+  --gutter-ink: #83a698;
   --caret: #f0b43c;
   --selection: rgba(126, 240, 178, .3);
   --tk-kw: #d7a6ff;
   --tk-fn: #f0b43c;
   --tk-num: #ff9f5a;
   --tk-str: #ffb0d0;
-  --tk-com: #6f9183;
+  --tk-com: #85a598;
   --tk-op: #e9efe6;
-  --tk-cmd: #6fe0ff;
+  --tk-cmd: #8ef6ff;
   --tk-sen: #a8f06a;
   --chip-bg: #0b1311;
   --star: #ffd166;
@@ -67,7 +67,7 @@
   --console-bg: #080e0d;
   --console-ink: #e9efe6;
   --console-muted: #93b4a6;
-  --hint-bg: rgba(255, 209, 102, .1);
+  --hint-bg: rgba(255, 209, 102, .06);
   --input: #0b1311;
   --ed-min: 200px;
   --ed-max: 400px;
@@ -97,11 +97,11 @@ body {
     #0b4031; }
 .hero-bot { width: 190px; height: 190px; display: block; }
 .code-teaser { text-align: left; white-space: pre; font: .95rem/1.55 var(--mono); background: var(--code-bg); border: 1px solid #000; border-radius: 10px; padding: .7rem 1rem; box-shadow: 0 10px 24px rgba(0, 0, 0, .4); color: var(--code-ink); }
-.chip-label { position: absolute; left: 14px; top: 14px; font: .78rem var(--mono); color: rgba(243, 244, 234, .7); border: 1px solid rgba(243, 244, 234, .35); border-radius: 4px; padding: .1rem .45rem; }
+.chip-label { position: absolute; left: 14px; top: 14px; font: .78rem var(--mono); color: rgba(243, 244, 234, .9); border: 1px solid rgba(243, 244, 234, .35); border-radius: 4px; padding: .1rem .45rem; }
 
 /* mapa */
 .node .n-sub { font-family: var(--mono); }
-.node.boss .n-title { color: #d7a6ff; }
+.node.boss .n-title { color: #edbfff; }
 .track .t-ico { background: var(--code-bg); border-color: #000; }
 
 /* mise */
@@ -151,7 +151,7 @@ body {
 
 /* příručka */
 .hb { margin-bottom: 1.1rem; }
-.hb h3 { color: var(--accent); margin-bottom: .45rem; }
+.hb h3 { color: var(--accent-text); margin-bottom: .45rem; }
 .api { list-style: none; padding: 0; margin: 0 0 .5rem; display: grid; gap: .35rem; }
 .api code { margin-right: .4rem; }
 
@@ -161,3 +161,5 @@ body {
   .code-teaser { font-size: .78rem; }
   .speed { margin-left: 0; }
 }
+.meters .m-label { font-size: .86rem; font-weight: 700; color: var(--ink2); }
+:root { --accent-text: #ffd978; }

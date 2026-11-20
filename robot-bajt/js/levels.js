@@ -125,7 +125,7 @@
       palette: ['krok', 'vlevo', 'vpravo'],
       starter: '// Napiš příkazy pro robota – každý na nový řádek.\n// Spusť program tlačítkem ▶ nebo Ctrl + Enter.\nkrok();\n',
       solution: 'krok();\nkrok();\nkrok();\nkrok();',
-      hints: ['Robot musí udělat 4 kroky. Jeden už v programu máš.', 'Zkopíruj řádek krok(); ještě třikrát.']
+      hints: ['Robot musí udělat 4 kroky. Jeden už v programu máš.', 'Zkopíruj řádek `krok();` ještě třikrát.']
     },
     {
       id: '1-2', chapter: 1, title: 'Zatáčka', concepts: ['sekvence'],
@@ -136,7 +136,7 @@
       palette: ['krok', 'vlevo', 'vpravo'],
       starter: 'krok();\nkrok();\n',
       solution: 'krok();\nkrok();\nvpravo();\nkrok();\nkrok();\nvlevo();\nkrok();\nkrok();',
-      hints: ['vpravo() a vlevo() robota jen otočí, nikam nejde. Pak teprve krok().', 'Doprava, když se robot dívá na východ, znamená otočit se dolů (na jih).']
+      hints: ['`vpravo()` a `vlevo()` robota jen otočí, nikam nejde. Pak teprve `krok()`.', 'Doprava, když se robot dívá na východ, znamená otočit se dolů (na jih).']
     },
     {
       id: '1-3', chapter: 1, title: 'Sběr bitů', concepts: ['sekvence'],
@@ -147,14 +147,14 @@
       palette: ['krok', 'vlevo', 'vpravo', 'seber'],
       starter: 'krok();\nseber();\n',
       solution: 'krok();\nseber();\nkrok();\nkrok();\nseber();\nkrok();\nkrok();\nseber();\nkrok();\nvpravo();\nkrok();',
-      hints: ['seber() funguje jen na poli, kde bit leží – nejdřív na něj dojeď.', 'Na konci chodby se otoč vpravo a udělej poslední krok.']
+      hints: ['`seber()` funguje jen na poli, kde bit leží – nejdřív na něj dojeď.', 'Na konci chodby se otoč vpravo a udělej poslední krok.']
     },
 
     /* ===== Kapitola 2: Cyklus for ===== */
     {
       id: '2-1', chapter: 2, title: 'Dlouhá chodba', concepts: ['for'],
       story: 'Nekonečně dlouhá datová sběrnice. Psát dvanáctkrát krok() by byla nuda.',
-      task: 'Dojeď na nabíječku ⚡. Na ⭐ za krátký kód použij cyklus for.',
+      task: 'Dojeď na nabíječku ⚡. Na ⭐ za krátký kód použij cyklus `for`.',
       spec: { map: ['###############', '#>...........G#', '###############'] },
       battery: 40, sizeStar: 2, stepStar: 12,
       palette: ['krok', 'vlevo', 'vpravo', 'for'],
@@ -171,7 +171,7 @@
       palette: ['krok', 'vlevo', 'vpravo', 'for'],
       starter: '',
       solution: 'for (let i = 0; i < 5; i++) {\n  krok();\n  vlevo();\n  krok();\n  vpravo();\n}',
-      hints: ['Jeden schod = krok dopředu, otočit nahoru, krok nahoru, otočit zpátky.', 'Ty čtyři příkazy dej do cyklu for, který se zopakuje 5×.']
+      hints: ['Jeden schod = krok dopředu, otočit nahoru, krok nahoru, otočit zpátky.', 'Ty čtyři příkazy dej do cyklu `for`, který se zopakuje 5×.']
     },
     {
       id: '2-3', chapter: 2, title: 'O jeden víc', concepts: ['for', 'offbyone'], debug: true,
@@ -182,7 +182,7 @@
       palette: ['krok', 'for'],
       starter: '// 🐞 Tenhle program je rozbitý: robot narazí do zdi.\n// Najdi chybu a oprav ji.\nfor (let i = 0; i <= 6; i++) {\n  krok();\n}\n',
       solution: 'for (let i = 0; i < 6; i++) {\n  krok();\n}',
-      hints: ['Kolikrát se provede cyklus, když i jde od 0 a podmínka je i <= 6?', 'Hodnoty 0, 1, 2, 3, 4, 5, 6 – to je 7 opakování. Potřebuješ jich 6.']
+      hints: ['Kolikrát se provede cyklus, když `i` jde od `0` a podmínka je `i <= 6`?', 'Hodnoty 0, 1, 2, 3, 4, 5, 6 – to je 7 opakování. Potřebuješ jich 6.']
     },
     {
       id: '2-4', chapter: 2, title: 'Čtverec', concepts: ['for', 'vnoreny'],
@@ -193,7 +193,7 @@
       palette: ['krok', 'vlevo', 'vpravo', 'seber', 'for'],
       starter: '',
       solution: 'for (let s = 0; s < 4; s++) {\n  for (let i = 0; i < 4; i++) {\n    krok();\n    seber();\n  }\n  vpravo();\n}',
-      hints: ['Jedna strana čtverce = 4× (krok + seber). Stran jsou 4 a po každé se otočíš vpravo.', 'Vnořený cyklus: for uvnitř for. Vnější cyklus = strany, vnitřní = kroky po straně.']
+      hints: ['Jedna strana čtverce = 4× (`krok()` + `seber()`). Stran jsou 4 a po každé se otočíš vpravo.', 'Vnořený cyklus: `for` uvnitř `for`. Vnější cyklus = strany, vnitřní = kroky po straně.']
     },
 
     /* ===== Kapitola 3: Podmínky ===== */
@@ -207,7 +207,7 @@
       palette: ['krok', 'seber', 'for', 'if', 'jeBit'],
       starter: 'for (let i = 0; i < 9; i++) {\n  krok();\n  // seber bit, jen když tu nějaký leží\n}\n',
       solution: 'for (let i = 0; i < 9; i++) {\n  krok();\n  if (jeBit()) {\n    seber();\n  }\n}',
-      hints: ['seber() na prázdném poli je chyba. Zeptej se senzoru jeBit().', 'Uvnitř cyklu: if (jeBit()) { seber(); }']
+      hints: ['`seber()` na prázdném poli je chyba. Zeptej se senzoru `jeBit()`.', 'Uvnitř cyklu: `if (jeBit()) { seber(); }`']
     },
     {
       id: '3-2', chapter: 3, title: 'Zap!', concepts: ['if'],
@@ -228,7 +228,7 @@
       palette: ['krok', 'seber', 'zap', 'for', 'if', 'jeBit', 'jeBug'],
       starter: 'for (let i = 0; i < 9; i++) {\n  krok();\n  if (jeBit()) {\n    seber();\n  }\n}\n',
       solution: 'for (let i = 0; i < 9; i++) {\n  if (jeBug()) {\n    zap();\n  }\n  krok();\n  if (jeBit()) {\n    seber();\n  }\n}',
-      hints: ['jeBug() se dívá na pole PŘED robotem. Zeptej se ho dřív, než uděláš krok.', 'Před krok(); přidej: if (jeBug()) { zap(); }']
+      hints: ['`jeBug()` se dívá na pole PŘED robotem. Zeptej se ho dřív, než uděláš krok.', 'Před `krok();` přidej: `if (jeBug()) { zap(); }`']
     },
     {
       id: '3-3', chapter: 3, title: 'Rozcestí', concepts: ['if', 'else'],
@@ -245,7 +245,7 @@
       palette: ['krok', 'vlevo', 'vpravo', 'for', 'if', 'else', 'vlevoVolno', 'vpravoVolno'],
       starter: 'for (let i = 0; i < 3; i++) {\n  krok();\n}\n// tady se rozhodni: doleva, nebo doprava?\n',
       solution: 'for (let i = 0; i < 3; i++) {\n  krok();\n}\nif (vlevoVolno()) {\n  vlevo();\n} else {\n  vpravo();\n}\nfor (let i = 0; i < 3; i++) {\n  krok();\n}',
-      hints: ['Senzor vlevoVolno() řekne, jestli je po levé ruce cesta.', 'if (vlevoVolno()) { vlevo(); } else { vpravo(); } – a pak ještě 3 kroky.']
+      hints: ['Senzor `vlevoVolno()` řekne, jestli je po levé ruce cesta.', '`if (vlevoVolno()) { vlevo(); } else { vpravo(); }` – a pak ještě 3 kroky.']
     },
 
     /* ===== Kapitola 4: Cyklus while ===== */
@@ -259,12 +259,12 @@
       palette: ['krok', 'while', 'jeCil', 'jeZed', 'jeVolno', 'not'],
       starter: '// Opakuj, dokud robot není v cíli\n',
       solution: 'while (!jeCil()) {\n  krok();\n}',
-      hints: ['while (podmínka) { … } opakuje, dokud podmínka platí.', 'while (!jeCil()) { krok(); } – „dokud nejsi v cíli, jdi“.']
+      hints: ['`while (podmínka) { … }` opakuje, dokud podmínka platí.', '`while (!jeCil()) { krok(); }` – „dokud nejsi v cíli, jdi“.']
     },
     {
       id: '4-2', chapter: 4, title: 'Laserová brána', concepts: ['while'],
       story: 'Bezpečnostní lasery se zapínají a vypínají. Vjet do zapnutého laseru = spálené obvody.',
-      task: 'Proklouzni lasery až na nabíječku ⚡. Senzor laser() hlídá pole před tebou.',
+      task: 'Proklouzni lasery až na nabíječku ⚡. Senzor `laser()` hlídá pole před tebou.',
       gen: r => {
         const n = 10;
         const tiles = Array(n).fill('.');
@@ -282,7 +282,7 @@
       palette: ['krok', 'cekej', 'while', 'jeCil', 'laser', 'not'],
       starter: 'while (!jeCil()) {\n  krok();\n}\n',
       solution: 'while (!jeCil()) {\n  while (laser()) {\n    cekej();\n  }\n  krok();\n}',
-      hints: ['Před každým krokem: dokud je laser před tebou zapnutý, čekej.', 'Uvnitř cyklu: while (laser()) { cekej(); } a teprve pak krok();']
+      hints: ['Před každým krokem: dokud je laser před tebou zapnutý, čekej.', 'Uvnitř cyklu: `while (laser()) { cekej(); }` a teprve pak `krok();`']
     },
     {
       id: '4-3', chapter: 4, title: 'Zacyklený robot', concepts: ['while', 'nekonecny'], debug: true,
@@ -294,14 +294,14 @@
       palette: ['krok', 'seber', 'while', 'if', 'jeCil', 'jeBit', 'not'],
       starter: '// 🐞 Robot se zasekl a točí se pořád dokola.\n// Najdi chybu a oprav ji.\nwhile (!jeCil()) {\n  if (jeBit()) {\n    seber();\n  }\n}\n',
       solution: 'while (!jeCil()) {\n  krok();\n  if (jeBit()) {\n    seber();\n  }\n}',
-      hints: ['Mění se uvnitř cyklu něco, co jednou ukončí podmínku !jeCil()?', 'Robot se v cyklu vůbec nehne. Chybí mu krok();']
+      hints: ['Mění se uvnitř cyklu něco, co jednou ukončí podmínku `!jeCil()`?', 'Robot se v cyklu vůbec nehne. Chybí mu `krok();`']
     },
 
     /* ===== Kapitola 5: Funkce a proměnné ===== */
     {
       id: '5-1', chapter: 5, title: 'Vlastní příkaz', concepts: ['funkce'],
       story: 'V chodbě stojí firewally. Každý se dá obejít stejným manévrem horem – ideální práce pro vlastní funkci.',
-      task: 'Dojeď na nabíječku ⚡. Podmínka: napiš a použij vlastní funkci (function).',
+      task: 'Dojeď na nabíječku ⚡. Podmínka: napiš a použij vlastní funkci (`function`).',
       requireFunction: true,
       gen: r => {
         const len = 14;
@@ -321,12 +321,12 @@
       palette: ['krok', 'vlevo', 'vpravo', 'while', 'if', 'else', 'jeCil', 'jeZed', 'function', 'not'],
       starter: 'function obejdi() {\n  // sem napiš manévr kolem firewallu\n}\n\nwhile (!jeCil()) {\n  krok();\n}\n',
       solution: 'function obejdi() {\n  vlevo();\n  krok();\n  vpravo();\n  krok();\n  krok();\n  vpravo();\n  krok();\n  vlevo();\n}\n\nwhile (!jeCil()) {\n  if (jeZed()) {\n    obejdi();\n  } else {\n    krok();\n  }\n}',
-      hints: ['Obejití: nahoru, dva kroky vpravo, zase dolů. Robot se při tom musí správně otáčet.', 'V cyklu: if (jeZed()) { obejdi(); } else { krok(); }']
+      hints: ['Obejití: nahoru, dva kroky vpravo, zase dolů. Robot se při tom musí správně otáčet.', 'V cyklu: `if (jeZed()) { obejdi(); } else { krok(); }`']
     },
     {
       id: '5-2', chapter: 5, title: 'Inventura', concepts: ['promenne'],
       story: 'Správce systému chce vědět, kolik bitů robot sebral. Robot si to musí pamatovat – v proměnné.',
-      task: 'Seber všechny bity 💠, dojeď na nabíječku ⚡ a nakonec ohlas, kolik bitů jsi sebral(a): ohlas(pocet);',
+      task: 'Seber všechny bity 💠, dojeď na nabíječku ⚡ a nakonec ohlas, kolik bitů jsi sebral(a): `ohlas(pocet);`',
       check: 'bitCount',
       gen: r => corridor(pickBits(r, randInt(r, 6, 11), 0.45, 1, 7)),
       seeds: [61, 62, 63], randomTests: 2,
@@ -334,7 +334,7 @@
       palette: ['krok', 'seber', 'ohlas', 'while', 'if', 'jeCil', 'jeBit', 'let', 'not'],
       starter: 'let pocet = 0;\n\nwhile (!jeCil()) {\n  krok();\n  if (jeBit()) {\n    seber();\n  }\n}\n',
       solution: 'let pocet = 0;\nwhile (!jeCil()) {\n  krok();\n  if (jeBit()) {\n    seber();\n    pocet++;\n  }\n}\nohlas(pocet);',
-      hints: ['Pokaždé, když sebereš bit, zvyš počítadlo: pocet++;', 'Úplně na konci programu (za cyklem) zavolej ohlas(pocet);']
+      hints: ['Pokaždé, když sebereš bit, zvyš počítadlo: `pocet++;`', 'Úplně na konci programu (za cyklem) zavolej `ohlas(pocet);`']
     },
     {
       id: '5-3', chapter: 5, title: 'Velký Bug', concepts: ['algoritmus', 'while', 'if'], boss: true,
@@ -348,7 +348,7 @@
       solution: 'while (!jeCil()) {\n  if (vpravoVolno()) {\n    vpravo();\n  } else {\n    while (jeZed()) {\n      vlevo();\n    }\n  }\n  while (jeBug()) {\n    zap();\n  }\n  krok();\n}',
       hints: [
         'Pravidlo pravé ruky: když je vpravo volno, otoč se vpravo. Jinak se otáčej vlevo, dokud máš před sebou zeď. Pak udělej krok.',
-        'Před každým krokem: while (jeBug()) { zap(); } – Velký Bug vydrží 3 zásahy.'
+        'Před každým krokem: `while (jeBug()) { zap(); }` – Velký Bug vydrží 3 zásahy.'
       ]
     }
   ];

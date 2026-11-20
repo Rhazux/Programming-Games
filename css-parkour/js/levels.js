@@ -86,7 +86,7 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
     {
       id: 1, world: 1, title: 'Most', concept: 'width',
       story: 'Pixel se probudil na okraji stránky. K vlajce vede most přes lávu – jenže má nulovou šířku.',
-      task: 'Nastav mostu (.bridge) takovou šířku, aby sahal přes celou lávu.',
+      task: 'Nastav mostu (`.bridge`) takovou šířku (`width`), aby sahal přes celou lávu.',
       fixed: [G('g1', 0, 300, 220, 100), G('g2', 540, 300, 260, 100), LAVA('l1', 220, 352, 320, 48), START(16, 264), FLAG(742, 240), COIN('c1', 330, 270), COIN('c2', 430, 270)],
       html: '<div class="bridge solid"></div>',
       css: '.bridge {\n  position: absolute;\n  left: 220px;\n  top: 300px;\n  height: 18px;\n  width: 0;\n}',
@@ -96,12 +96,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.bridge {\n  width: 320;\n}', '.bridge {\n  width: 150px;\n}'],
       maxDecl: 1,
       props: ['width: 100px;', 'height: 20px;'],
-      hints: ['Láva začíná na x = 220 px a končí na x = 540 px. Kolik je to pixelů?', 'Napiš do pravidla .bridge řádek width: 320px; – nezapomeň na jednotku px.']
+      hints: ['Láva začíná na x = 220 px a končí na x = 540 px. Kolik je to pixelů?', 'Napiš do pravidla `.bridge` řádek `width: 320px;` – nezapomeň na jednotku `px`.'],
+      fails: { lava: 'Most nedosáhl přes celou lávu, takže Pixel spadl do mezery. Most (`.bridge`) musí být aspoň tak široký jako láva – její šířku zjistíš 🔍 Inspektorem box modelu. Číslo potřebuje jednotku: `width: 100;` bez `px` prohlížeč ignoruje.' }
     },
     {
       id: 2, world: 1, title: 'Zasypat jámu', concept: 'height',
       story: 'V cestě je jáma s lávou. Na jejím dně leží kamenný blok – stačí ho „vytáhnout“ do výšky.',
-      task: 'Nastav bloku (.block) výšku tak, aby jeho vršek byl přesně v úrovni země.',
+      task: 'Nastav bloku (`.block`) výšku (`height`) tak, aby jeho vršek byl přesně v úrovni země.',
       fixed: [G('g1', 0, 300, 300, 100), G('g2', 440, 300, 360, 100), LAVA('l1', 300, 370, 140, 30), START(16, 264), FLAG(742, 240), COIN('c1', 363, 270)],
       html: '<div class="block solid"></div>',
       css: '.block {\n  position: absolute;\n  left: 300px;\n  bottom: 0;\n  width: 140px;\n  height: 20px;\n}',
@@ -111,12 +112,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.block {\n  height: 60px;\n}', '.block {\n  height: 150px;\n}'],
       maxDecl: 1,
       props: ['height: 50px;'],
-      hints: ['Scéna je vysoká 400 px a země začíná na y = 300 px. Blok stojí na dně (bottom: 0).', 'Vršek bloku má být 100 px nad dnem scény: height: 100px;']
+      hints: ['Scéna je vysoká 400 px a země začíná na y = 300 px. Blok stojí na dně (`bottom: 0`).', 'Vršek bloku má být 100 px nad dnem scény: `height: 100px;`'],
+      fails: { stuck: 'Vršek bloku (`.block`) není přesně v úrovni země. Když je blok moc nízko, Pixel v jámě uvízne. Když trčí moc vysoko, narazí do něj jako do zdi. Spočítej, jak vysoký má blok být, aby jeho vršek skončil přesně na y = 300 px.', fall: 'Pixel propadl jámou. Blok (`.block`) ji zatím nezasypal – nastav mu výšku (`height`), aby jámu vyplnil až po úroveň země.' }
     },
     {
       id: 3, world: 1, title: 'Posuň to', concept: 'margin',
       story: 'Prkno leží na špatném místě – schovává se pod startem. Šířku ani pozici mu nezměníš, ale vnější okraj ano.',
-      task: 'Posuň prkno (.plank) nad lávu pomocí vnějšího okraje (margin).',
+      task: 'Posuň prkno (`.plank`) nad lávu pomocí vnějšího okraje (`margin`).',
       fixed: [G('g1', 0, 300, 260, 100), G('g2', 520, 300, 280, 100), LAVA('l1', 260, 352, 260, 48), START(16, 264), FLAG(742, 240), COIN('c1', 383, 270)],
       html: '<div class="rail">\n  <div class="plank solid"></div>\n</div>',
       css: '.rail {\n  position: absolute;\n  left: 0;\n  top: 300px;\n  width: 800px;\n}\n.plank {\n  width: 260px;\n  height: 18px;\n}',
@@ -126,12 +128,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.plank {\n  padding-left: 260px;\n}', '.plank {\n  margin-left: 100px;\n}'],
       maxDecl: 1,
       props: ['margin-left: 10px;', 'margin: 0 0 0 10px;'],
-      hints: ['margin je průhledný prostor okolo prvku – odstrčí ho od okolí.', 'Láva začíná na x = 260 px: margin-left: 260px;']
+      hints: ['`margin` je průhledný prostor okolo prvku – odstrčí ho od okolí.', 'Láva začíná na x = 260 px: `margin-left: 260px;`'],
+      fails: { lava: 'Prkno (`.plank`) neleží nad lávou. `margin` je průhledný prostor kolem prvku: čím větší `margin-left`, tím víc prkno odstrčíš doprava. `padding` je vnitřní okraj, prkno neposune, jen ho zvětší.' }
     },
     {
       id: 4, world: 1, title: 'Box model', concept: 'padding',
       story: 'Šířka prkna je zamčená na 100 px. Jenže v CSS není „šířka“ jako „šířka“ – celková šířka krabice je víc než jen width.',
-      task: 'Rozšiř prkno (.plank) přes celou lávu, aniž bys měnil(a) width.',
+      task: 'Rozšiř prkno (`.plank`) přes celou lávu, aniž bys měnil(a) `width`.',
       fixed: [G('g1', 0, 300, 250, 100), G('g2', 550, 300, 250, 100), LAVA('l1', 250, 352, 300, 48), START(16, 264), FLAG(742, 240), COIN('c1', 393, 270)],
       html: '<div class="plank solid"></div>',
       css: '.plank {\n  position: absolute;\n  left: 250px;\n  top: 300px;\n  width: 100px;\n  height: 18px;\n}',
@@ -141,12 +144,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.plank {\n  width: 300px;\n}', '.plank {\n  margin-right: 200px;\n}'],
       maxDecl: 1,
       props: ['padding-right: 10px;', 'padding: 0 10px;', 'border-right: 10px solid;'],
-      hints: ['Celková šířka = width + padding vlevo + padding vpravo + rámečky.', 'Chybí ti 200 px: padding-right: 200px; (nebo padding: 0 100px;)']
+      hints: ['Celková šířka = `width` + `padding` vlevo + `padding` vpravo + rámečky.', 'Chybí ti 200 px: `padding-right: 200px;` (nebo `padding: 0 100px;`)'],
+      fails: { lava: 'Prkno (`.plank`) je pořád užší než láva. Bez změny `width` ho rozšíříš vnitřním okrajem `padding`: celková šířka = `width` + `padding` vlevo + `padding` vpravo. `margin` prkno nezvětší, jen odsune.' }
     },
     {
       id: 5, world: 2, title: 'Neviditelná zeď', concept: 'visibility',
       story: 'Cestu blokuje zeď. Stačí ji schovat… ale pozor: zeď stojí v řadě (flexbox) spolu s víkem, které zakrývá lávovou díru.',
-      task: 'Schovej zeď (.wall) tak, aby víko (.lid) zůstalo nad lávou.',
+      task: 'Schovej zeď (`.wall`) tak, aby víko (`.lid`) zůstalo nad lávou.',
       fixed: [G('g1', 0, 300, 400, 100), G('g2', 480, 300, 320, 100), LAVA('l1', 400, 358, 80, 42), START(16, 264), FLAG(742, 240), COIN('c1', 433, 270)],
       html: '<div class="row">\n  <div class="wall solid"></div>\n  <div class="gap"></div>\n  <div class="lid plank solid"></div>\n</div>',
       css: '.row {\n  position: absolute;\n  left: 300px;\n  top: 220px;\n  display: flex;\n  align-items: flex-start;\n}\n.wall {\n  width: 40px;\n  height: 80px;\n}\n.gap {\n  width: 60px;\n  height: 1px;\n}\n.lid {\n  width: 80px;\n  height: 18px;\n  margin-top: 80px;\n}',
@@ -156,12 +160,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.wall {\n  display: none;\n}', '.wall {\n  opacity: 0;\n}', '.wall {\n  width: 0;\n}'],
       maxDecl: 1,
       props: ['display: none;', 'visibility: hidden;', 'opacity: 0;'],
-      hints: ['display: none prvek úplně vyřadí z rozvržení – ostatní prvky v řadě se posunou na jeho místo.', 'Potřebuješ zeď schovat, ale nechat jí místo: visibility: hidden;']
+      hints: ['`display: none` prvek úplně vyřadí z rozvržení – ostatní prvky v řadě se posunou na jeho místo.', 'Potřebuješ zeď schovat, ale nechat jí místo: `visibility: hidden;`'],
+      fails: { lava: 'Zeď zmizela i se svým místem, prvky v řadě se posunuly a víko (`.lid`) sjelo z lávy. Tohle udělá `display: none` nebo nulová šířka. Potřebuješ zeď schovat, ale nechat jí místo v řadě.', stuck: 'Zeď je pořád v cestě. Je jen neviditelná (`opacity: 0`), ale Pixel do ní dál naráží. Hledej vlastnost, která prvek opravdu schová a přitom mu nechá místo v řadě.' }
     },
     {
       id: 6, world: 2, title: 'Na střed!', concept: 'justify-content',
       story: 'Prkno leží v pružném kontejneru (display: flex) přes celou šířku scény. Kam ho flexbox posune?',
-      task: 'Pomocí vlastnosti kontejneru (.dock) dostaň prkno nad lávu.',
+      task: 'Pomocí vlastnosti kontejneru (`.dock`) dostaň prkno nad lávu.',
       fixed: [G('g1', 0, 300, 300, 100), G('g2', 500, 300, 300, 100), LAVA('l1', 300, 352, 200, 48), START(16, 264), FLAG(742, 240), COIN('c1', 393, 270)],
       html: '<div class="dock">\n  <div class="plank solid"></div>\n</div>',
       css: '.dock {\n  position: absolute;\n  left: 0;\n  top: 300px;\n  width: 800px;\n  height: 18px;\n  display: flex;\n}\n.plank {\n  width: 200px;\n  height: 18px;\n}',
@@ -171,12 +176,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.dock {\n  justify-content: flex-end;\n}', '.dock {\n  align-items: center;\n}'],
       maxDecl: 1,
       props: ['justify-content: flex-start;', 'justify-content: center;', 'justify-content: flex-end;', 'justify-content: space-between;'],
-      hints: ['justify-content rozmisťuje prvky po hlavní ose – u řádku je to vodorovně.', 'Láva je přesně uprostřed scény: justify-content: center;']
+      hints: ['`justify-content` rozmisťuje prvky po hlavní ose – u řádku je to vodorovně.', 'Láva je přesně uprostřed scény: `justify-content: center;`'],
+      fails: { lava: 'Prkno neleží nad lávou. Láva je přesně uprostřed scény, takže prkno musí být na hlavní ose (v řádku vodorovně) uprostřed. Vodorovné rozmístění řídí `justify-content`, `align-items` hýbe prvky svisle.' }
     },
     {
       id: 7, world: 2, title: 'Dolů a doprostřed', concept: 'align-items',
       story: 'Teď je kontejner vysoký a prkno plave nahoře. Flexbox má dvě osy – hlavní a příčnou.',
-      task: 'Dostaň prkno uprostřed vodorovně a úplně dolů v kontejneru (.dock).',
+      task: 'Dostaň prkno uprostřed vodorovně a úplně dolů v kontejneru (`.dock`).',
       fixed: [G('g1', 0, 300, 300, 100), G('g2', 500, 300, 300, 100), LAVA('l1', 300, 352, 200, 48), START(16, 264), FLAG(742, 240), COIN('c1', 393, 270)],
       html: '<div class="dock">\n  <div class="plank solid"></div>\n</div>',
       css: '.dock {\n  position: absolute;\n  left: 200px;\n  top: 100px;\n  width: 400px;\n  height: 218px;\n  display: flex;\n  outline: 2px dashed #ffffff33;\n}\n.plank {\n  width: 200px;\n  height: 18px;\n}',
@@ -186,12 +192,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.dock {\n  justify-content: center;\n}', '.dock {\n  justify-content: flex-end;\n  align-items: center;\n}'],
       maxDecl: 2,
       props: ['justify-content: center;', 'align-items: flex-end;', 'align-items: center;'],
-      hints: ['justify-content = vodorovně (hlavní osa), align-items = svisle (příčná osa).', 'justify-content: center; a align-items: flex-end;']
+      hints: ['`justify-content` = vodorovně (hlavní osa), `align-items` = svisle (příčná osa).', '`justify-content: center;` a `align-items: flex-end;`'],
+      fails: { lava: 'Prkno je buď mimo střed, nebo visí moc vysoko a Pixel pod ním proběhne do lávy. Potřebuješ obojí najednou: vodorovně doprostřed (`justify-content`) a svisle úplně dolů (`align-items`).' }
     },
     {
       id: 8, world: 2, title: 'Pořadí', concept: 'order',
       story: 'Na mostě jsou bodáky – a to hned na začátku. HTML nesmíš měnit, ale flexbox umí prvky přeskládat.',
-      task: 'Přesuň bodáky (.spikes) na konec řady, za obě prkna.',
+      task: 'Přesuň bodáky (`.spikes`) na konec řady, za obě prkna.',
       fixed: [G('g1', 0, 300, 300, 100), G('g2', 540, 300, 260, 100), LAVA('l1', 300, 352, 240, 48), START(16, 264), FLAG(544, 240), COIN('c1', 413, 270)],
       html: '<div class="row">\n  <div class="spikes danger"></div>\n  <div class="plank solid"></div>\n  <div class="plank solid"></div>\n</div>',
       css: '.row {\n  position: absolute;\n  left: 300px;\n  top: 300px;\n  display: flex;\n}\n.spikes {\n  width: 160px;\n  height: 18px;\n}\n.plank {\n  width: 130px;\n  height: 18px;\n}',
@@ -201,12 +208,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.spikes {\n  order: -1;\n}'],
       maxDecl: 1,
       props: ['order: 1;', 'order: -1;', 'flex-direction: row-reverse;'],
-      hints: ['Vlastnost order určuje pořadí prvků ve flexboxu. Výchozí hodnota je 0.', 'Prvek s větším order jde dozadu: order: 1;']
+      hints: ['Vlastnost `order` určuje pořadí prvků ve flexboxu. Výchozí hodnota je `0`.', 'Prvek s větším `order` jde dozadu: `order: 1;`'],
+      fails: { spikes: 'Bodáky jsou pořád v cestě. `order` řadí prvky ve flexboxu od nejmenšího čísla po největší, výchozí je `0`. Záporné číslo prvek posune dopředu, ty ale bodáky potřebuješ dozadu, za obě prkna.' }
     },
     {
       id: 9, world: 3, title: 'Absolutně přesně', concept: 'position',
       story: 'Most leží v bedně s nářadím. Vytáhni ho ven a polož ho přesně nad lávu. Pozor, od čeho se měří left a top!',
-      task: 'Umísti most (.bridge) pomocí position: absolute nad lávu (x = 300, y = 300 na scéně).',
+      task: 'Umísti most (`.bridge`) pomocí `position: absolute` nad lávu (x = 300, y = 300 na scéně).',
       fixed: [G('g1', 0, 300, 300, 100), G('g2', 500, 300, 300, 100), LAVA('l1', 300, 352, 200, 48), START(16, 264), FLAG(742, 240), COIN('c1', 393, 270)],
       html: '<div class="toolbox">\n  <b>Nářadí</b>\n  <div class="bridge solid"></div>\n</div>',
       css: '.toolbox {\n  position: absolute;\n  left: 40px;\n  top: 40px;\n  width: 224px;\n  height: 74px;\n}\n.toolbox b {\n  display: block;\n  margin-bottom: 10px;\n}\n.bridge {\n  width: 200px;\n  height: 18px;\n}',
@@ -216,12 +224,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.bridge {\n  position: absolute;\n  left: 300px;\n  top: 300px;\n}'],
       maxDecl: 3,
       props: ['position: absolute;', 'left: 0px;', 'top: 0px;', 'position: static;'],
-      hints: ['Absolutně pozicovaný prvek se měří od nejbližšího předka, který má nastavené position – tady od bedny (.toolbox), která je na x = 40, y = 40.', 'Buď odečti pozici bedny (left: 260px; top: 260px;), nebo bedně nastav position: static; a pak měř od scény.']
+      hints: ['Absolutně pozicovaný prvek se měří od nejbližšího předka, který má nastavené `position` – tady od bedny (`.toolbox`), která je na x = 40, y = 40.', 'Buď odečti pozici bedny (`left: 260px; top: 260px;`), nebo bedně nastav `position: static;` a pak měř od scény.'],
+      fails: { lava: 'Most (`.bridge`) skončil jinde, než čekáš. Absolutní pozice se neměří od scény, ale od nejbližšího předka s nastaveným `position`. Tady je to bedna (`.toolbox`), která sama začíná na x = 40, y = 40.', fall: 'Most (`.bridge`) skončil jinde, než čekáš. Absolutní pozice se neměří od scény, ale od nejbližšího předka s nastaveným `position`. Tady je to bedna (`.toolbox`), která sama začíná na x = 40, y = 40.' }
     },
     {
       id: 10, world: 3, title: 'Natáhni most', concept: 'transform',
       story: 'Most visí ve vzduchu a je moc krátký. Pozici ani šířku nezměníš – ale transformace ano.',
-      task: 'Posuň most (.plank) o 100 px dolů a natáhni ho na trojnásobnou šířku – jediným transform.',
+      task: 'Posuň most (`.plank`) o 100 px dolů a natáhni ho na trojnásobnou šířku – jediným `transform`.',
       fixed: [G('g1', 0, 300, 250, 100), G('g2', 550, 300, 250, 100), LAVA('l1', 250, 352, 300, 48), START(16, 264), FLAG(742, 240), COIN('c1', 393, 270)],
       html: '<div class="plank solid"></div>',
       css: '.plank {\n  position: absolute;\n  left: 350px;\n  top: 200px;\n  width: 100px;\n  height: 18px;\n}',
@@ -231,12 +240,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.plank {\n  transform: translateY(100px);\n}', '.plank {\n  transform: scaleX(3);\n}'],
       maxDecl: 1,
       props: ['transform: translateY(10px);', 'transform: scaleX(2);', 'transform: translateY(10px) scaleX(2);'],
-      hints: ['transform umí víc funkcí najednou, oddělených mezerou: translateY(…) scaleX(…).', 'transform: translateY(100px) scaleX(3); – zvětšení se počítá od středu prkna.']
+      hints: ['`transform` umí víc funkcí najednou, oddělených mezerou: `translateY(…) scaleX(…)`.', '`transform: translateY(100px) scaleX(3);` – zvětšení se počítá od středu prkna.'],
+      fails: { lava: 'Most se buď neposunul dolů, nebo se nenatáhl. Obě změny musí být v jediné vlastnosti `transform`, oddělené mezerou. Druhý řádek s `transform` by ten první přepsal.' }
     },
     {
       id: 11, world: 3, title: 'Kdo vyhraje?', concept: 'specificity',
       story: 'Most má díry na 3. a 6. místě. Oprav je – jenže tvoje pravidlo možná prohraje se specifičtějším selektorem v level.css.',
-      task: 'Vrať 3. a 6. prknu (.plank) výšku 18px.',
+      task: 'Vrať 3. a 6. prknu (`.plank`) výšku `18px`.',
       fixed: [G('g1', 0, 300, 200, 100), G('g2', 600, 300, 200, 100), LAVA('l1', 200, 352, 400, 48), START(16, 264), FLAG(742, 240), COIN('c1', 318, 270), COIN('c2', 468, 270)],
       html: '<div class="bridge-row">\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n  <i class="plank solid"></i>\n</div>',
       css: '.bridge-row {\n  position: absolute;\n  left: 200px;\n  top: 300px;\n  display: flex;\n  align-items: flex-start;\n}\n.plank {\n  width: 50px;\n  height: 18px;\n}\n.bridge-row .plank:nth-child(3),\n.bridge-row .plank:nth-child(6) {\n  height: 0;\n}',
@@ -246,12 +256,13 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.plank {\n  height: 18px;\n}', '.bridge-row .plank {\n  height: 18px;\n}'],
       maxDecl: 1,
       props: [':nth-child(3)', '.bridge-row .plank:nth-child(3)', 'height: 18px;'],
-      hints: ['Selektor .bridge-row .plank:nth-child(3) má specificitu (0,3,0) – dvě třídy a pseudotřída. Tvoje .plank má jen (0,1,0), takže prohraje.', 'Napiš stejně specifický selektor (pravidlo, které je v CSS později, vyhraje): .bridge-row .plank:nth-child(3), .bridge-row .plank:nth-child(6) { height: 18px; }']
+      hints: ['Selektor `.bridge-row .plank:nth-child(3)` má specificitu (0,3,0) – dvě třídy a pseudotřída. Tvoje `.plank` má jen (0,1,0), takže prohraje.', 'Napiš stejně specifický selektor (pravidlo, které je v CSS později, vyhraje): `.bridge-row .plank:nth-child(3), .bridge-row .plank:nth-child(6) { height: 18px; }`'],
+      fails: { lava: '3. a 6. prkno má pořád nulovou výšku, protože tvoje pravidlo prohrálo se specifičtějším pravidlem v souboru `level.css`. Podívej se do záložky `level.css`, jaký selektor tam je, a napiš aspoň stejně specifický.', fall: '3. a 6. prkno má pořád nulovou výšku, protože tvoje pravidlo prohrálo se specifičtějším pravidlem v souboru `level.css`. Podívej se do záložky `level.css`, jaký selektor tam je, a napiš aspoň stejně specifický.' }
     },
     {
       id: 12, world: 3, title: 'Výtah', concept: 'animation',
       story: 'Finále! Pixel stojí ve výtahu v přízemí a vlajka čeká na střeše. Jenže výtah je zaseknutý. Když výtah jede, Pixel se otočí ke dveřím (doprava) a vystoupí, jakmile výtah dojede do patra.',
-      task: 'Vytvoř @keyframes a nastav výtahu (.lift) animaci, která ho vyveze o 200 px nahoru (a klidně zase dolů).',
+      task: 'Vytvoř `@keyframes` a nastav výtahu (`.lift`) animaci, která ho vyveze o 200 px nahoru (a klidně zase dolů).',
       timeout: 30,
       fixed: [['wl', 'shaft solid', 0, 0, 20, 400], ['wr', 'shaft solid', 100, 200, 10, 200], G('gs', 20, 356, 80, 44), G('gu', 100, 140, 700, 60), LAVA('l1', 110, 362, 690, 38), START(47, 304), FLAG(742, 80), COIN('c1', 80, 250), COIN('c2', 450, 110)],
       html: '<div class="lift"></div>',
@@ -262,7 +273,8 @@ html, body { margin: 0; padding: 0; overflow: hidden; background: #0b1020; font:
       wrong: ['.lift {\n  transform: translateY(-200px);\n}', '.lift {\n  animation: jizda 3s infinite alternate;\n}\n@keyframes jizda {\n  to { transform: translateY(-100px); }\n}', '.lift {\n  animation: jizda 3s infinite alternate;\n}\n@keyframes jizda {\n  to { top: 140px; }\n}'],
       maxDecl: 2,
       props: ['animation: jizda 3s ease-in-out infinite alternate;', 'to { transform: translateY(-100px); }', '@keyframes jizda { }'],
-      hints: ['Animace má dvě části: @keyframes jméno { to { … } } popisuje, kam se prvek pohne, a vlastnost animation ji spustí.', 'V @keyframes jizda napiš to { transform: translateY(-200px); } a výtahu dej animation: jizda 3s ease-in-out infinite alternate;']
+      hints: ['Animace má dvě části: `@keyframes jméno { to { … } }` popisuje, kam se prvek pohne, a vlastnost `animation` ji spustí.', 'V `@keyframes jizda` napiš `to { transform: translateY(-200px); }` a výtahu dej `animation: jizda 3s ease-in-out infinite alternate;`'],
+      fails: { stuck: 'Výtah nevyjel až k horní plošině, takže se Pixel nahoru nedostal. Animace potřebuje dvě části: `@keyframes` s cílovou polohou a vlastnost `animation` na výtahu (`.lift`). Výtah musí vyjet o celých 200 px nahoru.' }
     }
   ];
 

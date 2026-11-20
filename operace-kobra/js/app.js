@@ -245,7 +245,7 @@
           <span class="n-num">${open ? m.id : '🔒'}</span>
           <span class="n-title">${esc(m.title)}</span>
           <span class="n-sub">${esc(m.concept)}</span>
-          <span class="n-stars" aria-label="${s ? s.stars.filter(Boolean).length : 0} hvězd ze 3">${stars}</span>
+          <span class="n-stars" aria-label="${((n) => `${n} ${Kit.plural(n, 'hvězda', 'hvězdy', 'hvězd')} ze 3`)(s ? s.stars.filter(Boolean).length : 0)}">${stars}</span>
         </button>`;
     };
     const nextM = MISSIONS.find(m => m.id === nextId);
@@ -355,7 +355,7 @@
           <div class="col">
             <section class="dossier">
               <h2 class="panel-h">Spis mise ${pad2(m.id)} <small>spojení s velitelstvím</small></h2>
-              <div class="comms" id="comms"></div>
+              <!-- úkol je nahoře, aby byl hned vidět i s příklady pod ním; zprávy od Nory jsou sbalené (příběh už hráč viděl v úvodu mise) -->
               <div class="task-box">
                 <p class="task"><b>Úkol:</b> ${md(m.task)}</p>
                 <pre class="code sig">${Highlight(sig, 'python')}</pre>
@@ -368,6 +368,7 @@
                 <button class="btn small ghost" id="solBtn" hidden>👀 Ukázat řešení</button>
               </div>
               <div class="hints" id="hints"></div>
+              <details class="comms-box" id="commsBox"><summary>📡 Zprávy od velitelky <small>${m.brief.length} ${m.brief.length === 1 ? 'zpráva' : m.brief.length < 5 ? 'zprávy' : 'zpráv'}</small></summary><div class="comms" id="comms"></div></details>
             </section>
             <section class="panel">
               <h2 class="panel-h">Příklady z testů <small>volání → očekávaný výsledek</small></h2>
@@ -401,7 +402,8 @@
     /* úvod mise (příběh → lekce → úkol) se poprvé ukáže v okně; spis pod ním je pak už vypsaný */
     const firstIntro = !!(LESSONS[id] && !(P.intro && P.intro[id]));
     if (firstIntro) { P.intro = P.intro || {}; P.intro[id] = true; P.seen[id] = true; save(); }
-    /* spojení s velitelstvím – zprávy se „píšou“ jen poprvé */
+    /* spojení s velitelstvím – zprávy se „píšou“ jen poprvé; když už je hráč viděl (v úvodu mise), zůstanou sbalené */
+    $('#commsBox').open = !P.seen[id];
     const comms = $('#comms');
     const msgHtml = ([who, text]) => `<div class="msg ${who}"><span class="ava">${who === 'sakal' ? '☠' : 'N'}</span><div class="bubble"><span class="who">${who === 'sakal' ? 'Zachycená zpráva od Šakala' : 'Nora, velitelka'}</span>${md(text)}</div></div>`;
     if (P.seen[id]) comms.innerHTML = m.brief.map(msgHtml).join('');
@@ -471,7 +473,7 @@
     function errBlock(e, where) {
       const loc = e.line ? `Řádek ${e.line}${e.func ? ` (ve funkci ${esc(e.func)})` : ''}` : (where || '');
       return `<div class="err">✘ ${loc ? loc + ': ' : ''}${esc(e.text)}</div>` +
-        (e.czech ? `<div class="explain"><b>Co to znamená:</b> ${esc(e.czech)}${e.line ? ` <button class="line-link" data-line="${e.line}">ř. ${e.line}</button>` : ''}</div>` : '');
+        (e.czech ? `<div class="explain"><b>Co to znamená:</b> ${md(e.czech)}${e.line ? ` <button class="line-link" data-line="${e.line}">ř. ${e.line}</button>` : ''}</div>` : '');
     }
 
     function run() {
@@ -628,7 +630,7 @@
     }
 
     function showHints() {
-      $('#hints').innerHTML = m.hints.slice(0, ms.hints).map((h, i) => `<div class="hint"><b>💡 ${i + 1}.</b> ${esc(h)}</div>`).join('');
+      $('#hints').innerHTML = m.hints.slice(0, ms.hints).map((h, i) => `<div class="hint"><b>💡 ${i + 1}.</b> ${md(h)}</div>`).join('');
       const left = m.hints.length - ms.hints;
       $('#hintBtn').textContent = left ? `💡 Nápověda (${left})` : '💡 Nápovědy použity';
       $('#hintBtn').disabled = !left;
@@ -663,8 +665,8 @@
     /* průvodce obrazovkou: poprvé se spustí sám, pak tlačítkem ❔ */
     const focusEd = () => { if (window.matchMedia('(min-width: 1081px)').matches) ed.focus(); };
     const tourSteps = () => [
-      { el: '#comms', title: 'Spis mise', text: 'Velitelka Nora ti tu vysvětlí, o co v misi jde.' },
       { el: '.task-box', title: 'Úkol', text: 'Co má tvoje funkce dělat a jakou má hlavičku. Pod tím je <b>bonus navíc</b> za třetí hvězdu.' },
+      { el: '#commsBox > summary', title: 'Zprávy od velitelky', text: 'Nora tu vysvětluje, o co v misi jde. Rozklikni je, když si chceš příběh a detaily přečíst znovu.' },
       { el: '.examples', title: 'Příklady z testů', text: 'Takhle testy tvoji funkci zavolají a co od ní čekají. Navíc je tu i skrytý test na okrajové případy.' },
       { el: '#editor', title: 'Tvůj kód', text: 'Sem píšeš Python. 🧩 Úryvky kódu vloží hotové kousky.' },
       { el: '#runBtn', title: 'Spustit testy', text: 'Každý test zavolá tvoji funkci a porovná, co vrátila, s tím, co vrátit měla (nebo Ctrl+Enter). Na hvězdu stačí nejvýš 3 spuštění.' },

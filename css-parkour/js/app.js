@@ -277,7 +277,7 @@
           <span class="n-num">${open ? l.id : '🔒'}</span>
           <span class="n-title">${esc(l.title)}</span>
           <span class="n-sub">${esc(l.concept)}</span>
-          <span class="n-stars" aria-label="${s ? s.stars.filter(Boolean).length : 0} hvězd ze 3">${stars}</span>
+          <span class="n-stars" aria-label="${((n) => `${n} ${Kit.plural(n, 'hvězda', 'hvězdy', 'hvězd')} ze 3`)(s ? s.stars.filter(Boolean).length : 0)}">${stars}</span>
         </button>`;
     };
     const nextL = LEVELS.find(l => l.id === nextId);
@@ -380,7 +380,7 @@
         </header>
         <section class="panel brief brief-strip">
           <div class="bs-text">
-            <p class="task"><b>Úkol:</b> ${esc(l.task)}</p>
+            <p class="task"><b>Úkol:</b> ${Lesson.md(l.task)}</p>
             <p class="story">${esc(l.story)}</p>
             <p class="bonus-line"><span class="bl-star" aria-hidden="true">★</span> <b>Úsporné CSS:</b> stačí ${l.maxDecl} ${declNom(l.maxDecl)}. Deklarace je jeden řádek <code>vlastnost: hodnota;</code>. <span class="bs-state" id="declState" aria-live="polite"></span></p>
           </div>
@@ -493,7 +493,7 @@
         ? an.warnings.map(x => `<div class="log warn"><button class="line-link" data-line="${x.line}">ř. ${x.line}</button> ⚠ ${esc(x.msg)}</div>`).join('')
         : '';
       if (!ses.running && !ses.result) {
-        if (an.warnings.length) Kit.status($('#status'), 'warn', `V CSS ${an.warnings.length === 1 ? 'je chyba' : `je ${an.warnings.length} chyb`} (ř. ${an.warnings[0].line})`, 'Prohlížeč neplatné řádky potichu ignoruje. Oprav je, ať Pixel nespadne.');
+        if (an.warnings.length) Kit.status($('#status'), 'warn', `V CSS ${an.warnings.length === 1 ? 'je chyba' : an.warnings.length <= 4 ? `jsou ${an.warnings.length} chyby` : `je ${an.warnings.length} chyb`} (ř. ${an.warnings[0].line})`, 'Prohlížeč neplatné řádky potichu ignoruje. Oprav je, ať Pixel nespadne.');
         else Kit.status($('#status'), 'idle', ls.done ? 'Level máš hotový. Zkus získat všechny hvězdy.' : 'Napiš CSS a spusť Pixela', 'Scéna se mění hned, jak píšeš. Ctrl+Enter spustí Pixela.');
       }
       $$('#anaLog [data-line]').forEach(b => b.addEventListener('click', () => ed.goToLine(+b.dataset.line)));
@@ -512,7 +512,7 @@
       if (ds && ses.an) {
         const n = ses.an.decls;
         const okD = n > 0 && n <= l.maxDecl;
-        ds.textContent = n === 0 ? '· zatím žádná' : okD ? `✓ máš ${n}` : `· máš ${n}, o ${n - l.maxDecl} víc`;
+        ds.textContent = n === 0 ? '· teď máš 0' : okD ? `✓ teď máš ${n}` : `· teď máš ${n}, o ${n - l.maxDecl} víc`;
         ds.classList.toggle('ok', okD);
       }
       if (!ses.running) $('#coins').textContent = `🪙 ${ls.coins || 0}/${coinsHere}`;
@@ -580,13 +580,16 @@
       const msg = FAIL[r.reason] || 'Pixel to nezvládl.';
       banner(msg, 'bad');
       Kit.sound('fail');
+      // vysvětlení: nejdřív chyba v zápisu CSS, pak co se v tomhle levelu nejspíš pokazilo, nakonec rada s nápovědou
+      const w = ses.runAn && ses.runAn.warnings[0];
       let tip = '';
-      if (ses.runAn && ses.runAn.warnings.length) tip = ' Tvoje CSS obsahuje chybu (viz řádek výše) – prohlížeč neplatné řádky potichu ignoruje.';
-      else if (ses.fails >= 2 && ls.hints < l.hints.length) tip = ' Nevíš si rady? Zkus 💡 nápovědu.';
-      else if (r.reason === 'stuck') tip = ' Zkontroluj, jestli cesta k vlajce nikde nekončí zdí nebo schodem.';
+      if (w) tip = `Řádek ${w.line}: ${w.msg} Prohlížeč neplatné řádky potichu ignoruje, takže se neprojevily.`;
+      else if (l.fails && l.fails[r.reason]) tip = l.fails[r.reason];
+      else if (r.reason === 'stuck') tip = 'Zkontroluj, jestli cesta k vlajce nikde nekončí zdí nebo schodem.';
+      if (ses.fails >= 2 && ls.hints < l.hints.length) tip += (tip ? ' ' : '') + 'Nevíš si rady? Zkus 💡 nápovědu.';
       runLog('', 'info');
       ses.result = 'fail';
-      Kit.status($('#status'), 'bad', esc(msg), esc(tip.trim()) || 'Uprav CSS a zkus to znovu.');
+      Kit.status($('#status'), 'bad', esc(msg), esc(tip) || 'Uprav CSS a zkus to znovu.');
       if (ses.fails >= 3 && ls.hints >= l.hints.length) $('#solBtn').hidden = false;
       logEvent('fail', { level: l.id, reason: r.reason });
       save();
@@ -666,7 +669,7 @@
 
     /* nápovědy, řešení, reset */
     function showHints() {
-      $('#hints').innerHTML = l.hints.slice(0, ls.hints).map((h, i) => `<div class="hint"><b>💡 ${i + 1}.</b> ${esc(h)}</div>`).join('');
+      $('#hints').innerHTML = l.hints.slice(0, ls.hints).map((h, i) => `<div class="hint"><b>💡 ${i + 1}.</b> ${Lesson.md(h)}</div>`).join('');
       const left = l.hints.length - ls.hints;
       $('#hintBtn').textContent = left ? `💡 Nápověda (${left})` : '💡 Nápovědy použity';
       $('#hintBtn').disabled = !left;
@@ -750,7 +753,7 @@
       head: `<p class="b-kicker">${w.icon} Svět ${w.id}: ${esc(w.title)} · level ${l.id} z ${LEVELS.length}</p><h2>${esc(l.title)}</h2>`,
       story: Lesson.story('🏃', '', l.story),
       lesson: LESSONS[l.id],
-      task: `<div class="st-task"><p><b>Úkol:</b> ${esc(l.task)}</p></div>`,
+      task: `<div class="st-task"><p><b>Úkol:</b> ${Lesson.md(l.task)}</p></div>`,
       stars: [
         { t: 'Doběhni k vlajce', d: 'Pixel doběhne k vlajce a nespadne do lávy ani na bodáky.' },
         { t: 'Nejvýš 3 spuštění', d: 'Změny vidíš na scéně hned, jak píšeš. Pixela pusť, až si budeš jistý(á).' },

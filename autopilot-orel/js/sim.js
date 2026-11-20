@@ -50,7 +50,7 @@
 
   /* hráčova funkce vrátila něco nečekaného → česká zpráva */
   function badReturn(v, what, fn) {
-    if (v === null || v === undefined) return { type: 'ReturnError', text: `${fn}() vrátila None`, czech: `Funkce ${fn}() nic nevrátila. Chybí return, nebo se k němu program v téhle situaci nedostal (např. žádná větev if neplatila).` };
+    if (v === null || v === undefined) return { type: 'ReturnError', text: `${fn}() vrátila None`, czech: `Funkce \`${fn}()\` nic nevrátila. Chybí \`return\`, nebo se k němu program v téhle situaci nedostal (např. žádná větev \`if\` neplatila).` };
     return { type: 'ReturnError', text: `${fn}() vrátila ${P.repr(v).slice(0, 40)}`, czech: `Čekám ${what}, ale funkce vrátila ${tcz(v)}.` };
   }
 
@@ -160,7 +160,7 @@
       if (typeof i !== 'bigint' && !(typeof i === 'boolean')) {
         const b = badReturn(i, 'celé číslo – index místa v seznamu', level.fn);
         res.error = b;
-        fail('return', `${level.fn}() nevrátila index`, b.czech);
+        fail('return', `\`${level.fn}()\` nevrátila index`, b.czech);
         res.frames.push(frame());
         return finish();
       }
@@ -194,7 +194,7 @@
           const v = r.value;
           if (typeof v !== 'boolean') {
             if (isNum(v)) { /* číslo bereme jako pravdivostní hodnotu jako Python */ if (toNum(v) !== 0) release(); }
-            else { kill('return', `${level.fn}() vrátila ${tcz(v)}`, 'Funkce má vrátit True (pustit sondu) nebo False (ještě ne).', badReturn(v, 'True nebo False', level.fn)); }
+            else { kill('return', `\`${level.fn}()\` vrátila ${tcz(v)}`, 'Funkce má vrátit `True` (pustit sondu) nebo `False` (ještě ne).', badReturn(v, 'True nebo False', level.fn)); }
           } else if (v) release();
         }
         return c;
@@ -231,9 +231,9 @@
         else if (Array.isArray(v)) items = v;
         if (!items || items.length !== 2) {
           const b = badReturn(v, 'dvojici hodnot: return tah, bok', level.fn);
-          if (isNum(v)) b.czech = 'Funkce vrátila jen jedno číslo. Vrať dvojici: return tah, bok';
-          else if (items) b.czech = `Funkce vrátila ${items.length} hodnot${items.length === 1 ? 'u' : items.length < 5 ? 'y' : ''}, čekám přesně dvě: return tah, bok`;
-          kill('return', `${level.fn}() nevrátila (tah, bok)`, b.czech, b);
+          if (isNum(v)) b.czech = 'Funkce vrátila jen jedno číslo. Vrať dvojici: `return tah, bok`';
+          else if (items) b.czech = `Funkce vrátila ${items.length} hodnot${items.length === 1 ? 'u' : items.length < 5 ? 'y' : ''}, čekám přesně dvě: \`return tah, bok\``;
+          kill('return', `\`${level.fn}()\` nevrátila (tah, bok)`, b.czech, b);
           return { tah: 0, bok: 0 };
         }
         tah = items[0];
@@ -241,8 +241,8 @@
       } else {
         if (!(v instanceof P.PyDict) || !v.has('tah')) {
           const b = badReturn(v, "slovník s klíčem 'tah', např. {'tah': 50}", level.fn);
-          if (v instanceof P.PyDict) b.czech = "Ve vráceném slovníku chybí klíč 'tah'. Vrať např. {'tah': 50}" + (level.side ? ", 'bok': 0}" : '');
-          kill('return', `${level.fn}() nevrátila slovník s tahem`, b.czech, b);
+          if (v instanceof P.PyDict) b.czech = "Ve vráceném slovníku chybí klíč 'tah'. Vrať např. `" + (level.side ? "{'tah': 50, 'bok': 0}" : "{'tah': 50}") + '`.';
+          kill('return', `\`${level.fn}()\` nevrátila slovník s tahem`, b.czech, b);
           return { tah: 0, bok: 0 };
         }
         tah = v.get('tah');
@@ -254,7 +254,7 @@
       if (!isNum(tah)) {
         const b = badReturn(tah, 'číslo – tah motoru v procentech', level.fn);
         if (level.io !== 'hv') b.czech = `Tah musí být číslo, ale je to ${tcz(tah)}.`;
-        kill('return', tah === null ? `${level.fn}() nevrátila tah` : 'Tah není číslo', b.czech, b);
+        kill('return', tah === null ? `\`${level.fn}()\` nevrátila tah` : 'Tah není číslo', b.czech, b);
         return { tah: 0, bok: 0 };
       }
       if (!isNum(bok)) {
@@ -266,11 +266,11 @@
       let t = toNum(tah);
       let b = toNum(bok);
       if (R.clamp === 'strict' && (t < 0 || t > 100)) {
-        kill('fault', `Porucha motoru: tah ${fmt(t, 1)} % je mimo rozsah`, `Tenhle motor zvládne jen tah od 0 do 100 %. ${t > 100 ? 'Víc než 100' : 'Záporný tah'} ho poškodí – ořízni tah funkcemi min() a max().`);
+        kill('fault', `Porucha motoru: tah ${fmt(t, 1)} % je mimo rozsah`, `Tenhle motor zvládne jen tah od 0 do 100 %. ${t > 100 ? 'Víc než 100' : 'Záporný tah'} ho poškodí – ořízni tah funkcemi \`min()\` a \`max()\`.`);
         return { tah: 0, bok: 0 };
       }
       if (R.int && typeof tah !== 'bigint') {
-        kill('fault', `Porucha motoru: ${fmt(t, 2)} není celé číslo`, `Řídicí jednotka motoru přijímá jen celá čísla (int), tvoje funkce vrátila ${P.repr(tah)} (float). Zaokrouhli tah funkcí round().`);
+        kill('fault', `Porucha motoru: ${fmt(t, 2)} není celé číslo`, `Řídicí jednotka motoru přijímá jen celá čísla (int), tvoje funkce vrátila ${P.repr(tah)} (float). Zaokrouhli tah funkcí \`round()\`.`);
         return { tah: 0, bok: 0 };
       }
       t = clamp(t, 0, 100);
@@ -411,12 +411,12 @@
         if (R.goal === 'climb') {
           fail('timeout', s.h < 1 ? 'Orel se ani nehnul z rampy' : `Za ${R.timeLimit} s vystoupal jen do ${fmt(s.h, 0)} m`,
             s.h < 1 ? `Motor má málo tahu. Na Měsíci potřebuješ víc než ${fmt(HOVER, 1)} %, aby ses odlepil(a) od rampy.` : 'Zkus větší tah.');
-        } else if (R.goal === 'drop') fail('nodrop', released ? 'Sonda nestihla dopadnout' : 'Sonda nebyla uvolněna', 'Funkce uvolnit() celou dobu vracela False.');
+        } else if (R.goal === 'drop') fail('nodrop', released ? 'Sonda nestihla dopadnout' : 'Sonda nebyla uvolněna', 'Funkce `uvolnit()` celou dobu vracela `False`.');
         else fail('timeout', `Vypršel čas mise (${R.timeLimit} s)`, `Orel je pořád ve výšce ${fmt(s.h - gx, 0)} m. Klesej rychleji.`);
         break;
       }
       if (R.goal === 'drop' && !released && s.x > (fl.target || 0) + 120) {
-        fail('nodrop', 'Orel přeletěl cíl a sondu nepustil', 'Funkce uvolnit() celou dobu vracela False.');
+        fail('nodrop', 'Orel přeletěl cíl a sondu nepustil', 'Funkce `uvolnit()` celou dobu vracela `False`.');
         break;
       }
     }

@@ -313,7 +313,7 @@
           <span class="n-num">${open ? l.id : '🔒'}</span>
           <span class="n-title">${esc(l.title)}</span>
           <span class="n-sub">${esc(l.concept)}</span>
-          <span class="n-stars" aria-label="${s ? s.stars.filter(Boolean).length : 0} hvězd ze 3">${stars}</span>
+          <span class="n-stars" aria-label="${((n) => `${n} ${Kit.plural(n, 'hvězda', 'hvězdy', 'hvězd')} ze 3`)(s ? s.stars.filter(Boolean).length : 0)}">${stars}</span>
         </button>`;
     };
     const nextL = LEVELS.find(l => l.id === nextId);
@@ -608,7 +608,7 @@
     function errBlock(e) {
       const loc = e.line ? `Řádek ${e.line}${e.func ? ` (ve funkci ${esc(e.func)})` : ''}` : '';
       return `<div class="err">✘ ${loc ? loc + ': ' : ''}${esc(e.text)}</div>` +
-        (e.czech ? `<div class="explain"><b>Co to znamená:</b> ${esc(e.czech)}${e.line ? ` <button class="line-link" data-line="${e.line}">ř. ${e.line}</button>` : ''}</div>` : '');
+        (e.czech ? `<div class="explain"><b>Co to znamená:</b> ${md(e.czech)}${e.line ? ` <button class="line-link" data-line="${e.line}">ř. ${e.line}</button>` : ''}</div>` : '');
     }
     const prompt = cmd => `<div class="prompt">orel@palubni-pocitac:~$ <b>${esc(cmd)}</b></div>`;
     function renderLog() {
@@ -631,8 +631,8 @@
       (f.log || []).forEach(([t, line]) => rows.push([t, 'print', line]));
       rows.sort((a, b) => a[0] - b[0] || (a[1] === 'print') - (b[1] === 'print'));
       html += rows.slice(0, 320).map(([t, type, text]) => `<div class="lg ${type}"><span class="lt">${fmt(t, 1).padStart(5, ' ')} s</span>${type === 'print' ? '<span class="pr">print</span> ' : ''}${esc(text)}</div>`).join('');
-      if (f.logCut) html += `<div class="lg info">… a dalších ${f.logCut} řádků výpisu (print se volá při každém kroku, zkus vypisovat jen někdy)</div>`;
-      html += `<div class="lg ${f.ok ? 'ok' : 'alarm'}"><span class="lt">${fmt(f.time, 1).padStart(5, ' ')} s</span>${f.ok ? '✔' : '✘'} ${esc(f.msg)}${f.detail ? ` – ${esc(f.detail)}` : ''}</div>`;
+      if (f.logCut) html += `<div class="lg info">… a ${Kit.plural(f.logCut, 'další', 'další', 'dalších')} ${f.logCut} ${Kit.plural(f.logCut, 'řádek', 'řádky', 'řádků')} výpisu (print se volá při každém kroku, zkus vypisovat jen někdy)</div>`;
+      html += `<div class="lg ${f.ok ? 'ok' : 'alarm'}"><span class="lt">${fmt(f.time, 1).padStart(5, ' ')} s</span>${f.ok ? '✔' : '✘'} ${md(f.msg)}${f.detail ? ` – ${md(f.detail)}` : ''}</div>`;
       if (f.error) html += errBlock(f.error);
       term.innerHTML = html;
       bindLines();
@@ -647,7 +647,7 @@
         if (f.touch && f.ok && R.goal === 'land') stats.push(`dosednutí ${fmt(f.touch.v)} m/s`);
         if (f.probe && f.probe.hit !== undefined) stats.push(`odchylka ${fmt(Math.abs(f.probe.hit))} m`);
         stats.push(`palivo ${fmt(f.fuelLeft, 0)} kg`, `${fmt(f.time, 1)} s`);
-        return `<button class="fsum ${f.ok ? 'ok' : 'bad'} ${i === ses.sel ? 'on' : ''}" data-f="${i}" title="${esc(f.msg + (f.detail ? ' – ' + f.detail : ''))}"><span class="st">${f.ok ? '✔' : '✘'}</span><b>${esc(f.name)}</b><span class="m">${esc(f.msg)}</span><small>${esc(stats.join(' · '))}</small></button>`;
+        return `<button class="fsum ${f.ok ? 'ok' : 'bad'} ${i === ses.sel ? 'on' : ''}" data-f="${i}" title="${esc((f.msg + (f.detail ? ' – ' + f.detail : '')).replace(/`/g, ''))}"><span class="st">${f.ok ? '✔' : '✘'}</span><b>${esc(f.name)}</b><span class="m">${md(f.msg)}</span><small>${esc(stats.join(' · '))}</small></button>`;
       }).join('');
       $$('#fsum [data-f]').forEach(b => b.addEventListener('click', () => { ses.onPlayEnd = null; showFlight(+b.dataset.f, true); renderSummary(); }));
       $$('#tabs .fl-tab').forEach((t, i) => { const f = r.flights[i]; t.querySelector('.st').textContent = f ? (f.ok ? '✔' : '✘') : ''; t.classList.toggle('ok', !!f && f.ok); t.classList.toggle('bad', !!f && !f.ok); });

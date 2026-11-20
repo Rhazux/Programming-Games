@@ -75,7 +75,8 @@
       const parent = this.canvas.closest('.world-wrap') || this.canvas.parentElement;
       const avail = Math.max(200, parent.clientWidth);
       const maxH = this.maxHeight;
-      const tile = Math.max(18, Math.min(64, Math.floor(Math.min(avail / this.cols, maxH / this.rows))));
+      // políčka až 92 px: malé mapy se roztáhnou přes celý panel a robot i bity jsou dobře vidět
+      const tile = Math.max(18, Math.min(92, Math.floor(Math.min(avail / this.cols, maxH / this.rows))));
       this.tile = tile;
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       const cw = this.cols * tile, ch = this.rows * tile;

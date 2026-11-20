@@ -14,7 +14,7 @@
   --bg: #0e1828;
   --ink: #eef3fb;
   --ink2: #c3cfe3;
-  --muted: #95a4bf;
+  --muted: #a9b8d2;
   --line: #243652;
   --frame: #243652;
   --card: #142238;
@@ -34,7 +34,7 @@
   --good: #5fd38d;
   --good-ink: #05200f;
   --good-soft: rgba(95, 211, 141, .1);
-  --bad: #ff6b5e;
+  --bad: #ff7466;
   --bad-soft: rgba(255, 107, 94, .1);
   --warn: #ffb347;
   --pill-bg: rgba(255, 212, 59, .1);
@@ -43,9 +43,9 @@
   --manila: #eadbb0;
   --manila-2: #e1cf9c;
   --manila-ink: #2c2311;
-  --manila-muted: #5c4f32;
+  --manila-muted: #43381e;
   --manila-line: #c9b276;
-  --stamp: #9f2b23;
+  --stamp: #750807;
 
   --radius: 12px;
   --radius-sm: 8px;
@@ -57,15 +57,15 @@
   --code-bg-inline: rgba(90, 155, 213, .18);
   --code-ink: #e3ebf7;
   --gutter: #08101c;
-  --gutter-ink: #6b81a9;
+  --gutter-ink: #8aa0c6;
   --caret: #ffd43b;
   --selection: rgba(90, 155, 213, .4);
   --tk-kw: #c792ea;
-  --tk-fn: #82aaff;
+  --tk-fn: #8cb2ff;
   --tk-builtin: #ffd43b;
   --tk-num: #f9a26c;
   --tk-str: #b5e48c;
-  --tk-com: #7083a5;
+  --tk-com: #8d9fc0;
   --tk-op: #89ddff;
   --tk-prop: #82aaff;
   --tk-sel: #c792ea;
@@ -114,7 +114,7 @@ body { background: radial-gradient(1200px 500px at 85% -10%, rgba(90, 155, 213, 
 .track.s1 .t-ico { border-color: var(--accent); }
 .track.s2 .t-ico { border-color: var(--py-blue); }
 .track.s3 .t-ico { border-color: var(--bad); }
-.node .n-sub { font-family: var(--mono); font-size: .76rem; }
+.node .n-sub { font-family: var(--mono); font-size: .84rem; }
 .next-up { border-color: var(--accent); }
 
 /* mise – spis */
@@ -128,16 +128,21 @@ body { background: radial-gradient(1200px 500px at 85% -10%, rgba(90, 155, 213, 
 .dossier .task-box .task b { color: var(--stamp); }
 .dossier .task-box pre.code { margin: .6rem 0 0; font-size: .95rem; }
 .dossier .brief-actions .btn { background: #fff8e0; color: var(--manila-ink); border-color: var(--manila-line); }
+.comms-box { margin-top: .9rem; border-top: 1px dashed var(--manila-line); padding-top: .55rem; }
+.comms-box > summary { cursor: pointer; font-weight: 800; color: var(--manila-ink); padding: .2rem 0; }
+.comms-box > summary small { font-weight: 600; color: var(--manila-muted); margin-left: .3rem; }
+.comms-box > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.comms-box[open] > .comms { margin-top: .5rem; }
 .dossier .brief-actions .btn.ghost { background: transparent; }
 .dossier .hint { background: #fff3cf; color: var(--manila-ink); border-left-color: var(--warn); }
-.dossier .hint b { color: #a0560a; }
+.dossier .hint b { color: #824000; }
 .comms { display: grid; gap: .55rem; }
 .msg { display: grid; grid-template-columns: 2.1rem 1fr; gap: .6rem; align-items: start; animation: fade .3s; }
 .msg .ava { width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center; font: 800 .95rem var(--display); background: var(--manila-ink); color: var(--manila); }
 .msg .bubble { font-size: .97rem; line-height: 1.5; }
 .msg .who { display: block; font-weight: 800; font-size: .8rem; color: var(--manila-muted); margin-bottom: .05rem; }
 .msg.sakal .ava { background: var(--stamp); color: #fff; }
-.msg.sakal .bubble { font-family: var(--mono); font-size: .92rem; color: #7d1d15; background: rgba(195, 53, 43, .08); border-left: 3px solid var(--stamp); padding: .35rem .6rem; border-radius: 0 6px 6px 0; }
+.msg.sakal .bubble { font-family: var(--mono); font-size: .92rem; color: #71140d; background: rgba(195, 53, 43, .08); border-left: 3px solid var(--stamp); padding: .35rem .6rem; border-radius: 0 6px 6px 0; }
 .typing { color: var(--manila-muted); font-size: .9rem; font-style: italic; }
 .typing::after { content: "▋"; animation: blink 1s steps(1) infinite; font-style: normal; }
 .skip { background: none; border: 0; color: var(--manila-muted); font: 700 .85rem var(--font); cursor: pointer; text-decoration: underline; justify-self: end; }

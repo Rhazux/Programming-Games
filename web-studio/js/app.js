@@ -266,7 +266,7 @@
           <span class="n-num ava">${open ? o.client.avatar : '🔒'}</span>
           <span class="n-title">${esc(o.client.business)}</span>
           <span class="n-pay">💰 ${kc(o.reward)}${o.wish ? ` + ${kc(wishBonus(o))}` : ''}</span>
-          <span class="n-stars" aria-label="${s ? s.stars.filter(Boolean).length : 0} hvězd ze 3">${stars}</span>
+          <span class="n-stars" aria-label="${((n) => `${n} ${Kit.plural(n, 'hvězda', 'hvězdy', 'hvězd')} ze 3`)(s ? s.stars.filter(Boolean).length : 0)}">${stars}</span>
         </button>`;
     };
     const nextO = ORDERS.find(o => o.id === nextId);
@@ -396,9 +396,8 @@
         <div class="ws">
           <div class="col split">
             <section class="panel brief scroll-pane">
-              <h2 class="panel-h">Zadání od klienta <small>${esc(o.client.name)}</small><span class="sp"></span><span class="mb-reward" title="Odměna ${kc(o.reward)}, přání navíc ${kc(wishBonus(o))}, čistý kód ${kc(CLEAN_BONUS)}">💰 ${kc(o.reward)}</span></h2>
-              <div class="chat" id="chat"></div>
-              <h2 class="panel-h" style="margin-top:1rem">Požadavky <small>to zkontrolují testy</small></h2>
+              <!-- nahoře je to, co má web splnit (to hlídají testy); rozhovor s klientem je pod tím -->
+              <h2 class="panel-h">Požadavky <small>to zkontrolují testy</small><span class="sp"></span><span class="mb-reward" title="Odměna ${kc(o.reward)}, přání navíc ${kc(wishBonus(o))}, čistý kód ${kc(CLEAN_BONUS)}">💰 ${kc(o.reward)}</span></h2>
               <ul class="reqs" id="reqs"></ul>
               <h2 class="panel-h wish-h">🎁 Přání navíc <small>+${kc(wishBonus(o))}</small></h2>
               <ul class="reqs" id="wish"></ul>
@@ -409,6 +408,8 @@
                 <button class="btn small ghost" id="solBtn" hidden>👀 Ukázat řešení</button>
               </div>
               <div class="hints" id="hints"></div>
+              <h2 class="panel-h chat-h">Zadání od klienta <small>${esc(o.client.name)}</small></h2>
+              <div class="chat" id="chat"></div>
             </section>
             <section class="panel fixed-pane preview-pane">
               <h2 class="panel-h">Živý náhled <small>mění se, jak píšeš</small></h2>
@@ -446,7 +447,7 @@
     }
 
     /* požadavky */
-    const reqLi = (r, i, cls, msg, wish) => `<li class="req ${cls || ''} ${wish ? 'wishreq' : ''}" data-i="${i}"><i>${cls === 'pass' ? '✔' : cls === 'fail' ? '✘' : '○'}</i><span>${md(r.text)}</span>${msg ? `<small>${esc(msg)}</small>` : ''}</li>`;
+    const reqLi = (r, i, cls, msg, wish) => `<li class="req ${cls || ''} ${wish ? 'wishreq' : ''}" data-i="${i}"><i>${cls === 'pass' ? '✔' : cls === 'fail' ? '✘' : '○'}</i><span>${md(r.text)}</span>${msg ? `<small>${md(msg)}</small>` : ''}</li>`;
     function showReqs(results) {
       const map = results || [];
       $('#reqs').innerHTML = o.reqs.map((r, i) => { const x = map[i]; return reqLi(r, i, x ? (x.pass ? 'pass' : 'fail') : '', x && !x.pass ? x.msg : '', false); }).join('');
@@ -675,7 +676,7 @@
 
     /* konzultace, řešení, reset */
     function showHints() {
-      $('#hints').innerHTML = o.hints.slice(0, os.hints).map((h, i) => `<div class="hint"><b>💡 ${i + 1}.</b> ${esc(h)}</div>`).join('');
+      $('#hints').innerHTML = o.hints.slice(0, os.hints).map((h, i) => `<div class="hint"><b>💡 ${i + 1}.</b> ${Lesson.md(h)}</div>`).join('');
       const left = o.hints.length - os.hints;
       $('#hintBtn').textContent = left ? `💡 Konzultace (${kc(hintPrice())})` : '💡 Konzultace vyčerpány';
       $('#hintBtn').disabled = !left;
@@ -721,9 +722,9 @@
     /* průvodce obrazovkou: poprvé se spustí sám, pak tlačítkem ❔ */
     const focusEd = () => { if (window.matchMedia('(min-width: 1101px)').matches) ed.focus(); };
     const tourSteps = () => [
-      { el: '#chat', title: 'Klient', text: 'Klient ti tu napíše, jaký web chce.' },
       { el: '#reqs', title: 'Požadavky', text: 'Co musí web splňovat. Po testování se u každého požadavku objeví ✔ nebo ✘ i s vysvětlením, co přesně nesedí.' },
       { el: '#wish', title: 'Přání navíc', text: 'Když splníš i tohle, dostaneš třetí hvězdu a peníze navíc.' },
+      { el: '#chat', title: 'Klient', text: 'Pod požadavky je rozhovor s klientem: co chce a proč. Vrať se k němu, když si nejsi jistý(á) detailem.' },
       { el: '.preview-pane', title: 'Náhled webu', text: 'Tvůj web tak, jak ho uvidí návštěvník. Mění se hned, jak píšeš, a dá se do něj klikat.' },
       { el: '.code-pane .tabs', title: 'Soubory', text: 'Web má tři soubory: <code>index.html</code> (obsah), <code>script.js</code> (chování) a <code>style.css</code> (vzhled). Zakázka řekne, do kterého píšeš.' },
       { el: '#editor', title: 'Kód', text: 'Sem píšeš. 🧩 Úryvky vloží hotové kousky kódu. Chyby v HTML a v JavaScriptu se objeví pod editorem i s číslem řádku.' },

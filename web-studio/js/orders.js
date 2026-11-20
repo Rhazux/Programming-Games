@@ -72,9 +72,9 @@ ${extra || ''}`;
       ],
       palette: { html: ['<h1>|</h1>', '<p>|</p>', '<ul>\n  <li>|</li>\n</ul>', '<li>|</li>', '<a href="tel:|"></a>', '<strong>|</strong>'] },
       hints: [
-        'Nadpis: <h1>Pekárna U Kobližky</h1>. Odstavec: <p>Otevřeno od 7:00</p>.',
-        'Seznam je <ul> a v něm každá položka jako <li>…</li> – a nezapomeň </ul> na konci.',
-        'Odkaz na telefon: <a href="tel:+420777123456">777 123 456</a>.'
+        'Nadpis: `<h1>Pekárna U Kobližky</h1>`. Odstavec: `<p>Otevřeno od 7:00</p>`.',
+        'Seznam je `<ul>` a v něm každá položka jako `<li>…</li>` – a nezapomeň `</ul>` na konci.',
+        'Odkaz na telefon: `<a href="tel:+420777123456">777 123 456</a>`.'
       ],
       learn: ['HTML popisuje strukturu stránky: h1–h6 jsou nadpisy, p odstavec, ul nečíslovaný a ol číslovaný seznam s položkami li, a je odkaz. Podle značek se ve stránce vyznají prohlížeče, vyhledávače i čtečky pro nevidomé.',
         '<h1>Název</h1>\n<p>Odstavec textu.</p>\n<ul>\n  <li>První</li>\n  <li>Druhá</li>\n</ul>\n<a href="https://example.com">Odkaz</a>', 'html']
@@ -105,9 +105,9 @@ ${extra || ''}`;
       ],
       palette: { html: ['<a href="#|"></a>', 'id="|"', '<img src="kocky.svg" alt="|">', 'target="_blank"', '<a href="https://www.youtube.com" target="_blank">|</a>'] },
       hints: [
-        'Sekci dej id: <section id="koncerty">. Odkaz na ni: <a href="#koncerty">Koncerty</a> – mřížka # znamená „na stránce“.',
-        'Obrázek: <img src="kocky.svg" alt="Logo kapely">. Značka img se neuzavírá.',
-        'Nová záložka: <a href="https://www.youtube.com" target="_blank">YouTube</a>.'
+        'Sekci dej id: `<section id="koncerty">`. Odkaz na ni: `<a href="#koncerty">Koncerty</a>` – mřížka `#` znamená „na stránce“.',
+        'Obrázek: `<img src="kocky.svg" alt="Logo kapely">`. Značka `img` se neuzavírá.',
+        'Nová záložka: `<a href="https://www.youtube.com" target="_blank">YouTube</a>`.'
       ],
       learn: ['Atributy upřesňují značky: href říká, kam odkaz vede (#id = místo na stejné stránce), target="_blank" otevře novou záložku, src je soubor obrázku a alt jeho popis. id je jedinečný název prvku – použije ho odkaz, CSS i JavaScript.',
         '<a href="#kontakt">Kontakt</a>\n<section id="kontakt">…</section>\n<img src="logo.png" alt="Logo firmy">\n<a href="https://example.com" target="_blank">Web</a>', 'html']
@@ -137,9 +137,9 @@ ${extra || ''}`;
       ],
       palette: { html: ['<label for="|"></label>', '<input type="text" id="jmeno" name="jmeno">', '<input type="email" id="email" name="email">', '<select id="uroven" name="uroven">\n  <option>|</option>\n</select>', '<option>|</option>', '<button type="submit">Odeslat</button>', ' required'] },
       hints: [
-        'Pole: <input type="email" id="email" name="email">. Popisek: <label for="email">E-mail</label> – for musí sedět s id pole.',
-        'Výběr: <select id="uroven"> s možnostmi <option>začátečník</option> a <option>pokročilý</option>.',
-        'Tlačítko na konec formuláře: <button type="submit">Odeslat</button>.'
+        'Pole: `<input type="email" id="email" name="email">`. Popisek: `<label for="email">E-mail</label>` – `for` musí sedět s `id` pole.',
+        'Výběr: `<select id="uroven">` s možnostmi `<option>začátečník</option>` a `<option>pokročilý</option>`.',
+        'Tlačítko na konec formuláře: `<button type="submit">Odeslat</button>`.'
       ],
       learn: ['Formulář (form) sbírá data: input s typem (text, email, number, password…), select s option pro výběr a button pro odeslání. label for="id" propojí popisek s polem – kliknutí na popisek pak aktivuje pole a čtečka pro nevidomé ví, co pole znamená.',
         '<label for="email">E-mail</label>\n<input type="email" id="email" name="email" required>', 'html']
@@ -171,9 +171,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['document.querySelector(\'#|\')', 'pocet = pocet + 1;', 'pocetEl.textContent = pocet;', '.addEventListener(\'click\', function () {\n  |\n});', 'if (pocet >= 10) {\n  |\n}'] },
       hints: [
-        'Uvnitř funkce: pocet = pocet + 1; a pak pocetEl.textContent = pocet; – změna proměnné se sama na stránce neukáže.',
-        'Pro vynulování si najdi tlačítko: const vynulovat = document.querySelector(\'#vynulovat\'); a přidej mu další addEventListener.',
-        'Při vynulování nastav pocet = 0 a zase ho zobraz v pocetEl.'
+        'Uvnitř funkce: `pocet = pocet + 1;` a pak `pocetEl.textContent = pocet;` – změna proměnné se sama na stránce neukáže.',
+        'Pro vynulování si najdi tlačítko: `const vynulovat = document.querySelector(\'#vynulovat\');` a přidej mu další `addEventListener`.',
+        'Při vynulování nastav `pocet = 0` a zase ho zobraz v `pocetEl`.'
       ],
       learn: ['JavaScript oživí stránku: querySelector najde prvek (#id, .trida), addEventListener("click", funkce) spustí funkci po kliknutí a textContent změní text prvku. Proměnná (let) si pamatuje stav – ale na stránce se změní, až ho tam zapíšeš.',
         'const tlacitko = document.querySelector(\'#plus\');\nlet n = 0;\ntlacitko.addEventListener(\'click\', function () {\n  n = n + 1;\n  document.querySelector(\'#cislo\').textContent = n;\n});', 'js']
@@ -203,9 +203,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['jmeno.value', '.trim()', 'if (text === \'\') {\n  |\n} else {\n  \n}', 'vystup.textContent = \'Ahoj, \' + text + \'!\';', '\'Napiš své jméno.\''] },
       hints: [
-        'Co uživatel napsal, je v jmeno.value (u políčka ne textContent!).',
-        'Spojování textu: \'Ahoj, \' + text + \'!\' – a výsledek ulož do vystup.textContent.',
-        'Prázdné jméno: if (text === \'\') { vystup.textContent = \'Napiš své jméno.\'; } else { … }'
+        'Co uživatel napsal, je v `jmeno.value` (u políčka ne `textContent`!).',
+        'Spojování textu: `\'Ahoj, \' + text + \'!\'` – a výsledek ulož do `vystup.textContent`.',
+        'Prázdné jméno: `if (text === \'\') { vystup.textContent = \'Napiš své jméno.\'; } else { … }`'
       ],
       learn: ['Hodnotu z políčka <input> přečteš přes .value – je to vždy text. Text se spojuje operátorem + a .trim() odstraní mezery na začátku a na konci. if / else rozhodne, co se stane.',
         'const text = pole.value.trim();\nif (text === \'\') {\n  vystup.textContent = \'Prázdné!\';\n} else {\n  vystup.textContent = \'Ahoj, \' + text + \'!\';\n}', 'js']
@@ -234,9 +234,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['if (pocet <= 0) {\n  |\n  return;\n}', 'let celkem = pocet * 99;', 'if (pocet >= 10) {\n  celkem = celkem * 0.9;\n}', 'cena.textContent = celkem + \' Kč\';', 'Math.round(|)', '.toLocaleString(\'cs-CZ\')'] },
       hints: [
-        'Cena: let celkem = pocet * 99; – a vypiš ji: cena.textContent = celkem + \' Kč\';',
-        'Sleva: if (pocet >= 10) { celkem = celkem * 0.9; } – pozor, „od 10“ znamená včetně desítky (>=).',
-        'Nesmysl odchytíš hned na začátku: if (pocet <= 0) { cena.textContent = \'Zadej počet kusů.\'; return; } (Number(\'\') je 0).'
+        'Cena: `let celkem = pocet * 99;` – a vypiš ji: `cena.textContent = celkem + \' Kč\';`',
+        'Sleva: `if (pocet >= 10) { celkem = celkem * 0.9; }` – pozor, „od 10“ znamená včetně desítky (`>=`).',
+        'Nesmysl odchytíš hned na začátku: `if (pocet <= 0) { cena.textContent = \'Zadej počet kusů.\'; return; }` (`Number(\'\')` je `0`).'
       ],
       learn: ['Hodnota z políčka je text – Number() z něj udělá číslo, se kterým jde počítat (jinak by + text jen spojilo: "3" + 1 = "31"). Podmínky if hlídají slevy i nesmyslné vstupy, return funkci předčasně ukončí.',
         'const n = Number(pole.value);\nif (n <= 0) { vystup.textContent = \'Chyba\'; return; }\nlet cena = n * 99;\nif (n >= 10) cena = cena * 0.9;\nvystup.textContent = Math.round(cena) + \' Kč\';', 'js']
@@ -265,9 +265,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['document.body.classList.toggle(\'tmavy\');', 'if (document.body.classList.contains(\'tmavy\')) {\n  |\n} else {\n  \n}', 'tlacitko.textContent = \'☀️ Světlý režim\';', 'document.addEventListener(\'keydown\', function (e) {\n  |\n});', 'e.key === \'d\''] },
       hints: [
-        'document.body.classList.toggle(\'tmavy\') třídu přidá, když tam není, a odebere, když tam je.',
-        'Podle stavu změň text: if (document.body.classList.contains(\'tmavy\')) { tlacitko.textContent = \'☀️ Světlý režim\'; } else { … }',
-        'Pro klávesu si přepínání dej do funkce (function prepni() {…}) a volej ji z obou událostí.'
+        '`document.body.classList.toggle(\'tmavy\')` třídu přidá, když tam není, a odebere, když tam je.',
+        'Podle stavu změň text: `if (document.body.classList.contains(\'tmavy\')) { tlacitko.textContent = \'☀️ Světlý režim\'; } else { … }`',
+        'Pro klávesu si přepínání dej do funkce (`function prepni() {…}`) a volej ji z obou událostí.'
       ],
       learn: ['classList spravuje CSS třídy prvku: add, remove, toggle (přepnout) a contains (je tam?). JavaScript tak nemusí měnit styly jeden po druhém – jen přepne třídu a vzhled zařídí CSS. Událost keydown hlásí stisknuté klávesy v e.key.',
         'document.body.classList.toggle(\'tmavy\');\ndocument.addEventListener(\'keydown\', function (e) {\n  if (e.key === \'d\') prepni();\n});', 'js']
@@ -299,9 +299,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['for (const jidlo of jidla) {\n  |\n}', 'const li = document.createElement(\'li\');', 'li.textContent = jidlo.nazev + \' – \' + jidlo.cena + \' Kč\';', 'menu.appendChild(li);', 'li.classList.add(\'drahe\');'] },
       hints: [
-        'Cyklus: for (const jidlo of jidla) { … } – v každém kroku je v proměnné jidlo jeden objekt.',
-        'Nový prvek: const li = document.createElement(\'li\'); li.textContent = jidlo.nazev + \' – \' + jidlo.cena + \' Kč\';',
-        'Prvek se na stránce objeví, až ho vložíš: menu.appendChild(li);'
+        'Cyklus: `for (const jidlo of jidla) { … }` – v každém kroku je v proměnné `jidlo` jeden objekt.',
+        'Nový prvek: `const li = document.createElement(\'li\'); li.textContent = jidlo.nazev + \' – \' + jidlo.cena + \' Kč\';`',
+        'Prvek se na stránce objeví, až ho vložíš: `menu.appendChild(li);`'
       ],
       learn: ['Pole (array) drží seznam hodnot, tady objektů { nazev, cena }. Cyklus for…of projde každou položku, document.createElement vytvoří nový prvek a appendChild ho vloží do stránky. Stránka tak vzniká z dat – změníš data, změní se web.',
         'for (const jidlo of jidla) {\n  const li = document.createElement(\'li\');\n  li.textContent = jidlo.nazev;\n  menu.appendChild(li);\n}', 'js']
@@ -330,9 +330,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['const text = ukol.value.trim();', 'if (text === \'\') {\n  return;\n}', 'const li = document.createElement(\'li\');', 'li.textContent = text;', 'seznam.appendChild(li);', 'ukol.value = \'\';'] },
       hints: [
-        'Text z políčka: const text = ukol.value.trim(); a když je prázdný, funkci ukonči: if (text === \'\') { return; }',
-        'Nová položka: const li = document.createElement(\'li\'); li.textContent = text; seznam.appendChild(li);',
-        'Vyprázdnění políčka: ukol.value = \'\'; – a pro přání navíc dej každé li vlastní addEventListener(\'click\', …).'
+        'Text z políčka: `const text = ukol.value.trim();` a když je prázdný, funkci ukonči: `if (text === \'\') { return; }`',
+        'Nová položka: `const li = document.createElement(\'li\'); li.textContent = text; seznam.appendChild(li);`',
+        'Vyprázdnění políčka: `ukol.value = \'\';` – a pro přání navíc dej každé `li` vlastní `addEventListener(\'click\', …)`.'
       ],
       learn: ['Nové prvky vytváříš za běhu: createElement je vyrobí, textContent naplní a appendChild přidá na konec seznamu. Každý nový prvek může mít vlastní posluchač událostí. Hodnotu políčka měníš přiřazením do .value.',
         'const li = document.createElement(\'li\');\nli.textContent = text;\nli.addEventListener(\'click\', () => li.classList.toggle(\'hotovo\'));\nseznam.appendChild(li);', 'js']
@@ -362,9 +362,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['if (!email.value.includes(\'@\')) {\n  |\n}', 'else if (heslo.value.length < 8) {\n  |\n}', 'else if (heslo.value !== heslo2.value) {\n  |\n}', 'else {\n  |\n}', 'chyba.textContent = \'|\';', '/[0-9]/.test(heslo.value)'] },
       hints: [
-        'Zavináč: email.value.includes(\'@\') – vykřičník (!) podmínku obrátí. Délka hesla: heslo.value.length.',
-        'Kontroly řeť za sebou: if (…) { chyba… } else if (…) { … } else { úspěch } – vypíše se vždy jen první chyba.',
-        'Při úspěchu nezapomeň vymazat starou chybu: chyba.textContent = \'\'; a hotovo.textContent = \'Registrace proběhla!\';'
+        'Zavináč: `email.value.includes(\'@\')` – vykřičník (`!`) podmínku obrátí. Délka hesla: `heslo.value.length`.',
+        'Kontroly řeť za sebou: `if (…) { chyba… } else if (…) { … } else { úspěch }` – vypíše se vždy jen první chyba.',
+        'Při úspěchu nezapomeň vymazat starou chybu: `chyba.textContent = \'\';` a `hotovo.textContent = \'Registrace proběhla!\';`'
       ],
       learn: ['Validace hlídá data dřív, než je odešleš. Texty mají .length a .includes(), řetěz if / else if / else zkontroluje podmínky postupně. Regulární výraz /[0-9]/.test(text) zjistí, jestli text obsahuje číslici. A pozor: hodnota pole je v .value, ne v prvku samotném.',
         'if (!email.includes(\'@\')) {\n  chyba = \'Chybí zavináč\';\n} else if (heslo.length < 8) {\n  chyba = \'Krátké heslo\';\n} else {\n  chyba = \'\';\n}', 'js']
@@ -393,9 +393,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['const dotaz = hledat.value.toLowerCase();', 'for (const kniha of knihy) {\n  |\n}', 'kniha.textContent.toLowerCase().includes(dotaz)', 'kniha.hidden = !sedi;', 'pocet.textContent = \'Nalezeno: \' + nalezeno;'] },
       hints: [
-        'Událost input se spustí při každém napsaném znaku. Hledaný text: const dotaz = hledat.value.toLowerCase();',
-        'Pro každou knihu: const sedi = kniha.textContent.toLowerCase().includes(dotaz); kniha.hidden = !sedi; – skrýt i zase ukázat.',
-        'Počítej shody do proměnné (let nalezeno = 0; … if (sedi) nalezeno++;) a vypiš \'Nalezeno: \' + nalezeno.'
+        'Událost `input` se spustí při každém napsaném znaku. Hledaný text: `const dotaz = hledat.value.toLowerCase();`',
+        'Pro každou knihu: `const sedi = kniha.textContent.toLowerCase().includes(dotaz); kniha.hidden = !sedi;` – skrýt i zase ukázat.',
+        'Počítej shody do proměnné (`let nalezeno = 0;` … `if (sedi) nalezeno++;`) a vypiš `\'Nalezeno: \' + nalezeno`.'
       ],
       learn: ['Událost input přijde při každé změně políčka – ideální pro živé vyhledávání. toLowerCase() srovná velikost písmen a includes() hledá podřetězec. Vlastnost hidden prvek skryje (true) nebo ukáže (false).',
         'pole.addEventListener(\'input\', function () {\n  const q = pole.value.toLowerCase();\n  for (const li of polozky) {\n    li.hidden = !li.textContent.toLowerCase().includes(q);\n  }\n});', 'js']
@@ -426,9 +426,9 @@ ${extra || ''}`;
       ],
       palette: { js: ['polozky.push({ nazev: tl.dataset.nazev, cena: Number(tl.dataset.cena) });', 'function vykresli() {\n  |\n}', 'kosik.innerHTML = \'\';', 'for (const p of polozky) {\n  |\n}', 'celkem = celkem + p.cena;', 'celkemEl.textContent = \'Celkem: \' + celkem + \' Kč\';'] },
       hints: [
-        'Při kliknutí přidej produkt do pole: polozky.push({ nazev: tl.dataset.nazev, cena: Number(tl.dataset.cena) }); – Number(), jinak se ceny spojí jako text.',
-        'Napiš funkci vykresli(): vymaže #kosik (kosik.innerHTML = \'\'), projde pole, pro každou položku přidá <li> a sečte ceny.',
-        'Vysypání: polozky = []; a zavolej vykresli(). Funkci volej i po každém nákupu.'
+        'Při kliknutí přidej produkt do pole: `polozky.push({ nazev: tl.dataset.nazev, cena: Number(tl.dataset.cena) });` – `Number()`, jinak se ceny spojí jako text.',
+        'Napiš funkci `vykresli()`: vymaže `#kosik` (`kosik.innerHTML = \'\'`), projde pole, pro každou položku přidá `<li>` a sečte ceny.',
+        'Vysypání: `polozky = [];` a zavolej `vykresli()`. Funkci volej i po každém nákupu.'
       ],
       learn: ['Data-atributy (data-cena, data-nazev) ukládají data přímo v HTML a v JS jsou v element.dataset – vždy jako text. Stav aplikace (obsah košíku) drž v poli a stránku podle něj překresluj jednou funkcí – tak to dělají i velké frameworky.',
         'let polozky = [];\nfunction vykresli() {\n  seznam.innerHTML = \'\';\n  for (const p of polozky) { /* … */ }\n}\ntl.addEventListener(\'click\', () => {\n  polozky.push({ cena: Number(tl.dataset.cena) });\n  vykresli();\n});', 'js']

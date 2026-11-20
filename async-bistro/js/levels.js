@@ -76,7 +76,7 @@
         'Napiš před volání slovo `await`: `const kava = await kavovar();`. Funkce pak počká, až je káva hotová.',
         'Pro bonus přidej řádek `console.log(\'Káva hotová\')`. Uvidíš ho v deníku i s časem.'
       ],
-      bonus: { text: 'Zapiš do deníku, co se děje: console.log(…)', check: c => all(c, s => playerLogs(s).length > 0) },
+      bonus: { text: 'Zapiš do deníku, co se děje: `console.log(…)`', check: c => all(c, s => playerLogs(s).length > 0) },
       learn: ['Funkce stanic vrací Promise – slib budoucí hodnoty. await (jen uvnitř async funkce) počká, až se slib splní, a vrátí hotovou hodnotu.', 'async function obsluz(objednavka) {\n  const kava = await kavovar();\n  podej(objednavka, kava);\n}'],
       palette: ['await ', 'const kava = await kavovar();', "console.log('…');", 'podej(objednavka, kava);'],
       reward: 'Host odchází s kávou a úsměvem. Kávovar ti začíná věřit.'
@@ -123,7 +123,7 @@
         'Hotový toust vznikne ze dvou surovin: `const toust = sloz(chleba, syr);` a ten podej.',
         'Pro bonus používej jen `const` – každá hodnota se tu vytvoří jednou a už se nemění.'
       ],
-      bonus: { text: 'Jen const – žádné let ani var', check: c => !/\b(let|var)\b/.test(c.plain) },
+      bonus: { text: 'Jen `const` – žádné `let` ani `var`', check: c => !/\b(let|var)\b/.test(c.plain) },
       learn: ['Každý await počká na jeden krok. Výsledek si ulož do proměnné a předej dalšímu kroku – tak vzniká postup práce. const vytvoří proměnnou, která se už nemění.', "const chleba = await trouba('chléb');\nconst syr = await prkenko('sýr');\npodej(objednavka, sloz(chleba, syr));"],
       palette: ["const syr = await prkenko('sýr');", 'sloz(chleba, syr)', "await trouba('chléb')", 'podej(objednavka, toust);'],
       reward: 'Křupavý toust, roztečený sýr. Dvojka si objednala ještě jeden.'
@@ -189,7 +189,7 @@
         'Pozor na jedno `=`: to je přiřazení, ne porovnání. Porovnává se `===`.',
         'Pro bonus zkus `switch (objednavka.jidlo) { case \'káva\': … break; … }` – pro víc možností je přehlednější.'
       ],
-      bonus: { text: 'Rozhodni se pomocí switch', check: c => /\bswitch\s*\(/.test(c.plain) },
+      bonus: { text: 'Rozhodni se pomocí `switch`', check: c => /\bswitch\s*\(/.test(c.plain) },
       learn: ['Objekt nese pojmenované hodnoty: objednavka.jidlo, objednavka.stul. if / else if / else vybere jednu cestu, switch je přehlednější varianta pro mnoho možností.', "switch (objednavka.jidlo) {\n  case 'káva':\n    podej(objednavka, await kavovar());\n    break;\n  default:\n    // toust\n}"],
       palette: ["if (objednavka.jidlo === 'káva') {", '} else if (objednavka.jidlo === \'vajíčko\') {', 'switch (objednavka.jidlo) {', "case 'káva':"],
       reward: 'Každý dostal, co chtěl. Pepa už nemusí křičet dvakrát.'
@@ -312,7 +312,7 @@ async function smena(objednavky) {
         'Výsledek je pole, rozbal ho rovnou: `const [testoviny, omacka] = await Promise.all([plotna(\'těstoviny\'), plotna(\'omáčka\')]);`',
         'Burger stejně, jen se třemi stanicemi: fritéza, trouba a prkénko běží současně.'
       ],
-      bonus: { text: 'Rozbal výsledek: const [a, b] = await Promise.all(…)', check: c => /const\s*\[[^\]]+\]\s*=\s*await\s+Promise\.all\s*\(/.test(c.plain) },
+      bonus: { text: 'Rozbal výsledek: `const [a, b] = await Promise.all(…)`', check: c => /const\s*\[[^\]]+\]\s*=\s*await\s+Promise\.all\s*\(/.test(c.plain) },
       learn: ['Promise.all([…]) čeká na víc slibů najednou. Práce běží souběžně, takže to trvá jen tak dlouho jako ta nejpomalejší. Výsledky přijdou v poli ve stejném pořadí.', "const [testoviny, omacka] = await Promise.all([\n  plotna('těstoviny'),\n  plotna('omáčka')\n]);"],
       palette: ['await Promise.all([|])', "const [testoviny, omacka] = await Promise.all([plotna('těstoviny'), plotna('omáčka')]);", "friteza('maso')", "trouba('houska')"],
       reward: 'Dvě plotny, jedna myšlenka. Špagety za 8 minut místo 14!'
@@ -408,7 +408,7 @@ async function smena(objednavky) {
         'Na pole slibů počkej: `await Promise.all(objednavky.map(o => obsluz(o)));`. Bez `await` by směna skončila dřív, než se dovaří.',
         'Bruschetta je jako toust, jen místo sýra nakrájíš rajče: `prkenko(\'rajče\')`.'
       ],
-      bonus: { text: 'Bez cyklu for – jen map()', check: c => /\.map\s*\(/.test(c.plain) && !/\bfor\s*\(/.test(c.plain) },
+      bonus: { text: 'Bez cyklu `for` – jen `map()`', check: c => /\.map\s*\(/.test(c.plain) && !/\bfor\s*\(/.test(c.plain) },
       learn: ['pole.map(f) vytvoří nové pole: pro každý prvek zavolá f. U async funkce vznikne pole slibů, na které počkáš přes Promise.all. Stanice si vytvoří frontu samy.', 'await Promise.all(\n  objednavky.map(o => obsluz(o))\n);'],
       palette: ['objednavky.map(o => obsluz(o))', 'await Promise.all(|)', "prkenko('rajče')", "objednavka.jidlo === 'bruschetta'"],
       reward: 'Celý stůl jí najednou. Kuchyně jede na plný výkon a nic nestojí.'
@@ -495,7 +495,7 @@ async function smena(objednavky) {
         'Opakuj, dokud se nepovede: `while (true) { try { return await trouba(\'pizza\'); } catch (chyba) { … } }` – `return` cyklus ukončí.',
         'Pro bonus v `catch` vypiš `console.log(chyba.message)`. V deníku uvidíš, co se pokazilo.'
       ],
-      bonus: { text: 'Zapiš chybu do deníku: console.log(chyba.message)', check: c => all(c, s => !s.burnt || playerLogs(s).some(l => /spálil/.test(l[1]))) },
+      bonus: { text: 'Zapiš chybu do deníku: `console.log(chyba.message)`', check: c => all(c, s => !s.burnt || playerLogs(s).some(l => /spálil/.test(l[1]))) },
       learn: ['Když slib skončí chybou, await ji vyhodí jako výjimku. try { … } catch (chyba) { … } ji zachytí a program pokračuje; chyba.message obsahuje popis. Ve smyčce můžeš akci zkusit znovu.', "while (true) {\n  try {\n    return await trouba('pizza');\n  } catch (chyba) {\n    console.log(chyba.message);\n  }\n}"],
       palette: ['try {', '} catch (chyba) {', 'while (true) {', "return await trouba('pizza');"],
       reward: 'Spálené pizzy skončily v koši, hosté dostali dokonalé. Nikdo nic nepoznal.'
@@ -601,7 +601,7 @@ async function smena(objednavky) {
         '`const jidla = await Promise.all(objednavky.map(priprav));` – pole jídel ve stejném pořadí jako objednávky.',
         'Nakonec všem podej v cyklu bez čekání: `objednavky.forEach((objednavka, i) => podej(objednavka, jidla[i]));`'
       ],
-      bonus: { text: 'Podávej v forEach s indexem: (objednavka, i) => …', check: c => /\.forEach\s*\(\s*\(\s*\w+\s*,\s*\w+\s*\)\s*=>/.test(c.plain) },
+      bonus: { text: 'Podávej ve `forEach` s indexem: `(objednavka, i) => …`', check: c => /\.forEach\s*\(\s*\(\s*\w+\s*,\s*\w+\s*\)\s*=>/.test(c.plain) },
       learn: ['async funkce může hodnotu vrátit příkazem return – kdo ji zavolá s await, dostane hotový výsledek. Promise.all vrátí pole výsledků ve stejném pořadí, v jakém byly sliby.', 'const jidla = await Promise.all(objednavky.map(priprav));\nobjednavky.forEach((objednavka, i) => {\n  podej(objednavka, jidla[i]);\n});'],
       palette: ['return sloz(maso, houska, salat);', 'const jidla = await Promise.all(objednavky.map(priprav));', 'objednavky.forEach((objednavka, i) => podej(objednavka, jidla[i]));', 'return await kavovar();'],
       reward: 'Talíře přistály na stole ve stejné vteřině. Oslavenec tleská!'
@@ -661,7 +661,7 @@ async function obsluz(objednavka) {
         'Rýži vař zároveň: obal oboje do `Promise.all([plotna(\'rýže\'), …závod…])`. Pro bonus si závod schovej do vlastní funkce, třeba `sLimitem(slib, minuty, nahrada)`.'
       ],
       bonus: {
-        text: 'Závod schovej do vlastní funkce (např. sLimitem) a zavolej ji',
+        text: 'Závod schovej do vlastní funkce (např. `sLimitem`) a zavolej ji',
         check: c => {
           const names = [...c.plain.matchAll(/(?:function\s+([A-Za-z_$][\w$]*)\s*\(|(?:const|let)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:async\s*)?(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>)/g)].map(m => m[1] || m[2]).filter(n => n && n !== 'obsluz' && n !== 'smena');
           return /Promise\.race/.test(c.plain) && names.some(n => (c.plain.match(new RegExp(`\\b${n}\\s*\\(`, 'g')) || []).length >= 2);
@@ -816,7 +816,7 @@ async function smena(objednavky) {
         '`(a, b) => a.limit - b.limit` seřadí od nejmenšího limitu. Obráceně (`b.limit - a.limit`) by šli první ti, co mají nejvíc času.',
         'Pro bonus netřiď pole, které jsi dostal(a) – seřaď kopii: `[...objednavky].sort(…)`.'
       ],
-      bonus: { text: 'Seřaď kopii pole: [...objednavky].sort(…)', check: c => /\[\s*\.\.\.\s*objednavky\s*\]\s*\.sort\s*\(|objednavky\s*\.\s*slice\s*\(\s*\)\s*\.sort\s*\(/.test(c.plain) },
+      bonus: { text: 'Seřaď kopii pole: `[...objednavky].sort(…)`', check: c => /\[\s*\.\.\.\s*objednavky\s*\]\s*\.sort\s*\(|objednavky\s*\.\s*slice\s*\(\s*\)\s*\.sort\s*\(/.test(c.plain) },
       learn: ['sort(porovnej) seřadí pole na místě. Porovnávací funkce (a, b) => a.limit - b.limit dá dopředu menší čísla. Bez ní by sort řadil jako text. [...pole] vytvoří kopii, takže původní pole zůstane netknuté.', 'const poradi = [...objednavky]\n  .sort((a, b) => a.limit - b.limit);'],
       palette: ['objednavky.sort((a, b) => a.limit - b.limit)', '[...objednavky]', 'const poradi = ', 'for (const objednavka of poradi) {'],
       reward: 'Paní od devítky stihla divadlo. A dezert si dala o přestávce.'
