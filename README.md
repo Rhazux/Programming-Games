@@ -14,7 +14,6 @@ Píšeš skutečné HTML, CSS, JavaScript a Python a hra ti hned ukáže, co tv�
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Úrovně](https://img.shields.io/badge/%C3%BArovn%C3%AD-100-6f42c1?style=flat-square)
-![Automatické kontroly](https://img.shields.io/badge/automatick%C3%A9%20kontroly-1%20743-2ea44f?style=flat-square)
 ![Závislosti](https://img.shields.io/badge/z%C3%A1vislosti-0-2ea44f?style=flat-square)
 ![Jazyk](https://img.shields.io/badge/jazyk-%C4%8De%C5%A1tina-d7141a?style=flat-square)
 
@@ -33,7 +32,6 @@ Programming Games je sada osmi výukových her, které vznikly jako projekt do p
 | 📖 **Lekce ke každé úrovni** | Nová věc vysvětlená na živém příkladu, který si můžeš hned upravit a spustit. |
 | 📈 **Měřitelný pokrok** | Vstupní a výstupní test, normalizovaný zisk, tabulka dovedností a export výsledků. |
 | ♿ **Přístupnost** | Ovládání klávesnicí, kontrast podle WCAG, popisky pro čtečky, respekt k omezení pohybu. |
-| 🧪 **1 743 automatických kontrol** | Hlídají, že každá úroveň jde vyřešit, typické chyby neprojdou a lekce neprozradí řešení. |
 | 📦 **Bez instalace a závislostí** | Čisté HTML, CSS a JavaScript. Funguje online i po stažení dvojklikem na `index.html`. |
 
 <a name="hry"></a>
