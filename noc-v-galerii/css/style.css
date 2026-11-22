@@ -224,7 +224,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; box-shadow: no
 .piece.next::after { content: var(--next-label); position: absolute; top: -.35rem; right: .2rem; padding: .1rem .6rem; font-size: .76rem; font-weight: 900; color: var(--label-ink); background: var(--gold-hi); border-radius: 99px; }
 .piece.locked { opacity: 1; cursor: default; }
 .piece.locked .plabel { background: #d9cbb4; }
-.piece.locked .plabel small { color: #5a463e; }
+.piece.locked .plabel small { color: #33251f; }
 .final { background: var(--card); }
 
 /* ---------- obraz (úroveň) ---------- */
