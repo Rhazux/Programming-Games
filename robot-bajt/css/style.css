@@ -12,7 +12,7 @@
   --display-track: -.01em;
 
   --bg: #08342a;
-  --ink: #f3f4ea;
+  --ink: #fefff5;
   --ink2: #d3e6d8;
   --muted: #cbe8da;
   --line: #1b6550;
@@ -20,7 +20,7 @@
   --card: #0d4535;
   --soft: #12513f;
   --btn: #155a46;
-  --btn-ink: #f3f4ea;
+  --btn-ink: #fefff5;
   --topbar: rgba(6, 40, 32, .94);
 
   --accent: #f0b43c;
@@ -59,7 +59,7 @@
   --tk-str: #ffb0d0;
   --tk-com: #85a598;
   --tk-op: #e9efe6;
-  --tk-cmd: #8ef6ff;
+  --tk-cmd: #97fcff;
   --tk-sen: #a8f06a;
   --chip-bg: #0b1311;
   --star: #ffd166;
@@ -162,4 +162,4 @@ body {
   .speed { margin-left: 0; }
 }
 .meters .m-label { font-size: .86rem; font-weight: 700; color: var(--ink2); }
-:root { --accent-text: #ffd978; }
+:root { --accent-text: #ffe284; }

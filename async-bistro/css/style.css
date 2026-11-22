@@ -24,22 +24,22 @@
   --btn-ink: #1f2326;
   --topbar: rgba(255, 255, 255, .94);
 
-  --accent: #b31200;
+  --accent: #b00e00;
   --accent-ink: #ffffff;
   --accent-soft: rgba(226, 65, 43, .16);
-  --primary: #b31200;
+  --primary: #b00e00;
   --primary-ink: #ffffff;
-  --go: #b31200;
+  --go: #b00e00;
   --go-ink: #ffffff;
   --good: #186432;
   --good-ink: #ffffff;
   --good-soft: rgba(47, 143, 78, .09);
-  --bad: #b40a16;
+  --bad: #a7000d;
   --bad-soft: rgba(198, 40, 40, .07);
   --warn: #744900;
   --pill-bg: rgba(226, 65, 43, .08);
   --pill-line: rgba(226, 65, 43, .35);
-  --focus: #005d94;
+  --focus: #005c93;
   --paper: #fffdf6;
   --paper-line: #e9e2cf;
 
@@ -54,19 +54,19 @@
   --code-ink: #f1efe9;
   --gutter: #191c1f;
   --gutter-ink: #a5afb7;
-  --caret: #ff8a65;
+  --caret: #ff8e6a;
   --selection: rgba(124, 196, 255, .3);
-  --tk-kw: #ff8a65;
-  --tk-fn: #7cc4ff;
+  --tk-kw: #ff8e6a;
+  --tk-fn: #82c9ff;
   --tk-builtin: #ffd36e;
   --tk-num: #d2a8ff;
   --tk-str: #a8e6a3;
   --tk-com: #a5aeb5;
   --tk-op: #c9d1d9;
-  --tk-prop: #7cc4ff;
-  --tk-sel: #ff8a65;
+  --tk-prop: #82c9ff;
+  --tk-sel: #ff8e6a;
   --tk-val: #a8e6a3;
-  --tk-tag: #ff8a65;
+  --tk-tag: #ff8e6a;
   --tk-attr: #ffd36e;
   --chip-bg: #ffffff;
   --chip-ink: #891504;
@@ -100,7 +100,7 @@ pre.code code, .code code { color: inherit; }
 .feed li { display: grid; grid-template-columns: 3.2rem 4.6rem 1fr; gap: .4rem; padding: .18rem 0; animation: fade .35s; }
 .feed .f-t { color: var(--muted); }
 .feed .f-w { color: var(--accent); font-weight: 700; }
-.feed li.code .f-x { color: #005d94; }
+.feed li.code .f-x { color: #005c93; }
 .steps li::before { background: var(--accent); color: var(--accent-ink); }
 
 /* ---------- mapa ---------- */
@@ -230,7 +230,7 @@ pre.code code, .code code { color: inherit; }
 .log-h { font: 700 .8rem var(--font); color: var(--muted); margin: .45rem 0 .2rem; padding-bottom: .2rem; border-bottom: 1px dashed var(--paper-line); }
 .lg { white-space: pre-wrap; word-break: break-word; }
 .lg .lt { color: #4f5962; margin-right: .6rem; }
-.lg .pr { font-size: .72rem; color: #fff; background: #005d94; border-radius: 3px; padding: 0 .3rem; }
+.lg .pr { font-size: .72rem; color: #fff; background: #005c93; border-radius: 3px; padding: 0 .3rem; }
 .lg.info { color: var(--muted); }
 .lg.ok { color: var(--good); }
 .lg.warn { color: var(--warn); }

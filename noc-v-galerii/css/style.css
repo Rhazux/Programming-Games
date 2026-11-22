@@ -24,7 +24,7 @@
   --bg: #2a1218;
   --ink: #f6eadb;
   --ink2: #e6d6c3;
-  --muted: #c9b19e;
+  --muted: #cdb5a2;
   --line: #4f2b35;
   --frame: #5e3643;
   --card: #34171f;
@@ -89,7 +89,7 @@
   --console-bg: #1d0b10;
   --console-ink: #f3e6d6;
   --console-warn: #f2c14e;
-  --console-muted: #c9b19e;
+  --console-muted: #cdb5a2;
   --hint-bg: rgba(242, 193, 78, .1);
   --scrim: rgba(12, 4, 7, .74);
   --ed-min: 180px;
@@ -154,7 +154,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; box-shadow: no
 .goal small { color: var(--ink2); }
 .field-input { display: block; width: 100%; max-width: 380px; margin-top: .4rem; padding: .75rem .95rem; font: 500 1.05rem var(--font); color: var(--ink); background: var(--input); border: 1px solid var(--frame); border-radius: var(--radius-sm); }
 .field-input:focus { border-color: var(--gold); }
-.field-input::placeholder { color: #a18779; }
+.field-input::placeholder { color: #b2988b; }
 
 /* ---------- rám, plátno, štítek ---------- */
 .art { margin: 0; display: grid; gap: .55rem; justify-items: center; min-width: 0; }
@@ -174,7 +174,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; box-shadow: no
 .label-card { display: grid; gap: .05rem; justify-items: start; text-align: left; padding: .5rem .8rem .55rem; color: var(--label-ink); background: var(--cream); border-radius: 2px; box-shadow: 0 4px 10px rgba(0, 0, 0, .35); font-size: .86rem; line-height: 1.3; }
 .label-card b { font-family: var(--display); font-size: 1.02rem; color: var(--label-ink); }
 .label-card span { color: var(--label-ink); }
-.label-card small, .art .label-card small { display: block; color: #6a554c; font-size: .78rem; font-weight: 400; }
+.label-card small, .art .label-card small { display: block; color: #5d4941; font-size: .78rem; font-weight: 400; }
 
 /* ---------- úvod ---------- */
 .intro { align-items: center; }
@@ -216,7 +216,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; box-shadow: no
 .pframe.blank .pq { color: #f4ead6; font-size: 1.6rem; background: #3a2a1c; }
 .plabel { display: grid; gap: .05rem; padding: .4rem .65rem .45rem; color: var(--label-ink); background: var(--cream); border-radius: 2px; box-shadow: 0 3px 8px rgba(0, 0, 0, .35); }
 .plabel b { font-family: var(--display); font-style: italic; font-size: 1.02rem; line-height: 1.2; }
-.plabel small { color: #6a554c; font-size: .78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.plabel small { color: #5d4941; font-size: .78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .plabel .n-stars { font-size: .95rem; letter-spacing: .06em; color: #c9b8a6; }
 .plabel .n-stars i { font-style: normal; }
 .plabel .n-stars i.on { color: #c98a00; }
