@@ -174,7 +174,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; box-shadow: no
 .label-card { display: grid; gap: .05rem; justify-items: start; text-align: left; padding: .5rem .8rem .55rem; color: var(--label-ink); background: var(--cream); border-radius: 2px; box-shadow: 0 4px 10px rgba(0, 0, 0, .35); font-size: .86rem; line-height: 1.3; }
 .label-card b { font-family: var(--display); font-size: 1.02rem; color: var(--label-ink); }
 .label-card span { color: var(--label-ink); }
-.label-card small, .art .label-card small { display: block; color: #5d4941; font-size: .78rem; font-weight: 400; }
+.label-card small, .art .label-card small { display: block; color: #54403a; font-size: .82rem; font-weight: 400; }
 
 /* ---------- úvod ---------- */
 .intro { align-items: center; }
@@ -216,7 +216,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; box-shadow: no
 .pframe.blank .pq { color: #f4ead6; font-size: 1.6rem; background: #3a2a1c; }
 .plabel { display: grid; gap: .05rem; padding: .4rem .65rem .45rem; color: var(--label-ink); background: var(--cream); border-radius: 2px; box-shadow: 0 3px 8px rgba(0, 0, 0, .35); }
 .plabel b { font-family: var(--display); font-style: italic; font-size: 1.02rem; line-height: 1.2; }
-.plabel small { color: #5d4941; font-size: .78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.plabel small { color: #54403a; font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .plabel .n-stars { font-size: .95rem; letter-spacing: .06em; color: #c9b8a6; }
 .plabel .n-stars i { font-style: normal; }
 .plabel .n-stars i.on { color: #c98a00; }

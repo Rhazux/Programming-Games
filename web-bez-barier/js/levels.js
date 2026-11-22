@@ -10,10 +10,10 @@
 
   /* ---------------- testeři ---------------- */
   const PERSONAS = {
-    karel: { name: 'Karel', age: 52, role: 'Nevidomý, web mu čte čtečka obrazovky', short: 'čtečka obrazovky', ico: '🦯', color: '#6d3fb5', view: 'reader', ok: 'Všechno jsem slyšel a pochopil. Díky!' },
-    tomas: { name: 'Tomáš', age: 34, role: 'Ruka v sádře, ovládá web jen klávesnicí', short: 'jen klávesnice', ico: '⌨️', color: '#1d4ed8', view: 'keys', ok: 'Prošel jsem to celé bez myši.' },
-    jana: { name: 'Jana', age: 68, role: 'Slabozraká, potřebuje silný kontrast', short: 'slabý zrak', ico: '👓', color: '#b4470f', view: 'contrast', ok: 'Konečně to přečtu bez lupy.' },
-    eliska: { name: 'Eliška', age: 27, role: 'Porucha rovnováhy, pohyb jí dělá zle', short: 'citlivá na pohyb', ico: '🌀', color: '#0f766e', view: 'motion', ok: 'Nic se nehoupe, je mi dobře.' }
+    karel: { name: 'Karel', age: 52, role: 'Nevidomý, web mu čte čtečka obrazovky', short: 'čtečka obrazovky', ico: '🦯', color: '#6a3bb1', view: 'reader', ok: 'Všechno jsem slyšel a pochopil. Díky!' },
+    tomas: { name: 'Tomáš', age: 34, role: 'Ruka v sádře, ovládá web jen klávesnicí', short: 'jen klávesnice', ico: '⌨️', color: '#1945cc', view: 'keys', ok: 'Prošel jsem to celé bez myši.' },
+    jana: { name: 'Jana', age: 68, role: 'Slabozraká, potřebuje silný kontrast', short: 'slabý zrak', ico: '👓', color: '#9c3200', view: 'contrast', ok: 'Konečně to přečtu bez lupy.' },
+    eliska: { name: 'Eliška', age: 27, role: 'Porucha rovnováhy, pohyb jí dělá zle', short: 'citlivá na pohyb', ico: '🌀', color: '#005f58', view: 'motion', ok: 'Nic se nehoupe, je mi dobře.' }
   };
 
   const CHAPTERS = [

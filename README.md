@@ -31,7 +31,7 @@ Programming Games je sada osmi výukových her, které vznikly jako projekt do p
 | 🧠 **4 jazyky** | HTML, CSS, JavaScript a Python. Python běží přímo ve hře, nic se neinstaluje. |
 | 📖 **Lekce ke každé úrovni** | Nová věc vysvětlená na živém příkladu, který si můžeš hned upravit a spustit. |
 | 📈 **Měřitelný pokrok** | Vstupní a výstupní test, normalizovaný zisk, tabulka dovedností a export výsledků. |
-| ♿ **Přístupnost** | Ovládání klávesnicí, kontrast podle WCAG, popisky pro čtečky, respekt k omezení pohybu. |
+| ♿ **Přístupnost** | Kontrast textu podle nejpřísnější normy WCAG AAA (7 : 1), ovládání klávesnicí, popisky pro čtečky, respekt k omezení pohybu. |
 | 📦 **Bez instalace a závislostí** | Čisté HTML, CSS a JavaScript. Funguje online i po stažení dvojklikem na `index.html`. |
 
 <a name="hry"></a>
@@ -180,11 +180,11 @@ flowchart LR
 | Prvek | Co dělá |
 |---|---|
 | ⌨️ **Editor kódu** | Zvýraznění syntaxe, čísla řádků, automatické odsazení a vkládání hotových úryvků. |
-| 💬 **Chyby česky** | Číslo řádku, srozumitelné vysvětlení a návrh opravy překlepu („Nemyslel(a) jsi `krok()`?“). |
-| 💡 **Nápovědy** | Tři postupné nápovědy od jemného postrčení po skoro hotový kód. Vzorové řešení až nakonec. |
+| 💬 **Chyby česky** | Číslo řádku, co se stalo, proč a jak to opravit, i návrh opravy překlepu („Nemyslel(a) jsi `krok()`?“). Kód ve vysvětleních je zvýrazněný. Po spuštění je výsledek vždy vidět celý. |
+| 💡 **Nápovědy** | Postupné nápovědy od jemného postrčení po skoro hotový kód, se zvýrazněným kódem. Vzorové řešení až nakonec. |
 | ⭐ **Tři hvězdy** | Splnění, úspornost (třeba nejvýš 3 spuštění nebo krátký kód) a bonus navíc. Po výhře hra u každé hvězdy napíše, za co ji máš, a u chybějící poradí, jak ji získat. |
 | ❔ **Průvodce** | V první úrovni provede obrazovkou krok po kroku. Spustit ho jde kdykoli znovu. |
-| 📖 **Tahák a lekce** | Přehled všeho, co ses naučil(a), a lekce všech odemčených úrovní. |
+| 📖 **Tahák a lekce** | Přehled všeho, co ses naučil(a), a lekce všech odemčených úrovní. Z lekce se tlačítkem vrátíš rovnou do taháku. |
 | 🏅 **Odznaky a hodnosti** | Odměny za styl hraní, třeba za řešení bez nápovědy nebo na první pokus. |
 | 💾 **Ukládání** | Postup se ukládá v prohlížeči, hru jde kdykoli přerušit. |
 
@@ -248,6 +248,15 @@ nazev-hry/
 └── tests/              automatické testy
 ```
 
+## 🆕 Poslední vylepšení
+
+- **Kontrast AAA ve všech hrách.** Tlumené texty, komentáře v kódu, čísla řádků, tlačítka i barevné štítky mají kontrast aspoň 7 : 1.
+- **Zvýrazněný kód všude, kde se o kódu mluví.** Úkoly, nápovědy, bonusy i chybové hlášky ukazují kód jako kód, ne jako obyčejný text.
+- **Konkrétnější vysvětlení chyb.** CSS Parkour u každého levelu řekne, proč Pixel neprošel a co zkontrolovat. Chyby Pythonu, JavaScriptu a letu Orla mají zvýrazněný kód a opravené překlepy.
+- **Úkol na prvním místě.** Operace Kobra a Web Studio ukazují úkol, požadavky a příklady nahoře, příběh je pod nimi. Robot Bajt má větší herní plochu a popsané ukazatele.
+- **Výsledek je vždy vidět.** Vysvětlení po spuštění se nezkracuje a obrazovka se k němu posune.
+- **Hry běží online** na [GitHub Pages](https://rhazux.github.io/Programming-Games/) a rozcestník ukazuje počet úrovní každé hry.
+
 <a name="spusteni"></a>
 
 ## ▶️ Spuštění
@@ -274,7 +283,7 @@ Každá hra má vlastní automatické testy. Ověřují, že vzorové řešení 
 | 🖼️ Noc v galerii | otevři `noc-v-galerii/tests/test.html` | 311 |
 | **Celkem** | | **1 743** |
 
-Kontrast všech textů ve všech hrách byl ověřený pixelovým auditem podle WCAG 2 (úroveň AA), včetně oken, lekcí a stavů tlačítek. Hry jdou ovládat klávesnicí, mají viditelný fokus, popisky pro čtečky obrazovky a respektují nastavení omezeného pohybu.
+Kontrast všech textů ve všech hrách byl ověřený pixelovým auditem podle nejpřísnější úrovně WCAG 2 **AAA**: běžný text má kontrast aspoň 7 : 1, velký text aspoň 4,5 : 1, včetně oken, lekcí, tlačítek a stavů po spuštění. Jedinou záměrnou výjimkou je ukázka špatného kontrastu „Aa“ v lekci o kontrastu ve hře Web bez bariér, která má hráči ukázat, jak nečitelný text vypadá. Hry jdou ovládat klávesnicí, mají viditelný fokus, popisky pro čtečky obrazovky a respektují nastavení omezeného pohybu.
 
 ## 👤 Autor a licence
 
